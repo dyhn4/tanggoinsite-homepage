@@ -10,6 +10,7 @@ import Technology from "@/components/Technology";
 import Process from "@/components/Process";
 import Achievement from "@/components/Achievement";
 import CaseStudy from "@/components/CaseStudy";
+import Cases from "@/components/Cases";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
 
@@ -101,6 +102,10 @@ export default function Home() {
 
         <section className="min-h-screen">
           <CaseStudy />
+        </section>
+
+        <section className="min-h-screen">
+          <Cases />
         </section>
 
         <section className="min-h-screen">

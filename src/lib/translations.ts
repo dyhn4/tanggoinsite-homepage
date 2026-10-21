@@ -141,6 +141,35 @@ const ko = {
     ],
   },
 
+  // ── CASES (기관별 수행 사례) ───────────────────
+  cases: {
+    badge:    "수행 사례",
+    title:    ["국가 대표 기관과 함께한", "디지털 원문 구축 사례"],
+    subtitle: "도서관·기록관의 원문 구축 사업에 AI OCR과 공정 솔루션을 공급하고 기술을 지원했습니다.",
+    items: [
+      {
+        org: "국회도서관", eng: "National Assembly Library", period: "2020 ~ 2025",
+        projects: ["국회도서관 원문DB 구축사업 (DB I · II · III)", "Tango PDF — 원문DB 구축사업 주관기관 공식 인증 소프트웨어"],
+        tags: ["Tango OCR", "Tango PDF", "Tango Workflow", "TOC 구축"],
+      },
+      {
+        org: "국립중앙도서관", eng: "National Library of Korea", period: "2023 ~ 2026",
+        projects: ["고문헌(근대자료) 원문 텍스트 데이터베이스 구축사업", "문화예술·현대간행물 자료 디지털화 및 지식정보자원 공유기반 구축 사업", "공유서재 — AI 학습 데이터 공개 플랫폼"],
+        tags: ["AI OCR 공급", "Tango Workflow 공급", "기술지원"],
+      },
+      {
+        org: "국립장애인도서관", eng: "National Library for the Disabled", period: "2025",
+        projects: ["시각장애인용 대체자료 기본장서 제작사업"],
+        tags: ["대체자료 제작", "텍스트 데이터화"],
+      },
+      {
+        org: "대통령기록관", eng: "Presidential Archives", period: "2024",
+        projects: ["비전자 대통령 기록물 전자화 사업"],
+        tags: ["기록물 전자화", "스캔·이미지 처리"],
+      },
+    ],
+  },
+
   // ── CTA (문의 버튼 · 무료 샘플 배너) ───────────
   cta: {
     contactBtn:  "문의하기",
@@ -829,6 +858,34 @@ const en: typeof ko = {
       { title: "Unbinding",        desc: "Bound materials are safely disassembled into scannable condition. We operate dedicated workshops under technical partnership with specialized unbinding/binding firms.", tags: ["Dedicated workshops", "Technical partnership", "Minimal damage"] },
       { title: "Rebinding",        desc: "After scanning, original materials go through a professional rebinding process and are restored to their original form before return.", tags: ["Original restoration", "Rebinding process", "QC before return"] },
       { title: "Image Correction", desc: "Our in-house auto-correction program (Tango Image) fixes tilt, shadows, and curvature to maximize OCR recognition rates.", tags: ["Auto tilt correction", "Background/noise removal", "Auto centering"] },
+    ],
+  },
+
+  cases: {
+    badge:    "Case Studies",
+    title:    ["Digital Text Projects with", "Leading National Institutions"],
+    subtitle: "We supplied AI OCR and workflow solutions and provided technical support for text digitization projects at libraries and archives.",
+    items: [
+      {
+        org: "National Assembly Library", eng: "국회도서관", period: "2020 ~ 2025",
+        projects: ["National Assembly Library Full-text DB Project (DB I · II · III)", "Tango PDF — officially certified software of the DB project's managing institution"],
+        tags: ["Tango OCR", "Tango PDF", "Tango Workflow", "TOC Production"],
+      },
+      {
+        org: "National Library of Korea", eng: "국립중앙도서관", period: "2023 ~ 2026",
+        projects: ["Classical & Modern Materials Full-text Database Project", "Cultural/Arts & Contemporary Publications Digitization Project", "Gongyou Seojae — Open AI training data platform"],
+        tags: ["AI OCR supply", "Tango Workflow supply", "Technical support"],
+      },
+      {
+        org: "National Library for the Disabled", eng: "국립장애인도서관", period: "2025",
+        projects: ["Alternative Format Materials Core Collection Production Project"],
+        tags: ["Alternative formats", "Text data conversion"],
+      },
+      {
+        org: "Presidential Archives", eng: "대통령기록관", period: "2024",
+        projects: ["Non-electronic Presidential Records Digitization Project"],
+        tags: ["Records digitization", "Scanning & imaging"],
+      },
     ],
   },
 
