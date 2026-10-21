@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { ExternalLink, FileText, Table2, Image as ImageIcon, Camera, Megaphone, Type, Search } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { translations } from "@/lib/translations";
@@ -10,6 +11,7 @@ const statIcons = [FileText, Table2, ImageIcon, Camera, Megaphone, Type];
 export default function CaseStudy() {
   const { lang } = useLanguage();
   const t = translations[lang].caseStudy;
+  const c = translations[lang].cta;
 
   return (
     <section
@@ -44,6 +46,12 @@ export default function CaseStudy() {
                 {t.cta}
                 <ExternalLink size={16} />
               </a>
+              <Link
+                href="/contact"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-white border border-blue-200 text-blue-700 hover:bg-blue-50 font-semibold text-sm transition-all duration-200 w-fit"
+              >
+                {c.contactBtn}
+              </Link>
               <span className="text-slate-400 text-xs">{t.orgLabel}</span>
             </div>
           </div>

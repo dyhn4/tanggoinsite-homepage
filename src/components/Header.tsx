@@ -71,7 +71,7 @@ export default function Header() {
     {
       label: t.demoLabel,
       items: [
-        { label: t.demoOcr,       href: "http://ai.tangoinsight.kr", sub: t.demoOcrSub,       icon: Zap,       color: "from-cyan-500 to-blue-500" },
+        { label: t.demoOcr,       href: "https://ai.tangoinsight.kr", sub: t.demoOcrSub,       icon: Zap,       color: "from-cyan-500 to-blue-500" },
         { label: t.demoTranslate, href: "/demo/translate",  sub: t.demoTranslateSub, icon: Languages, color: "from-violet-500 to-purple-400", badge: t.demoBadge, disabled: true },
       ],
     },

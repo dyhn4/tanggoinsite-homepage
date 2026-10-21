@@ -141,6 +141,16 @@ const ko = {
     ],
   },
 
+  // ── CTA (문의 버튼 · 무료 샘플 배너) ───────────
+  cta: {
+    contactBtn:  "문의하기",
+    sampleBadge: "FREE SAMPLE",
+    sampleTitle: "내 자료로 먼저 확인해보세요 — 무료 샘플 처리",
+    sampleDesc:  "실제 보유 자료 일부를 스캔·OCR 처리해 결과를 먼저 확인하실 수 있습니다. 부담 없이 신청해 주세요.",
+    sampleBtn:   "무료 샘플 신청",
+    sampleLink:  "무료 샘플 처리 신청",
+  },
+
   // ── TECHNOLOGY ──────────────────────────────
   technology: {
     badge:        "솔루션",
@@ -820,6 +830,15 @@ const en: typeof ko = {
       { title: "Rebinding",        desc: "After scanning, original materials go through a professional rebinding process and are restored to their original form before return.", tags: ["Original restoration", "Rebinding process", "QC before return"] },
       { title: "Image Correction", desc: "Our in-house auto-correction program (Tango Image) fixes tilt, shadows, and curvature to maximize OCR recognition rates.", tags: ["Auto tilt correction", "Background/noise removal", "Auto centering"] },
     ],
+  },
+
+  cta: {
+    contactBtn:  "Contact Us",
+    sampleBadge: "FREE SAMPLE",
+    sampleTitle: "Try it with your own materials — free sample processing",
+    sampleDesc:  "We scan and OCR a portion of your actual materials so you can check the results first. No obligation.",
+    sampleBtn:   "Request a Free Sample",
+    sampleLink:  "Request free sample processing",
   },
 
   technology: {

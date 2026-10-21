@@ -2,6 +2,7 @@
 
 import { useLanguage } from "@/context/LanguageContext";
 import { translations } from "@/lib/translations";
+import SampleBanner from "@/components/SampleBanner";
 
 const gradients = [
   "from-blue-600 to-sky-400",
@@ -75,7 +76,9 @@ export default function Testimonials() {
         ))}
       </div>
 
-      <p className="mt-10 text-xs text-slate-400 tracking-wide">
+      <SampleBanner className="mt-10 w-full max-w-5xl" />
+
+      <p className="mt-8 text-xs text-slate-400 tracking-wide">
         {t.footer}
       </p>
     </section>

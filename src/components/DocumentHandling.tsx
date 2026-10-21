@@ -3,6 +3,7 @@
 import { ScanLine, BookOpenCheck, BookMarked, Wand2 } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { translations } from "@/lib/translations";
+import SampleBanner from "@/components/SampleBanner";
 
 const handlingIcons = [ScanLine, BookOpenCheck, BookMarked, Wand2];
 
@@ -64,6 +65,8 @@ export default function DocumentHandling() {
             </div>
           ))}
         </div>
+
+        <SampleBanner className="mt-8" />
       </div>
     </section>
   );

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import Link from "next/link";
-import { ArrowRight, BookOpen, Cpu, Sparkles } from "lucide-react";
+import { ArrowRight, BookOpen, Cpu, Gift, Sparkles } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { translations } from "@/lib/translations";
 
@@ -146,6 +146,15 @@ export default function Hero() {
                 {t.cta2}
               </button>
             </div>
+
+            <Link
+              href="/apply"
+              className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-sky-300 hover:text-sky-200 transition-colors"
+            >
+              <Gift size={16} />
+              {translations[lang].cta.sampleLink}
+              <ArrowRight size={14} />
+            </Link>
           </div>
 
           <div className="hidden lg:block">

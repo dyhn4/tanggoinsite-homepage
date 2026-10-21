@@ -1,6 +1,7 @@
 "use client";
 
-import { ScanLine, Edit3, Table, MessageSquare, Shield, Zap } from "lucide-react";
+import Link from "next/link";
+import { ScanLine, Edit3, Table, MessageSquare, Shield, Zap, ArrowRight } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { translations } from "@/lib/translations";
 
@@ -9,6 +10,7 @@ const serviceIcons = [ScanLine, Edit3, Table, MessageSquare, Shield, Zap];
 export default function Services() {
   const { lang } = useLanguage();
   const t = translations[lang].services;
+  const c = translations[lang].cta;
 
   const services = t.items.map((item, i) => ({
     ...item,
@@ -61,6 +63,16 @@ export default function Services() {
               </div>
             </div>
           ))}
+        </div>
+
+        <div className="mt-8 text-center">
+          <Link
+            href="/contact"
+            className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-blue-700 hover:bg-blue-800 text-white font-semibold text-sm transition-all duration-200 hover:-translate-y-0.5 shadow-lg shadow-blue-700/20"
+          >
+            {c.contactBtn}
+            <ArrowRight size={16} />
+          </Link>
         </div>
       </div>
     </section>
