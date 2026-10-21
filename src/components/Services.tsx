@@ -20,10 +20,10 @@ export default function Services() {
   return (
     <section
       id="services"
-      className="min-h-screen flex flex-col justify-center px-4 sm:px-6 bg-white py-12"
+      className="min-h-screen flex flex-col justify-center px-4 sm:px-6 bg-white pt-24 pb-8"
     >
       <div className="max-w-6xl mx-auto w-full">
-        <div className="text-center mb-10">
+        <div className="text-center mb-7">
           <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-blue-100 text-blue-700 border border-blue-200 font-semibold text-sm mb-3">
             {t.badge}
           </span>
@@ -35,11 +35,11 @@ export default function Services() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {services.map((service) => (
             <div
               key={service.title}
-              className="group bg-slate-50 rounded-2xl p-6 border border-slate-100 hover:-translate-y-1 hover:shadow-xl hover:border-blue-200 hover:bg-blue-50/40 transition-all duration-300 cursor-default flex flex-col"
+              className="group bg-slate-50 rounded-2xl p-5 border border-slate-100 hover:-translate-y-1 hover:shadow-xl hover:border-blue-200 hover:bg-blue-50/40 transition-all duration-300 cursor-default flex flex-col"
             >
               <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 bg-gradient-to-br from-blue-700 to-sky-500 shadow-md shadow-blue-500/20 flex-shrink-0">
                 <service.icon size={22} className="text-white" />
@@ -65,7 +65,7 @@ export default function Services() {
           ))}
         </div>
 
-        <div className="mt-8 text-center">
+        <div className="mt-6 text-center">
           <Link
             href="/contact"
             className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-blue-700 hover:bg-blue-800 text-white font-semibold text-sm transition-all duration-200 hover:-translate-y-0.5 shadow-lg shadow-blue-700/20"
