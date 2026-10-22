@@ -27,7 +27,7 @@ export default function SideNav() {
   return (
     <nav
       aria-label="섹션 이동"
-      className="hidden lg:flex fixed left-5 top-1/2 -translate-y-1/2 z-40 flex-col items-start gap-1"
+      className="hidden lg:flex fixed left-6 top-1/2 -translate-y-1/2 z-40 flex-col items-start gap-0.5"
     >
       {homeSections.map((s, i) =>
         s.nav ? (
@@ -41,8 +41,8 @@ export default function SideNav() {
             <span
               className={`block rounded-full transition-all duration-200 ${
                 active === i
-                  ? "w-3 h-3 bg-blue-500 ring-4 ring-blue-500/25"
-                  : `w-2 h-2 ${dark ? "bg-white/40 group-hover:bg-white" : "bg-slate-400 group-hover:bg-blue-500"}`
+                  ? "w-5 h-5 bg-blue-500 ring-4 ring-blue-500/30 shadow-lg shadow-blue-500/40"
+                  : `w-3.5 h-3.5 border-2 ${dark ? "bg-white/50 border-white/70 group-hover:bg-white" : "bg-slate-400 border-slate-500/60 group-hover:bg-blue-500 group-hover:border-blue-600"}`
               }`}
             />
             <span
