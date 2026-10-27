@@ -493,6 +493,13 @@ export default function SolutionsPage() {
                     <h1 className="text-3xl sm:text-4xl font-black text-white mb-2 leading-tight">{sol.title}</h1>
                     <p className="text-base font-semibold mb-3" style={{ color: sol.accent }}>{tSol.subtitle}</p>
                     <p className="text-white/60 text-sm leading-relaxed max-w-xl whitespace-pre-line">{tSol.description}</p>
+                    {cta.evidence[sol.id] && (
+                      <div className="mt-4 inline-flex items-start gap-2 max-w-xl rounded-xl border px-3.5 py-2.5 text-xs font-semibold leading-snug"
+                        style={{ borderColor: `${sol.accent}50`, background: `${sol.accent}15`, color: sol.accent }}>
+                        <ShieldCheck size={15} className="flex-shrink-0 mt-px" />
+                        {cta.evidence[sol.id]}
+                      </div>
+                    )}
                   </div>
 
                   <div className="flex-shrink-0 flex items-center justify-center">

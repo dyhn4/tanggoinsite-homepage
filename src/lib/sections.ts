@@ -8,6 +8,7 @@ export const homeSections = [
   { ko: "핵심 기능",     en: "Core Features",     dark: false, nav: true  },
   { ko: "물리자료 처리", en: "Document Handling", dark: false, nav: true  },
   { ko: "솔루션",       en: "Solutions",         dark: false, nav: true  },
+  { ko: "도입 방식",     en: "Engagement Models", dark: false, nav: true  },
   { ko: "프로세스",     en: "Process",           dark: true,  nav: true  },
   { ko: "고객 평가",     en: "Reviews",           dark: false, nav: true  },
   { ko: "푸터",         en: "Footer",            dark: true,  nav: false },

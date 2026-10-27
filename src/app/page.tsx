@@ -8,6 +8,7 @@ import About from "@/components/About";
 import Services from "@/components/Services";
 import DocumentHandling from "@/components/DocumentHandling";
 import Technology from "@/components/Technology";
+import ModelCompare from "@/components/ModelCompare";
 import Process from "@/components/Process";
 import Achievement from "@/components/Achievement";
 import CaseStudy from "@/components/CaseStudy";
@@ -124,6 +125,10 @@ export default function Home() {
 
         <section className="min-h-screen">
           <Technology />
+        </section>
+
+        <section className="min-h-screen">
+          <ModelCompare />
         </section>
 
         <section className="min-h-screen">

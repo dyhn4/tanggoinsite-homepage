@@ -276,6 +276,42 @@ const ko = {
     contactBtn:    "도입 문의",
     moreBtn:       "솔루션 자세히 보기",
     barText:       "{name} 도입을 고민 중이신가요?",
+    evidence: {
+      "tango-pdf":      "국회도서관 원문DB 구축사업 주관기관 공식 인증 소프트웨어 · 프로그램 저작권 등록",
+      "tango-workflow": "솔루션 저작권 등록 · 2024 국회도서관 원문DB 최종납품 품질 99.95% 이상 달성",
+      "moon-ai-ocr":    "국회도서관 원문DB 구축사업(2024~) AI OCR 및 공정솔루션 적용",
+    } as Record<string, string>,
+  },
+
+  // ── MODEL COMPARE (도입 방식 비교) ───────────────
+  modelCompare: {
+    badge:    "도입 방식",
+    title:    "우리 기관에는 어떤 방식이 맞을까요?",
+    subtitle: "두 가지 방식 중 선택하거나, 필요한 공정만 조합할 수도 있습니다.",
+    rowLabels: ["이런 기관에 맞아요", "진행 방식", "포함 범위", "보안·운영"],
+    models: [
+      {
+        name: "솔루션 도입", sub: "직접 구축·운영",
+        cells: [
+          "자체 인력으로 구축·운영하려는 기관",
+          "소프트웨어 설치 → 교육 → 기술지원",
+          "OCR·편집·목차·공정관리 등 필요한 솔루션만 선택 도입",
+          "On-Premise(내부망)·Cloud 모두 지원",
+        ],
+        cta: "도입 상담하기", href: "/contact",
+      },
+      {
+        name: "구축 대행", sub: "스캔부터 납품까지",
+        cells: [
+          "인력·장비 없이 결과물만 받고 싶은 기관",
+          "자료 반입 → 해철·스캔 → 이미지 보정 → OCR → 검수 → 납품",
+          "스캔·OCR·검수·원본 제본 복원까지 전 과정",
+          "보안 환경을 갖춘 전용 작업장에서 수행",
+        ],
+        cta: "구축 견적 신청", href: "/apply",
+      },
+    ],
+    mixNote: "일부 공정만 대행하고 솔루션을 함께 쓰는 조합도 가능합니다.",
   },
 
   // ── PROCESS ─────────────────────────────────
@@ -1064,6 +1100,41 @@ const en: typeof ko = {
     contactBtn:    "Inquire",
     moreBtn:       "Explore all solutions",
     barText:       "Considering {name}?",
+    evidence: {
+      "tango-pdf":      "Officially certified software of the National Assembly Library DB project · Registered program copyright",
+      "tango-workflow": "Registered solution copyright · 99.95%+ final delivery quality in the 2024 National Assembly Library DB project",
+      "moon-ai-ocr":    "Applied AI OCR and process solutions in the National Assembly Library DB project (2024~)",
+    } as Record<string, string>,
+  },
+
+  modelCompare: {
+    badge:    "Engagement Models",
+    title:    "Which model fits your institution?",
+    subtitle: "Choose one of two models — or combine only the steps you need.",
+    rowLabels: ["Best for", "How it works", "Scope", "Security & operations"],
+    models: [
+      {
+        name: "Solution License", sub: "Build & run it yourself",
+        cells: [
+          "Institutions with in-house staff to build and operate",
+          "Software installation → training → technical support",
+          "Select only the solutions you need: OCR, editing, TOC, process management",
+          "On-Premise (internal network) and Cloud supported",
+        ],
+        cta: "Talk to us", href: "/contact",
+      },
+      {
+        name: "Outsourced Production", sub: "From scanning to delivery",
+        cells: [
+          "Institutions that want finished results without staff or equipment",
+          "Intake → unbinding & scanning → image correction → OCR → review → delivery",
+          "Full process including scanning, OCR, review, and rebinding of originals",
+          "Performed in dedicated, security-controlled workshops",
+        ],
+        cta: "Request a quote", href: "/apply",
+      },
+    ],
+    mixNote: "You can also outsource only some steps and use our solutions for the rest.",
   },
 
   process: {
