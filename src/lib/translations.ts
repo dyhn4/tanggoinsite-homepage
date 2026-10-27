@@ -275,6 +275,7 @@ const ko = {
     sampleBtn:     "무료 샘플 신청",
     contactBtn:    "도입 문의",
     moreBtn:       "솔루션 자세히 보기",
+    barText:       "{name} 도입을 고민 중이신가요?",
   },
 
   // ── PROCESS ─────────────────────────────────
@@ -1062,6 +1063,7 @@ const en: typeof ko = {
     sampleBtn:     "Free Sample",
     contactBtn:    "Inquire",
     moreBtn:       "Explore all solutions",
+    barText:       "Considering {name}?",
   },
 
   process: {

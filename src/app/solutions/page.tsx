@@ -6,6 +6,7 @@ import {
   ArrowLeft, GitBranch, PenLine, ScanSearch, Braces,
   Layers, FileText, BrainCircuit, ChevronRight, Check,
   Briefcase, ShieldCheck, BookOpen, ClipboardCheck, Package, Settings,
+  ExternalLink, Gift, MessageCircle,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
@@ -419,8 +420,11 @@ export default function SolutionsPage() {
     return () => observerRef.current?.disconnect();
   }, []);
 
+  const cta = translations[lang].solutionHome;
+  const activeTitle = solutions.find((s) => s.id === activeId)?.title ?? "";
+
   return (
-    <div className="bg-slate-950 min-h-screen">
+    <div className="bg-slate-950 min-h-screen pb-20">
 
       {/* 상단 헤더 */}
       <div className="sticky top-0 z-50 border-b border-white/8"
@@ -534,6 +538,30 @@ export default function SolutionsPage() {
           </section>
         );
       })}
+
+      {/* 하단 고정 문의 바 */}
+      <div className="fixed bottom-0 inset-x-0 z-50 border-t border-white/10"
+        style={{ background: "rgba(10,12,26,0.94)", backdropFilter: "blur(16px)" }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center justify-center sm:justify-between gap-3">
+          <p className="hidden sm:block text-sm font-semibold text-white/80">
+            {cta.barText.replace("{name}", activeTitle)}
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            <a href="https://ai.tangoinsight.kr" target="_blank" rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-white/20 text-white/80 text-xs sm:text-sm font-semibold hover:bg-white/10 transition-colors">
+              {cta.demoBtn}<ExternalLink size={13} />
+            </a>
+            <Link href="/apply"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-sky-500/20 border border-sky-400/40 text-sky-200 text-xs sm:text-sm font-semibold hover:bg-sky-500/30 transition-colors">
+              <Gift size={13} />{cta.sampleBtn}
+            </Link>
+            <Link href="/contact"
+              className="inline-flex items-center gap-1.5 px-5 py-2 rounded-full bg-blue-600 hover:bg-blue-500 text-white text-xs sm:text-sm font-semibold shadow-lg shadow-blue-900/40 transition-colors">
+              <MessageCircle size={13} />{cta.contactBtn}
+            </Link>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
