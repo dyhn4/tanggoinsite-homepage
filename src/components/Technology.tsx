@@ -1,134 +1,181 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import {
-  GitBranch,
-  PenLine,
-  ScanSearch,
-  Braces,
-  Layers,
-  FileText,
-  BrainCircuit,
-  Wand2,
+  GitBranch, PenLine, ScanSearch, Braces, Layers, FileText, BrainCircuit, Wand2,
+  ArrowRight, ExternalLink, Gift, MessageCircle, AlertCircle, CheckCircle2,
 } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { translations } from "@/lib/translations";
 
-const solutionMeta = [
-  { id: "moon-editor",      icon: PenLine,      title: "MooN Editor",      color: "from-violet-600 to-blue-500",  col: 1, row: 1, series: "moon"  },
-  { id: "moon-ai-ocr",      icon: ScanSearch,   title: "MooN AI OCR",      color: "from-sky-600 to-cyan-400",     col: 2, row: 1, series: "moon"  },
-  { id: "moon-ai-explorer", icon: BrainCircuit, title: "MooN AI Explorer", color: "from-indigo-600 to-blue-400",  col: 3, row: 1, series: "moon"  },
-  { id: "tango-pdf",        icon: FileText,     title: "Tango PDF",        color: "from-rose-600 to-pink-400",    col: 1, row: 2, series: "tango" },
-  { id: "tango-xml",        icon: Braces,       title: "Tango XML(JSON)",  color: "from-emerald-600 to-teal-400", col: 3, row: 2, series: "tango" },
-  { id: "tango-batch",      icon: Layers,       title: "Tango Batch",      color: "from-orange-500 to-amber-400", col: 1, row: 3, series: "tango" },
-  { id: "tango-image",      icon: Wand2,        title: "Tango Image",      color: "from-red-600 to-orange-500",   col: 3, row: 3, series: "tango" },
-];
+const stepIcons = [Wand2, ScanSearch, PenLine, FileText, Braces, Layers, BrainCircuit];
+const DEMO_URL = "https://ai.tangoinsight.kr";
 
 export default function Technology() {
   const { lang } = useLanguage();
-  const t = translations[lang].technology;
-
-  const solutions = solutionMeta.map((meta, i) => ({
-    ...meta,
-    features: t.solutions[i].features,
-  }));
+  const t = translations[lang].solutionHome;
+  const [active, setActive] = useState(0);
+  const scenario = t.scenarios[active];
+  const workflowFocus = active === 1;
 
   return (
     <section
       id="technology"
-      className="min-h-screen flex flex-col justify-center px-4 sm:px-6 bg-white py-8"
+      className="min-h-screen flex flex-col justify-center px-4 sm:px-6 bg-white pt-24 pb-8"
     >
       <div className="max-w-6xl mx-auto w-full flex flex-col gap-5">
         <div className="text-center">
           <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-blue-100 text-blue-700 border border-blue-200 font-semibold text-sm mb-3">
             {t.badge}
           </span>
-          <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-2">
-            {t.title}
-          </h2>
-          <p className="text-slate-500 text-sm">{t.subtitle}</p>
+          <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 mb-2">{t.title}</h2>
+          <p className="text-slate-500 text-sm sm:text-base">{t.subtitle}</p>
         </div>
 
-        {/* 3×3 그리드 — Tango Workflow 중앙 row-span-2 */}
-        <div className="grid grid-cols-3 gap-4">
-
-          {/* 7개 솔루션 카드 (명시적 위치 지정) */}
-          {solutions.map((sol) => {
-            const isMoon = sol.series === "moon";
-            const cardBg    = isMoon ? "bg-violet-50 border-violet-100 hover:border-violet-300" : "bg-sky-50/70 border-sky-100 hover:border-sky-300";
-            const badgeCls  = isMoon ? "text-violet-500 border-violet-200" : "text-sky-600 border-sky-200";
-            return (
-            <Link
-              key={sol.id}
-              href={`/solutions#${sol.id}`}
-              style={{ gridColumn: String(sol.col), gridRow: String(sol.row) }}
-              className={`group flex flex-col gap-3 p-4 rounded-2xl border hover:bg-white hover:-translate-y-0.5 hover:shadow-lg transition-all duration-300 ${cardBg}`}
+        {/* 시나리오 탭 */}
+        <div className="flex flex-wrap justify-center gap-2">
+          {t.scenarios.map((s, i) => (
+            <button
+              key={s.tab}
+              onClick={() => setActive(i)}
+              className={`px-4 py-2 rounded-full text-sm font-semibold border transition-all duration-200 ${
+                active === i
+                  ? "bg-blue-700 border-blue-700 text-white shadow-lg shadow-blue-700/25"
+                  : "bg-white border-slate-200 text-slate-600 hover:border-blue-300 hover:text-blue-700"
+              }`}
             >
-              <div className="flex items-center gap-2.5">
-                <div className={`flex-shrink-0 w-9 h-9 rounded-xl bg-gradient-to-br ${sol.color} flex items-center justify-center shadow-md`}>
-                  <sol.icon size={16} className="text-white" />
-                </div>
-                <span className={`text-[10px] font-bold tracking-widest uppercase border rounded-full px-2 py-0.5 ${badgeCls}`}>
-                  {t.pluginBadge}
-                </span>
+              {s.tab}
+            </button>
+          ))}
+        </div>
+
+        {/* 시나리오 패널 */}
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
+          <div className="lg:col-span-3 rounded-2xl bg-slate-50 border border-slate-100 p-6 flex flex-col gap-4">
+            <div className="flex items-start gap-3">
+              <AlertCircle size={18} className="text-amber-500 mt-0.5 flex-shrink-0" />
+              <div>
+                <div className="text-[11px] font-bold tracking-widest text-slate-400 mb-0.5">{t.problemLabel}</div>
+                <p className="text-slate-700 text-sm leading-relaxed">{scenario.problem}</p>
               </div>
-
-              <h3 className="font-bold text-slate-900 text-sm group-hover:text-blue-700 transition-colors leading-tight">
-                {sol.title}
-              </h3>
-
-              <ul className="flex flex-col gap-1">
-                {sol.features.map((f) => (
-                  <li key={f} className="flex items-start gap-1.5 text-xs text-slate-500 leading-snug">
-                    <span className={`mt-[4px] flex-shrink-0 w-1 h-1 rounded-full bg-gradient-to-br ${sol.color}`} />
-                    {f}
-                  </li>
+            </div>
+            <div className="flex items-start gap-3">
+              <CheckCircle2 size={18} className="text-blue-600 mt-0.5 flex-shrink-0" />
+              <div>
+                <div className="text-[11px] font-bold tracking-widest text-blue-600 mb-0.5">{t.solutionLabel}</div>
+                <p className="text-slate-900 font-semibold text-base leading-relaxed">{scenario.solution}</p>
+              </div>
+            </div>
+            <div>
+              <div className="text-[11px] font-bold tracking-widest text-slate-400 mb-2">{t.usedLabel}</div>
+              <div className="flex flex-wrap gap-2">
+                {scenario.steps.map((si) => (
+                  <Link
+                    key={t.steps[si].id}
+                    href={`/solutions#${t.steps[si].id}`}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-blue-200 text-blue-700 text-xs font-semibold hover:bg-blue-50 transition-colors"
+                  >
+                    {t.steps[si].name}
+                    <ArrowRight size={12} />
+                  </Link>
                 ))}
-              </ul>
-            </Link>
-            );
-          })}
+                {workflowFocus && (
+                  <Link
+                    href="/solutions#tango-workflow"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-blue-200 text-blue-700 text-xs font-semibold hover:bg-blue-50 transition-colors"
+                  >
+                    Tango Workflow
+                    <ArrowRight size={12} />
+                  </Link>
+                )}
+              </div>
+            </div>
+          </div>
 
-          {/* Tango Workflow — 중앙 col 2, row 2-3 */}
+          <div
+            className="lg:col-span-2 rounded-2xl p-6 text-white flex flex-col justify-center gap-4"
+            style={{ background: "linear-gradient(160deg, #1e3a8a 0%, #1d4ed8 55%, #0ea5e9 100%)" }}
+          >
+            {scenario.results.map((r) => (
+              <div key={r.label}>
+                <div className="text-3xl sm:text-4xl font-black tracking-tight">{r.value}</div>
+                <div className="text-blue-100 text-sm">{r.label}</div>
+              </div>
+            ))}
+            {scenario.note && <p className="text-blue-200/80 text-xs">{scenario.note}</p>}
+          </div>
+        </div>
+
+        {/* 전 과정 파이프라인 */}
+        <div>
+          <div className="text-[11px] font-bold tracking-widest text-slate-400 mb-2 text-center">{t.pipelineLabel}</div>
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2">
+            {t.steps.map((step, i) => {
+              const Icon = stepIcons[i];
+              const on = scenario.steps.includes(i);
+              return (
+                <Link
+                  key={step.id}
+                  href={`/solutions#${step.id}`}
+                  className={`group relative flex flex-col items-center text-center gap-1 rounded-xl border px-2 py-3 transition-all duration-300 ${
+                    on
+                      ? "bg-gradient-to-br from-blue-700 to-sky-500 border-transparent text-white shadow-lg shadow-blue-500/25 -translate-y-0.5"
+                      : "bg-slate-50 border-slate-100 text-slate-500 hover:border-blue-200"
+                  }`}
+                >
+                  <span className={`absolute top-1.5 left-2 text-[10px] font-bold ${on ? "text-white/70" : "text-slate-300"}`}>
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <Icon size={20} className={on ? "text-white" : "text-slate-400 group-hover:text-blue-600"} />
+                  <span className={`text-xs font-bold leading-tight ${on ? "text-white" : "text-slate-700"}`}>{step.title}</span>
+                  <span className={`text-[10px] leading-tight ${on ? "text-blue-100" : "text-slate-400"}`}>{step.name}</span>
+                </Link>
+              );
+            })}
+          </div>
           <Link
             href="/solutions#tango-workflow"
-            style={{
-              gridColumn: "2",
-              gridRow: "2 / span 2",
-              background: "linear-gradient(160deg, #1e3a8a 0%, #1d4ed8 55%, #0ea5e9 100%)",
-            }}
-            className="flex flex-col rounded-2xl p-6 text-white relative overflow-hidden hover:brightness-110 transition-all duration-300"
+            className={`mt-2 flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-xs sm:text-sm font-semibold transition-all duration-300 ${
+              workflowFocus
+                ? "bg-gradient-to-r from-blue-800 to-sky-500 text-white shadow-lg shadow-blue-500/25"
+                : "bg-blue-50 border border-blue-100 text-blue-700 hover:bg-blue-100"
+            }`}
           >
-            <div className="absolute -top-8 -right-8 w-32 h-32 rounded-full bg-white/5" />
-            <div className="absolute -bottom-6 -left-6 w-24 h-24 rounded-full bg-white/5" />
-
-            <span className="relative z-10 self-start text-[10px] font-bold tracking-widest uppercase border border-white/30 rounded-full px-2.5 py-0.5 text-white/80 mb-5">
-              {t.workflowBadge}
-            </span>
-
-            <div className="relative z-10 w-12 h-12 rounded-xl bg-white/15 flex items-center justify-center mb-5 backdrop-blur-sm">
-              <GitBranch size={22} className="text-white" />
-            </div>
-
-            <h3 className="relative z-10 text-xl font-black leading-tight">Tango</h3>
-            <h3 className="relative z-10 text-xl font-black leading-tight text-sky-200 mb-5">
-              Workflow
-            </h3>
-
-            <p className="relative z-10 text-sm text-white/70 mb-6 leading-relaxed whitespace-pre-line">
-              {t.workflowDesc}
-            </p>
-
-            <ul className="relative z-10 flex flex-col gap-3 mt-auto">
-              {t.workflowFeatures.map((f) => (
-                <li key={f} className="flex items-start gap-2 text-sm text-white/85 leading-snug">
-                  <span className="mt-1 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-sky-300" />
-                  {f}
-                </li>
-              ))}
-            </ul>
+            <GitBranch size={16} />
+            {t.workflowLabel}
           </Link>
+        </div>
 
+        {/* CTA */}
+        <div className="flex flex-wrap items-center justify-center gap-3">
+          <a
+            href={DEMO_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white border border-blue-200 text-blue-700 text-sm font-semibold hover:bg-blue-50 transition-colors"
+          >
+            {t.demoBtn}
+            <ExternalLink size={14} />
+          </a>
+          <Link
+            href="/apply"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-sky-100 border border-sky-200 text-sky-800 text-sm font-semibold hover:bg-sky-200 transition-colors"
+          >
+            <Gift size={14} />
+            {t.sampleBtn}
+          </Link>
+          <Link
+            href="/contact"
+            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-blue-700 hover:bg-blue-800 text-white text-sm font-semibold shadow-lg shadow-blue-700/20 transition-all hover:-translate-y-0.5"
+          >
+            <MessageCircle size={14} />
+            {t.contactBtn}
+          </Link>
+          <Link href="/solutions" className="text-sm text-slate-500 hover:text-blue-700 transition-colors inline-flex items-center gap-1">
+            {t.moreBtn}
+            <ArrowRight size={14} />
+          </Link>
         </div>
       </div>
     </section>

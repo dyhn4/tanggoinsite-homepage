@@ -206,6 +206,77 @@ const ko = {
     ],
   },
 
+  // ── SOLUTION HOME (메인 솔루션 섹션: 고객 과제 중심) ─
+  solutionHome: {
+    badge:    "솔루션",
+    title:    "우리 자료에 맞는 구성을 골라보세요",
+    subtitle: "고민에 맞는 솔루션 조합과 기대 결과를 확인하고, 바로 상담받으세요.",
+    pipelineLabel: "문서 디지털화 전 과정",
+    workflowLabel: "Tango Workflow — 모든 공정을 하나로 연결하는 통합 공정관리",
+    steps: [
+      { title: "이미지 보정", name: "Tango Image",      id: "tango-image" },
+      { title: "AI 문자 인식", name: "MooN AI OCR",      id: "moon-ai-ocr" },
+      { title: "교정·편집",   name: "MooN Editor",      id: "moon-editor" },
+      { title: "목차 구축",   name: "Tango PDF",        id: "tango-pdf" },
+      { title: "구조화 변환", name: "Tango XML(JSON)",  id: "tango-xml" },
+      { title: "대량 일괄 처리", name: "Tango Batch",   id: "tango-batch" },
+      { title: "AI 탐색·활용", name: "MooN AI Explorer", id: "moon-ai-explorer" },
+    ],
+    scenarios: [
+      {
+        tab: "고문헌·옛한글 텍스트화",
+        problem: "한자·옛한글·세로쓰기 자료는 일반 OCR로는 인식이 어렵습니다.",
+        solution: "이미지 보정 → AI OCR → 전문가 교정을 하나의 흐름으로 처리해 읽을 수 있는 텍스트로 만듭니다.",
+        steps: [0, 1, 2],
+        results: [
+          { value: "98.7%", label: "고문헌 인식 정확도" },
+          { value: "3배",   label: "일반 OCR 대비 정확도 향상" },
+        ],
+        note: "",
+      },
+      {
+        tab: "대량 자료 기한 내 처리",
+        problem: "수십만 면의 대량 자료는 공정 관리와 납기 지연이 가장 큰 위험입니다.",
+        solution: "Tango Workflow로 공정·인력·진척을 실시간 관리하고, Tango Batch로 일괄 처리해 일정을 지킵니다.",
+        steps: [1, 5],
+        results: [
+          { value: "1.68억 면", label: "누적 처리 면수" },
+          { value: "103만 건",  label: "누적 처리 건수" },
+        ],
+        note: "",
+      },
+      {
+        tab: "검수·교정 시간 단축",
+        problem: "OCR 결과 검수와 목차 작업에 가장 많은 시간과 인력이 들어갑니다.",
+        solution: "OCR 선 처리로 오류를 줄이고, 편집기와 목차 구축 도구로 검수 공정을 표준화합니다.",
+        steps: [2, 3],
+        results: [
+          { value: "97%",     label: "OCR 선처리 평균 인식률" },
+          { value: "99.95%+", label: "최종 납품 품질 달성" },
+        ],
+        note: "※ 2024 국회도서관 원문DB 구축사업(DBⅡ) 기준",
+      },
+      {
+        tab: "AI 학습·활용 데이터화",
+        problem: "구축한 텍스트를 AI 학습이나 서비스에 바로 쓸 수 있는 데이터로 만들고 싶습니다.",
+        solution: "XML·JSON·TXT로 구조화해 출력하고, AI 탐색 도구로 검색·질의·번역까지 이어갑니다.",
+        steps: [4, 6],
+        results: [
+          { value: "3,833만 건", label: "공유서재 AI 학습 데이터" },
+          { value: "XML·JSON",   label: "구조화 출력 지원" },
+        ],
+        note: "※ 국립중앙도서관 공유서재 공개 기준",
+      },
+    ],
+    solutionLabel: "이렇게 해결합니다",
+    problemLabel:  "이런 고민이 있다면",
+    usedLabel:     "사용 솔루션",
+    demoBtn:       "체험해보기",
+    sampleBtn:     "무료 샘플 신청",
+    contactBtn:    "도입 문의",
+    moreBtn:       "솔루션 자세히 보기",
+  },
+
   // ── PROCESS ─────────────────────────────────
   process: {
     techBadge:    "기술력",
@@ -921,6 +992,76 @@ const en: typeof ko = {
       { features: ["Output XML·JSON·TXT generation", "Table, image & character image extraction", "Hidden Text PDF generation", "Bibliography extraction & statistics"] },
       { features: ["Auto skew correction & background/edge removal", "Auto color(JPEG)/grayscale(TIFF) sort", "Auto centering, alignment & resize", "Noise removal & page cropping"] },
     ],
+  },
+
+  solutionHome: {
+    badge:    "Solutions",
+    title:    "Pick the setup that fits your materials",
+    subtitle: "See the solution combination and expected results for your challenge — then talk to us right away.",
+    pipelineLabel: "End-to-end document digitization",
+    workflowLabel: "Tango Workflow — integrated process management connecting every step",
+    steps: [
+      { title: "Image Correction",   name: "Tango Image",      id: "tango-image" },
+      { title: "AI Recognition",     name: "MooN AI OCR",      id: "moon-ai-ocr" },
+      { title: "Editing & Review",   name: "MooN Editor",      id: "moon-editor" },
+      { title: "TOC Production",     name: "Tango PDF",        id: "tango-pdf" },
+      { title: "Structured Output",  name: "Tango XML(JSON)",  id: "tango-xml" },
+      { title: "Bulk Processing",    name: "Tango Batch",      id: "tango-batch" },
+      { title: "AI Exploration",     name: "MooN AI Explorer", id: "moon-ai-explorer" },
+    ],
+    scenarios: [
+      {
+        tab: "Heritage Text Conversion",
+        problem: "Chinese characters, Old Korean, and vertical text are hard for standard OCR.",
+        solution: "Image correction → AI OCR → expert review in a single flow, producing readable text.",
+        steps: [0, 1, 2],
+        results: [
+          { value: "98.7%", label: "Heritage OCR accuracy" },
+          { value: "3×",    label: "Better than standard OCR" },
+        ],
+        note: "",
+      },
+      {
+        tab: "Large Volumes on Schedule",
+        problem: "With hundreds of thousands of pages, process control and delays are the biggest risks.",
+        solution: "Tango Workflow tracks process, staff, and progress in real time; Tango Batch processes in bulk to hit deadlines.",
+        steps: [1, 5],
+        results: [
+          { value: "168M pages",  label: "Total pages processed" },
+          { value: "1.03M items", label: "Total records processed" },
+        ],
+        note: "",
+      },
+      {
+        tab: "Faster Review & Correction",
+        problem: "Reviewing OCR output and building tables of contents takes the most time and labor.",
+        solution: "OCR pre-processing reduces errors, while the editor and TOC tools standardize the review process.",
+        steps: [2, 3],
+        results: [
+          { value: "97%",     label: "Avg. OCR pre-processing accuracy" },
+          { value: "99.95%+", label: "Final delivery quality achieved" },
+        ],
+        note: "※ Based on the 2024 National Assembly Library Full-text DB Project (DB II)",
+      },
+      {
+        tab: "AI Training & Reuse",
+        problem: "You want your digitized text ready for AI training and services.",
+        solution: "Export to XML, JSON, or TXT, then continue to search, Q&A, and translation with AI exploration tools.",
+        steps: [4, 6],
+        results: [
+          { value: "38.3M",    label: "AI training data on Gongyou Seojae" },
+          { value: "XML·JSON", label: "Structured output formats" },
+        ],
+        note: "※ As published on the National Library of Korea's Gongyou Seojae",
+      },
+    ],
+    solutionLabel: "How we solve it",
+    problemLabel:  "If this sounds familiar",
+    usedLabel:     "Solutions used",
+    demoBtn:       "Try the Demo",
+    sampleBtn:     "Free Sample",
+    contactBtn:    "Inquire",
+    moreBtn:       "Explore all solutions",
   },
 
   process: {
