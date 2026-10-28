@@ -586,6 +586,36 @@ const ko = {
   },
 
   // ── SOLUTIONS PAGE (/solutions) ──────────────
+  workflowPage: {
+    headline: ["수십만 면 구축,", "일정과 품질을 한 화면에서"],
+    metrics: [
+      { value: "6대",     label: "공정을 하나로 일원화 관리" },
+      { value: "99.95%+", label: "2024 국회도서관 원문DB 최종납품 품질" },
+      { value: "실시간",  label: "진척·품질 모니터링과 통계" },
+    ],
+    mockCaption: "화면 예시 이미지",
+    tabsLabel: "6대 공정, 이렇게 관리됩니다",
+    featuresLabel: "세부 기능",
+    benefits: [
+      { headline: "전 공정의 일정과 인력을 한 화면에서", desc: "사업·장서 등록부터 작업 배분, 권한, 실적 모니터링까지 한곳에서 관리합니다." },
+      { headline: "검증된 기준으로 품질을 실시간 집계", desc: "공정별 품질 지표가 실시간으로 모여 문제를 빠르게 발견합니다." },
+      { headline: "반출·반납·중복 검출을 자동으로",     desc: "대상자료를 자동 등록하고 중복·단권본을 걸러 불필요한 업무를 줄입니다." },
+      { headline: "오류 유형 체크 후 자동 반려",         desc: "점검 차수별로 오류를 기록하고 자동 반려해 재작업을 체계적으로 관리합니다." },
+      { headline: "차수별 대시보드로 납품 검증까지",     desc: "최종 데이터 기반 검수용 검증과 납품 목록·통계를 제공합니다." },
+      { headline: "작업 이력과 공정별 트래킹",           desc: "누가 언제 무엇을 했는지 이력을 조회하고 공정별 진행을 추적합니다." },
+    ],
+    compareTitle: "엑셀·메신저로 관리할 때 vs Tango Workflow",
+    beforeLabel: "기존 방식",
+    afterLabel: "Tango Workflow",
+    compareRows: [
+      { item: "진척 파악",   before: "담당자가 파일을 취합해 수기로 집계",     after: "공정별 진척이 대시보드로 실시간 집계" },
+      { item: "작업 분배",   before: "메신저·구두로 배분, 권한 관리 어려움",   after: "자동 작업분배와 권한 관리" },
+      { item: "오류·반려",   before: "오류 유형이 흩어져 이력 추적이 어려움",  after: "오류 유형 표준화, 자동 반려와 이력 조회" },
+      { item: "납품 검증",   before: "납품 전 수작업으로 목록을 대조",         after: "검수용 검증과 납품 목록·통계 제공" },
+    ],
+    demoCta: "이 화면으로 데모 요청",
+  },
+
   solutionsPage: {
     backHome:             "홈으로",
     contactBtn:           "문의하기",
@@ -1403,6 +1433,36 @@ const en: typeof ko = {
   },
 
   // ── SOLUTIONS PAGE (/solutions) ──────────────
+  workflowPage: {
+    headline: ["Hundreds of thousands of pages,", "schedule and quality on one screen"],
+    metrics: [
+      { value: "6",       label: "core processes managed as one" },
+      { value: "99.95%+", label: "Final delivery quality, 2024 National Assembly Library DB" },
+      { value: "Real-time", label: "Progress & quality monitoring with statistics" },
+    ],
+    mockCaption: "Illustrative screen",
+    tabsLabel: "How the 6 core processes are managed",
+    featuresLabel: "Detailed features",
+    benefits: [
+      { headline: "Schedule and staff for every process on one screen", desc: "From project and collection registration to task assignment, permissions, and performance monitoring." },
+      { headline: "Real-time quality aggregation on proven standards",   desc: "Quality indicators per process are gathered live so issues surface early." },
+      { headline: "Automatic handling of loans, returns, and duplicates", desc: "Target materials are registered automatically and duplicates are filtered out." },
+      { headline: "Error-type checks with automatic rejection",          desc: "Record errors per inspection round and manage rework systematically." },
+      { headline: "Delivery verification through round-based dashboards", desc: "Verification on final data plus delivery lists and statistics." },
+      { headline: "Work history and per-process tracking",               desc: "See who did what and when, and track progress by process." },
+    ],
+    compareTitle: "Spreadsheets & messengers vs Tango Workflow",
+    beforeLabel: "Conventional",
+    afterLabel: "Tango Workflow",
+    compareRows: [
+      { item: "Progress",    before: "Staff collect files and tally by hand",         after: "Live dashboard of progress per process" },
+      { item: "Assignment",  before: "Tasks assigned by messenger; permissions hard to manage", after: "Automatic task assignment and permission control" },
+      { item: "Errors",      before: "Error types scattered; history hard to trace",   after: "Standardized error types, auto-rejection, history lookup" },
+      { item: "Delivery",    before: "Lists cross-checked manually before delivery",   after: "Verification plus delivery lists and statistics" },
+    ],
+    demoCta: "Request a demo of this screen",
+  },
+
   solutionsPage: {
     backHome:             "Home",
     contactBtn:           "Contact Us",

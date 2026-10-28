@@ -12,6 +12,7 @@ import type { LucideIcon } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { translations } from "@/lib/translations";
 import type { Translations } from "@/lib/translations";
+import WorkflowShowcase, { WorkflowMock, WorkflowMetrics } from "@/components/WorkflowShowcase";
 
 /* ─────────────────────────────────────────────
    타입 정의
@@ -142,34 +143,7 @@ function SectionContent({ sol, tSol, labels }: { sol: AnySolution; tSol: TSol; l
   if (sol.kind === "workflow") {
     return (
       <div className="flex flex-col gap-8">
-        <div>
-          <SectionLabel accent={accent}>{labels.workflowProcessLabel}</SectionLabel>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mt-4">
-            {tSol.processes.map((p, pi) => {
-              const PIcon = sol.processIcons[pi] ?? Briefcase;
-              return (
-                <div key={p.label} className="rounded-xl p-4 border border-white/6 hover:border-white/12 transition-colors"
-                  style={{ background: "rgba(255,255,255,0.03)" }}>
-                  <div className="flex items-center gap-2.5 mb-2.5">
-                    <div className="w-7 h-7 rounded-lg flex items-center justify-center"
-                      style={{ background: `${accent}20` }}>
-                      <PIcon size={13} style={{ color: accent }} />
-                    </div>
-                    <h3 className="font-bold text-white text-sm">{p.label}</h3>
-                  </div>
-                  <ul className="flex flex-col gap-1">
-                    {p.items.map((item) => (
-                      <li key={item} className="flex items-start gap-1.5 text-xs text-white/50">
-                        <ChevronRight size={11} className="mt-0.5 flex-shrink-0" style={{ color: accent }} />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              );
-            })}
-          </div>
-        </div>
+        <WorkflowShowcase accent={accent} processes={tSol.processes} icons={sol.processIcons} />
         <div>
           <SectionLabel accent={accent}>{labels.workflowAutoLabel}</SectionLabel>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 mt-4">
@@ -421,6 +395,7 @@ export default function SolutionsPage() {
   }, []);
 
   const cta = translations[lang].solutionHome;
+  const wf = translations[lang].workflowPage;
   const activeTitle = solutions.find((s) => s.id === activeId)?.title ?? "";
 
   return (
@@ -491,7 +466,13 @@ export default function SolutionsPage() {
                       <span className="text-white/30 text-xs">#{String(idx + 1).padStart(2, "0")}</span>
                     </div>
                     <h1 className="text-3xl sm:text-4xl font-black text-white mb-2 leading-tight">{sol.title}</h1>
-                    <p className="text-base font-semibold mb-3" style={{ color: sol.accent }}>{tSol.subtitle}</p>
+                    {sol.kind === "workflow" ? (
+                      <p className="text-xl sm:text-2xl font-extrabold mb-3 leading-snug" style={{ color: sol.accent }}>
+                        {wf.headline[0]}<br />{wf.headline[1]}
+                      </p>
+                    ) : (
+                      <p className="text-base font-semibold mb-3" style={{ color: sol.accent }}>{tSol.subtitle}</p>
+                    )}
                     <p className="text-white/60 text-sm leading-relaxed max-w-xl whitespace-pre-line">{tSol.description}</p>
                     {cta.evidence[sol.id] && (
                       <div className="mt-4 inline-flex items-start gap-2 max-w-xl rounded-xl border px-3.5 py-2.5 text-xs font-semibold leading-snug"
@@ -500,8 +481,14 @@ export default function SolutionsPage() {
                         {cta.evidence[sol.id]}
                       </div>
                     )}
+                    {sol.kind === "workflow" && <WorkflowMetrics accent={sol.accent} />}
                   </div>
 
+                  {sol.kind === "workflow" ? (
+                    <div className="w-full md:w-[420px] flex-shrink-0">
+                      <WorkflowMock accent={sol.accent} caption={wf.mockCaption} />
+                    </div>
+                  ) : (
                   <div className="flex-shrink-0 flex items-center justify-center">
                     <div className="relative">
                       <div className="w-28 h-28 rounded-2xl flex items-center justify-center animate-glow"
@@ -514,6 +501,7 @@ export default function SolutionsPage() {
                         style={{ borderColor: sol.accent }} />
                     </div>
                   </div>
+                  )}
                 </div>
               </div>
             </div>
