@@ -6,13 +6,14 @@ import {
   ArrowLeft, GitBranch, PenLine, ScanSearch, Braces,
   Layers, FileText, BrainCircuit, ChevronRight, Check,
   Briefcase, ShieldCheck, BookOpen, ClipboardCheck, Package, Settings,
-  ExternalLink, Gift, MessageCircle,
+  ExternalLink, Gift, MessageCircle, Languages,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { translations } from "@/lib/translations";
 import type { Translations } from "@/lib/translations";
 import WorkflowShowcase, { WorkflowMock, WorkflowMetrics } from "@/components/WorkflowShowcase";
+import TranslatorShowcase from "@/components/TranslatorShowcase";
 import SolutionCompare, { SolutionHeadline, SolutionMetrics, SolutionMock, hasShowcase } from "@/components/SolutionShowcase";
 
 /* ─────────────────────────────────────────────
@@ -44,10 +45,11 @@ type XmlSol       = SolBase & { kind: "xml";       featureIcons: string[] };
 type BatchSol     = SolBase & { kind: "batch";     outputIcons: string[] };
 type PdfSol       = SolBase & { kind: "pdf";       featureIcons: string[] };
 type ExplorerSol  = SolBase & { kind: "explorer";  capabilityIcons: string[] };
+type TranslatorSol = SolBase & { kind: "translator" };
 
 type AnySolution =
   | WorkflowSol | EditorSol | OcrSol | XmlSol
-  | BatchSol | PdfSol | ExplorerSol;
+  | BatchSol | PdfSol | ExplorerSol | TranslatorSol;
 
 /* ─────────────────────────────────────────────
    정적 메타 (아이콘·색상·시각 데이터만)
@@ -130,6 +132,15 @@ const solutions: AnySolution[] = [
     accent: "#818cf8", tag: "indigo",
     capabilityIcons: ["🧠", "🖼️", "📖", "🌐", "🤖"],
   },
+  {
+    kind: "translator",
+    id: "moon-translator", icon: Languages,
+    title: "MooN Translator",
+    badge: "Plug in Program",
+    bg: "linear-gradient(135deg, #0f1f2b 0%, #1f3a4a 35%, #8a5230 68%, #d99a63 100%)",
+    orbs: ["rgba(201,125,74,0.50)", "rgba(224,160,107,0.38)", "rgba(31,58,74,0.45)"],
+    accent: "#e0a06b", tag: "copper",
+  },
 ];
 
 /* ─────────────────────────────────────────────
@@ -159,6 +170,10 @@ function SectionContent({ sol, tSol, labels }: { sol: AnySolution; tSol: TSol; l
         </div>
       </div>
     );
+  }
+
+  if (sol.kind === "translator") {
+    return <TranslatorShowcase accent={accent} />;
   }
 
   if (sol.kind === "editor") {

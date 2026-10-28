@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Check, X, ArrowRight, MessageCircle, Search, Bot } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { translations } from "@/lib/translations";
@@ -157,6 +158,8 @@ function MockBody({ id, accent }: { id: string; accent: string }) {
           </div>
         </div>
       );
+    case "moon-translator":
+      return <Image src="/solutions/translator/translate.webp" alt="MooN Translator" width={1430} height={742} className="w-full h-auto" unoptimized />;
     default:
       return null;
   }
@@ -175,7 +178,7 @@ export function SolutionMock({ id, accent }: { id: string; accent: string }) {
         </div>
         <MockBody id={id} accent={accent} />
       </div>
-      <p className="mt-2 text-center text-[11px] text-white/30">{common.mockCaption}</p>
+      <p className="mt-2 text-center text-[11px] text-white/30">{id === "moon-translator" ? common.realCaption : common.mockCaption}</p>
     </div>
   );
 }

@@ -3,13 +3,13 @@
 import { useState } from "react";
 import Link from "next/link";
 import {
-  GitBranch, PenLine, ScanSearch, Braces, Layers, FileText, BrainCircuit, Wand2,
+  GitBranch, PenLine, ScanSearch, Braces, Layers, FileText, BrainCircuit, Wand2, Languages,
   ArrowRight, ExternalLink, Gift, MessageCircle, AlertCircle, CheckCircle2,
 } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { translations } from "@/lib/translations";
 
-const stepIcons = [Wand2, ScanSearch, PenLine, FileText, Braces, Layers, BrainCircuit];
+const stepIcons = [Wand2, ScanSearch, PenLine, FileText, Braces, Layers, BrainCircuit, Languages];
 const DEMO_URL = "https://ai.tangoinsight.kr";
 
 export default function Technology() {
@@ -110,7 +110,7 @@ export default function Technology() {
         {/* 전 과정 파이프라인 */}
         <div>
           <div className="text-[11px] font-bold tracking-widest text-slate-400 mb-2 text-center">{t.pipelineLabel}</div>
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2">
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2">
             {t.steps.map((step, i) => {
               const Icon = stepIcons[i];
               const on = scenario.steps.includes(i);

@@ -59,6 +59,7 @@ export default function Header() {
         { label: "Tango Batch",      href: "/solutions#tango-batch",      sub: lang === "ko" ? "대량 일괄 처리"     : "Bulk Processing",        icon: Layers,       color: "from-orange-500 to-amber-400" },
         { label: "Tango PDF",        href: "/solutions#tango-pdf",        sub: lang === "ko" ? "TOC 구조화 PDF"    : "Structured PDF",         icon: FileText,     color: "from-rose-600 to-pink-400" },
         { label: "MooN AI Explorer", href: "/solutions#moon-ai-explorer", sub: lang === "ko" ? "AI 탐색·번역"       : "AI Exploration",         icon: BrainCircuit, color: "from-indigo-600 to-blue-400" },
+        { label: "MooN Translator",  href: "/solutions#moon-translator",  sub: lang === "ko" ? "옛 한국어 현대어 번역" : "Historical Korean Translation", icon: Languages,    color: "from-amber-600 to-orange-400" },
       ],
     },
     {

@@ -221,6 +221,7 @@ const ko = {
       { title: "구조화 변환", name: "Tango XML(JSON)",  id: "tango-xml" },
       { title: "대량 일괄 처리", name: "Tango Batch",   id: "tango-batch" },
       { title: "AI 탐색·활용", name: "MooN AI Explorer", id: "moon-ai-explorer" },
+      { title: "현대어 번역",  name: "MooN Translator",  id: "moon-translator" },
     ],
     scenarios: [
       {
@@ -266,6 +267,17 @@ const ko = {
           { value: "XML·JSON",   label: "구조화 출력 지원" },
         ],
         note: "※ 국립중앙도서관 공유서재 공개 기준",
+      },
+      {
+        tab: "고문헌 현대어 번역",
+        problem: "옛 한국어를 현대어로 옮기려면 낯선 어휘와 문장 관계를 일일이 판단해야 하고, 범용 AI 초안은 단어 오독이나 누락이 생길 수 있습니다.",
+        solution: "번역가가 규칙을 세우고 AI 초안을 같은 창에서 수정하면, 수정 기록이 평가 지표와 다음 초안의 개선 데이터로 쌓입니다.",
+        steps: [1, 7],
+        results: [
+          { value: "91.6",  label: "문자 일치도 0–100 (TVI v4)" },
+          { value: "−56%",  label: "주요 어휘 차이 감소 (초기 대비)" },
+        ],
+        note: "※ 20세기 초 소설 7작품 80쪽 기준 TVI 내부 벤치마크",
       },
     ],
     solutionLabel: "이렇게 해결합니다",
@@ -586,12 +598,64 @@ const ko = {
   },
 
   // ── SOLUTIONS PAGE (/solutions) ──────────────
+  translatorPage: {
+    flowLabel: "번역가의 수정이 다음 AI 초안을 개선합니다",
+    flowSteps: [
+      { title: "규칙 설정",        desc: "용어·표기·문체 규칙을 번역가가 정합니다." },
+      { title: "AI 초안",          desc: "규칙에 맞춘 초안을 AI가 생성합니다." },
+      { title: "같은 창에서 수정", desc: "번역가가 원문과 나란히 보며 바로 고칩니다." },
+      { title: "AI 오류 확인",     desc: "AI가 틀린 부분을 번역가가 직접 확인합니다." },
+      { title: "차이 데이터 수집", desc: "수정 기록이 차이 지표와 개선 데이터로 쌓입니다." },
+    ],
+    flowNote: "수정 기록은 적절한 이용 허락을 받은 사례에 한해 AI 모델 미세조정에 활용되며, 일반적인 편집 작업이 모델의 자동 재학습으로 이어지지는 않습니다.",
+    featuresLabel: "핵심 기능",
+    features: [
+      { title: "원문 가져오기",        desc: "TXT·JSON·JSONL·NDJSON을 지원하고, 줄바꿈마다·빈 줄·사용자 구분자 등으로 블록을 나눈 뒤 경계를 직접 보정합니다." },
+      { title: "번역 단위(TU) 그룹화", desc: "문맥이 이어지는 블록을 묶어 지시 대상과 흐름을 유지하고, 번역 요청 미리보기로 실제 입력을 확인합니다." },
+      { title: "다양한 번역 API",      desc: "TVI/Mo文oN 계정과 OpenAI, Google Gemini, Anthropic Claude, OpenAI 호환·로컬 API를 설정할 수 있습니다." },
+      { title: "사람의 번역 우선",     desc: "저장한 사람의 번역이 재생성보다 우선하며, 초안과 수정 내용은 자동 저장되어 처음 초안과 이후 작업이 함께 보존됩니다." },
+      { title: "평가·벤치마크",        desc: "원문과 승인 번역 쌍으로 평가 세트를 만들고, 프로필을 정해 Overview·Compare·Benchmarks·Progress로 개선을 추적합니다." },
+      { title: "저장·내보내기·백업",   desc: "프로젝트 저장과 결과 내보내기, 사용자 데이터 백업·복원으로 작업을 안전하게 이어갑니다." },
+    ],
+    screensLabel: "실제 작업 화면",
+    screens: [
+      { src: "/solutions/translator/translate.webp",  title: "번역 화면",        desc: "원문과 번역문을 나란히 놓고 검토·수정, 저장 후 다음 단위로 이동" },
+      { src: "/solutions/translator/evaluation.webp", title: "초벌 번역 평가",   desc: "여러 번역 초안을 확정 번역과 비교해 지표로 확인" },
+      { src: "/solutions/translator/compare.webp",    title: "차이 비교",        desc: "사람 번역 기준과 후보 번역의 차이를 문장 단위로 표시" },
+      { src: "/solutions/translator/setup.webp",      title: "설정 및 시작",     desc: "프로젝트·번역 API·평가 설정을 한 화면에서 관리" },
+    ],
+    resultsLabel: "평가 결과 — TVI v4와 Gemini 3.1 Pro 비교",
+    resultsHead: ["평가 지표", "초기", "TVI v3", "TVI v4", "Gemini 3.1 Pro"],
+    resultsRows: [
+      { label: "문자 일치도 (0–100)",     values: ["80.3", "87.4", "91.6", "87.7"],   best: 2 },
+      { label: "100어절당 주요 차이 ↓",   values: ["15.09", "8.91", "6.71", "9.79"],  best: 2 },
+      { label: "문장 유사도 (0–1)",       values: ["0.842", "0.898", "0.940", "0.894"], best: 2 },
+      { label: "AI 정확성 평가 (1–5)*",   values: ["2.24", "2.95", "3.23", "3.45"],   best: 3 },
+      { label: "AI 종합 평가 (1–5)*",     values: ["2.25", "2.92", "3.15", "3.35"],   best: 3 },
+    ],
+    resultsSummary: "주요 어휘 차이는 초기 버전 대비 약 56%, v3 대비 약 25% 감소했고, Gemini 대비 약 31% 적습니다.",
+    resultsNotes: [
+      "20세기 초 소설 일곱 작품에서 선정한 80쪽에 대한 TVI 내부 벤치마크이며, 독립적인 인증이 아닙니다.",
+      "평가용 80쪽은 v4 학습에서 제외되었으나 같은 작품의 다른 쪽은 개발에 활용되어, 전혀 새로운 작품이나 시대에 대한 성능을 입증하지는 않습니다.",
+      "일부 참조 번역문은 미정리본이며, 주요 어휘 차이는 확인된 오류나 작업 시간의 감소를 뜻하지 않습니다.",
+      "* AI 평가는 아직 타당성이 검증되지 않은 참고 지표이며, 이 항목에서는 Gemini가 앞섰습니다. 최종 판단은 한국어 전문가가 합니다.",
+    ],
+    principleLabel: "번역의 기준은 전문가가 정합니다",
+    principles: [
+      { title: "기준을 정하는 주체", desc: "옛 한국어를 어떻게 옮길지는 번역자·연구자·관련 기관이 정합니다. 원문 충실도, 어휘, 가독성, 시대적 표현에 대한 이들의 판단이 기준입니다." },
+      { title: "AI는 근거를 제공",   desc: "자동 평가는 전문가가 검토할 근거를 드러낼 뿐이며, 차이가 오류인지 허용할 대안인지의 판단과 최종 승인은 사람이 합니다." },
+      { title: "여러 지표로 확인",   desc: "문자 일치도, 주요 어휘 차이, 문장 유사도를 함께 보고, 새 버전마다 이전 버전과 비교해 새로운 약점이 생기지 않았는지 확인합니다." },
+    ],
+    versionNote: "Windows 클라이언트 v0.01 · TVI(Tamal Vista Insights) 번역 엔진 연동",
+  },
+
   solutionShowcase: {
     common: {
       compareTitle: "기존 방식 vs {name}",
       beforeLabel: "기존 방식",
       demoCta: "이 솔루션 데모 요청",
       mockCaption: "화면 예시 이미지",
+      realCaption: "실제 화면",
     },
     items: {
       "moon-editor": {
@@ -657,6 +721,19 @@ const ko = {
           { item: "목차 연결", before: "페이지마다 목차를 직접 대조", after: "OCR 후 목차 항목과 해당 페이지 이미지를 자동 연결" },
           { item: "검수", before: "목차 오류를 별도 파일로 점검", after: "입력·검수·수정을 하나의 인터페이스에서 처리" },
           { item: "결과 PDF", before: "목차 없는 평면 PDF", after: "다단계 목차 구조가 반영된 북마크 PDF" },
+        ],
+      },
+      "moon-translator": {
+        headline: ["번역가가 기준을 세우고,", "AI는 그 기준에 맞춰 돕습니다"],
+        metrics: [
+          { value: "−56%",  label: "주요 어휘 차이 감소 (초기 버전 대비)" },
+          { value: "91.6",  label: "문자 일치도 0–100 (TVI v4)" },
+          { value: "0.940", label: "문장 유사도 0–1 (TVI v4)" },
+        ],
+        compare: [
+          { item: "번역 기준",  before: "범용 AI의 기본 표현 선호에 번역이 좌우됨",       after: "번역가가 용어·표기·문체 규칙을 정하고 AI가 그 기준을 따름" },
+          { item: "검토 방식",  before: "초안과 수정본이 따로 흩어져 비교가 어려움",       after: "원문·AI 초안·수정본을 한 작업 환경에서 보존하고 비교" },
+          { item: "개선",      before: "수정 내용이 다음 번역에 반영되지 않음",           after: "수정 기록과 차이 지표가 쌓여 다음 AI 초안 개선에 활용" },
         ],
       },
       "moon-ai-explorer": {
@@ -841,6 +918,18 @@ const ko = {
           { name: "영어 번역",            desc: "구축 데이터를 영어로 번역하여\n국제 연구 및 글로벌 서비스 지원" },
           { name: "특정 주제 질의응답",   desc: "RAG 기반 AI로 방대한 문서에서\n원하는 정보를 자연어로 즉시 답변" },
         ],
+      },
+      {
+        subtitle: "전문가 협업 기반 옛 한국어 현대어 번역",
+        description: "옛 한국어를 현대어로 옮기는 전문가 협업 번역 플랫폼.\n원문·AI 초안·번역가 수정본을 하나의 작업 환경에서 다루고,\n수정 기록을 평가 지표와 개선 데이터로 쌓아갑니다.",
+        processes: [] as { label: string; items: string[] }[],
+        automation: [] as string[],
+        editorFeatures: [] as { name: string; stage: string; desc: string }[],
+        ocrFeatures: [] as string[],
+        accuracyLabels: [] as string[],
+        namedFeatures: [] as { name: string; desc: string }[],
+        outputs: [] as { name: string; desc: string }[],
+        capabilities: [] as { name: string; desc: string }[],
       },
     ],
   },
@@ -1164,6 +1253,7 @@ const en: typeof ko = {
       { title: "Structured Output",  name: "Tango XML(JSON)",  id: "tango-xml" },
       { title: "Bulk Processing",    name: "Tango Batch",      id: "tango-batch" },
       { title: "AI Exploration",     name: "MooN AI Explorer", id: "moon-ai-explorer" },
+      { title: "Modern Translation", name: "MooN Translator",  id: "moon-translator" },
     ],
     scenarios: [
       {
@@ -1209,6 +1299,17 @@ const en: typeof ko = {
           { value: "XML·JSON", label: "Structured output formats" },
         ],
         note: "※ As published on the National Library of Korea's Gongyou Seojae",
+      },
+      {
+        tab: "Historical Korean Translation",
+        problem: "Rendering historical Korean in modern Korean demands judgment on unfamiliar words and sentence relations, and general AI drafts can misread or omit words.",
+        solution: "Translators set the rules and revise AI drafts in the same window, and the revisions accumulate as metrics and data to improve the next draft.",
+        steps: [1, 7],
+        results: [
+          { value: "91.6", label: "Character match, 0-100 (TVI v4)" },
+          { value: "-56%", label: "Fewer major differences (vs. initial)" },
+        ],
+        note: "※ TVI internal benchmark on 80 pages from seven early-20th-century novels",
       },
     ],
     solutionLabel: "How we solve it",
@@ -1522,12 +1623,64 @@ const en: typeof ko = {
   },
 
   // ── SOLUTIONS PAGE (/solutions) ──────────────
+  translatorPage: {
+    flowLabel: "Translator revisions improve the next AI draft",
+    flowSteps: [
+      { title: "Set rules",         desc: "Translators define terminology, orthography, and style." },
+      { title: "AI draft",          desc: "AI generates a draft following those rules." },
+      { title: "Revise in place",   desc: "Translators edit right beside the source text." },
+      { title: "Check AI errors",   desc: "Translators confirm where the AI went wrong." },
+      { title: "Collect differences", desc: "Revisions accumulate as difference metrics and improvement data." },
+    ],
+    flowNote: "Revision records are used for model fine-tuning only for cases with appropriate usage permission; ordinary editing does not automatically retrain the model.",
+    featuresLabel: "Key Features",
+    features: [
+      { title: "Source import",          desc: "Supports TXT, JSON, JSONL, and NDJSON; split into blocks by hard return, blank line, or custom delimiter, then adjust boundaries by hand." },
+      { title: "Translation Unit (TU) grouping", desc: "Group contextually linked blocks to keep references and flow, and verify the actual input with the request preview." },
+      { title: "Multiple translation APIs", desc: "Configure TVI/Mo文oN accounts, OpenAI, Google Gemini, Anthropic Claude, and OpenAI-compatible or local APIs." },
+      { title: "Human translation first",  desc: "Saved human translations take priority over regeneration; drafts and revisions are auto-saved so the first draft and later work are preserved together." },
+      { title: "Evaluation & benchmarks",  desc: "Build evaluation sets from source and approved translation pairs and track improvement through Overview, Compare, Benchmarks, and Progress." },
+      { title: "Save, export & backup",    desc: "Save projects, export results, and back up or restore user data to keep working safely." },
+    ],
+    screensLabel: "Actual working screens",
+    screens: [
+      { src: "/solutions/translator/translate.webp",  title: "Translation",          desc: "Review and revise with source and translation side by side, then save and move on" },
+      { src: "/solutions/translator/evaluation.webp", title: "Draft evaluation",     desc: "Compare multiple drafts against the approved translation with metrics" },
+      { src: "/solutions/translator/compare.webp",    title: "Difference comparison", desc: "Show sentence-level differences between the human reference and candidates" },
+      { src: "/solutions/translator/setup.webp",      title: "Setup & start",        desc: "Manage projects, translation APIs, and evaluation settings on one screen" },
+    ],
+    resultsLabel: "Results — TVI v4 vs Gemini 3.1 Pro",
+    resultsHead: ["Metric", "Initial", "TVI v3", "TVI v4", "Gemini 3.1 Pro"],
+    resultsRows: [
+      { label: "Character match (0-100)",         values: ["80.3", "87.4", "91.6", "87.7"],     best: 2 },
+      { label: "Major differences per 100 words ↓", values: ["15.09", "8.91", "6.71", "9.79"],  best: 2 },
+      { label: "Sentence similarity (0-1)",       values: ["0.842", "0.898", "0.940", "0.894"], best: 2 },
+      { label: "AI accuracy rating (1-5)*",       values: ["2.24", "2.95", "3.23", "3.45"],     best: 3 },
+      { label: "AI overall rating (1-5)*",        values: ["2.25", "2.92", "3.15", "3.35"],     best: 3 },
+    ],
+    resultsSummary: "Major lexical differences fell about 56% from the initial version and 25% from v3, and are about 31% fewer than Gemini's.",
+    resultsNotes: [
+      "TVI's internal benchmark on 80 pages selected from seven early-20th-century novels; not an independent certification.",
+      "The 80 evaluation pages were excluded from v4 training, but other pages of the same works were used in development, so this does not prove performance on entirely new works or eras.",
+      "Some reference translations are unedited drafts, and fewer major differences does not mean fewer confirmed errors or less working time.",
+      "* AI ratings are reference metrics whose validity is not yet verified; Gemini led on these. Final judgment rests with Korean-language experts.",
+    ],
+    principleLabel: "Experts set the translation standard",
+    principles: [
+      { title: "Who sets the standard", desc: "Translators, researchers, and institutions decide how historical Korean is rendered; their judgment on fidelity, vocabulary, readability, and period expression is the standard." },
+      { title: "AI supplies evidence",   desc: "Automatic evaluation only surfaces evidence for experts; whether a difference is an error or an acceptable alternative, and final approval, remain human decisions." },
+      { title: "Check with several metrics", desc: "Character match, major differences, and sentence similarity are read together, and each new version is compared with the previous one to catch new weaknesses." },
+    ],
+    versionNote: "Windows client v0.01 · Integrated with the TVI (Tamal Vista Insights) translation engine",
+  },
+
   solutionShowcase: {
     common: {
       compareTitle: "Conventional vs {name}",
       beforeLabel: "Conventional",
       demoCta: "Request a demo of this solution",
       mockCaption: "Illustrative screen",
+      realCaption: "Actual screen",
     },
     items: {
       "moon-editor": {
@@ -1593,6 +1746,19 @@ const en: typeof ko = {
           { item: "TOC linking", before: "Match the table of contents to pages by hand", after: "TOC entries auto-linked to page images after OCR" },
           { item: "Review", before: "TOC errors checked in separate files", after: "Input, review, and correction in a single interface" },
           { item: "Output PDF", before: "Flat PDF without a table of contents", after: "Bookmarked PDF reflecting a multi-level TOC" },
+        ],
+      },
+      "moon-translator": {
+        headline: ["Translators set the standard,", "AI helps meet it"],
+        metrics: [
+          { value: "-56%",  label: "Fewer major lexical differences (vs. initial version)" },
+          { value: "91.6",  label: "Character match, 0-100 (TVI v4)" },
+          { value: "0.940", label: "Sentence similarity, 0-1 (TVI v4)" },
+        ],
+        compare: [
+          { item: "Standard",  before: "Translation shaped by a general model's default style", after: "Translators define terminology, orthography, and style; AI follows" },
+          { item: "Review",    before: "Drafts and revisions scattered and hard to compare",     after: "Source, AI draft, and revision preserved side by side in one workspace" },
+          { item: "Improvement", before: "Revisions never feed back into the next translation",   after: "Revision records and difference metrics accumulate to improve the next AI draft" },
         ],
       },
       "moon-ai-explorer": {
@@ -1777,6 +1943,18 @@ const en: typeof ko = {
           { name: "English Translation",        desc: "Translates built data into English to support international research and global services" },
           { name: "Domain-Specific Q&A",        desc: "RAG-based AI instantly answers natural language queries from vast document collections" },
         ],
+      },
+      {
+        subtitle: "Expert-Led Modern Korean Translation of Historical Texts",
+        description: "A collaborative platform for translating historical Korean into modern Korean.\nSource text, AI drafts, and translator revisions live in one workspace,\nand every revision becomes evaluation data for continuous improvement.",
+        processes: [] as { label: string; items: string[] }[],
+        automation: [] as string[],
+        editorFeatures: [] as { name: string; stage: string; desc: string }[],
+        ocrFeatures: [] as string[],
+        accuracyLabels: [] as string[],
+        namedFeatures: [] as { name: string; desc: string }[],
+        outputs: [] as { name: string; desc: string }[],
+        capabilities: [] as { name: string; desc: string }[],
       },
     ],
   },
