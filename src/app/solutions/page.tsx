@@ -13,6 +13,7 @@ import { useLanguage } from "@/context/LanguageContext";
 import { translations } from "@/lib/translations";
 import type { Translations } from "@/lib/translations";
 import WorkflowShowcase, { WorkflowMock, WorkflowMetrics } from "@/components/WorkflowShowcase";
+import SolutionCompare, { SolutionHeadline, SolutionMetrics, SolutionMock, hasShowcase } from "@/components/SolutionShowcase";
 
 /* ─────────────────────────────────────────────
    타입 정의
@@ -470,6 +471,10 @@ export default function SolutionsPage() {
                       <p className="text-xl sm:text-2xl font-extrabold mb-3 leading-snug" style={{ color: sol.accent }}>
                         {wf.headline[0]}<br />{wf.headline[1]}
                       </p>
+                    ) : hasShowcase(sol.id) ? (
+                      <p className="text-xl sm:text-2xl font-extrabold mb-3 leading-snug" style={{ color: sol.accent }}>
+                        <SolutionHeadline id={sol.id} />
+                      </p>
                     ) : (
                       <p className="text-base font-semibold mb-3" style={{ color: sol.accent }}>{tSol.subtitle}</p>
                     )}
@@ -482,11 +487,16 @@ export default function SolutionsPage() {
                       </div>
                     )}
                     {sol.kind === "workflow" && <WorkflowMetrics accent={sol.accent} />}
+                    {sol.kind !== "workflow" && hasShowcase(sol.id) && <SolutionMetrics id={sol.id} accent={sol.accent} />}
                   </div>
 
                   {sol.kind === "workflow" ? (
                     <div className="w-full md:w-[420px] flex-shrink-0">
                       <WorkflowMock accent={sol.accent} caption={wf.mockCaption} />
+                    </div>
+                  ) : hasShowcase(sol.id) ? (
+                    <div className="w-full md:w-[420px] flex-shrink-0">
+                      <SolutionMock id={sol.id} accent={sol.accent} />
                     </div>
                   ) : (
                   <div className="flex-shrink-0 flex items-center justify-center">
@@ -510,6 +520,7 @@ export default function SolutionsPage() {
             <div className="bg-slate-950" style={{ borderTop: `1px solid ${sol.accent}20` }}>
               <div className="max-w-7xl mx-auto px-6 sm:px-10 py-10">
                 <SectionContent sol={sol} tSol={tSol} labels={labels} />
+                {sol.kind !== "workflow" && <SolutionCompare id={sol.id} name={sol.title} accent={sol.accent} />}
 
                 {/* CTA */}
                 <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 rounded-2xl px-6 py-5 border border-white/8"

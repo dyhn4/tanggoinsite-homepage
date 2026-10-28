@@ -586,6 +586,95 @@ const ko = {
   },
 
   // ── SOLUTIONS PAGE (/solutions) ──────────────
+  solutionShowcase: {
+    common: {
+      compareTitle: "기존 방식 vs {name}",
+      beforeLabel: "기존 방식",
+      demoCta: "이 솔루션 데모 요청",
+      mockCaption: "화면 예시 이미지",
+    },
+    items: {
+      "moon-editor": {
+        headline: ["오류 수정은 한 번에,", "고문헌 편집은 정확하게"],
+        metrics: [
+          { value: "군집검수", label: "같은 모양 글자를 한 번에 수정" },
+          { value: "1~4단", label: "고문헌 단 구성 문단 정제" },
+          { value: "가로·세로", label: "쓰기 방향 혼용 문서 대응" },
+        ],
+        compare: [
+          { item: "교정 방식", before: "같은 오류를 글자마다 하나씩 수정", after: "같은 모양으로 인식된 글자를 모아 한 번에 수정(군집검수)" },
+          { item: "고문헌 편집", before: "단·쓰기 방향이 섞인 문서의 문단 구성이 어려움", after: "가로·세로 혼용, 1~4단 고문헌에 맞춘 문단 정제" },
+          { item: "표·그림", before: "표·그림 영역을 수작업으로 따로 정리", after: "표·그림 영역을 자동 감지해 메타데이터와 함께 구조화" },
+        ],
+      },
+      "moon-ai-ocr": {
+        headline: ["고문헌도 스스로 학습해", "더 정확하게 읽어냅니다"],
+        metrics: [
+          { value: "90%+", label: "고문서·타자체·필기체 인식률" },
+          { value: "F1 0.964", label: "고문헌 기준 평균 인식 정확도" },
+          { value: "자기학습", label: "데이터가 쌓이면 엔진이 자동 업데이트" },
+        ],
+        compare: [
+          { item: "인식 대상", before: "한자·옛 글자·필기체에서 정확도가 크게 떨어짐", after: "고문서·국한문 혼용·타자체·필기체까지 90% 이상 인식" },
+          { item: "성능 개선", before: "엔진 성능은 그대로, 같은 오류가 반복됨", after: "학습 데이터가 쌓이면 엔진이 스스로 성능을 업데이트" },
+          { item: "결과물", before: "텍스트만 얻고 후처리를 따로 해야 함", after: "데이터셋(이미지·JSON·XML)과 OCR PDF를 자동 생성" },
+        ],
+      },
+      "tango-xml": {
+        headline: ["수작업 태깅은 줄이고,", "바로 쓸 수 있는 데이터로"],
+        metrics: [
+          { value: "90%", label: "수작업 태깅 시간 절감" },
+          { value: "XML·JSON", label: "표준 구조화 형식으로 출력" },
+          { value: "자동", label: "요소 분류와 XML Tagging" },
+        ],
+        compare: [
+          { item: "태깅", before: "사람이 요소마다 직접 태그를 지정", after: "AI가 요소를 자동 분류해 XML 태그 지정(수작업 시간 90% 절감)" },
+          { item: "데이터 형식", before: "기관·시스템마다 형식이 달라 재가공이 필요", after: "DTD/XSD 기반 표준 XML 구조로 자동 변환" },
+          { item: "활용", before: "DB 적재를 위한 가공 작업이 별도로 필요", after: "의미 기반 JSON으로 API 연계와 DB 적재가 즉시 가능" },
+        ],
+      },
+      "tango-batch": {
+        headline: ["수십만 페이지도", "한 번에, 원스톱으로"],
+        metrics: [
+          { value: "수십만 면", label: "한 번에 일괄 처리" },
+          { value: "6종", label: "출력물 유형을 원스톱 생성" },
+          { value: "자동 리포트", label: "처리 건수·인식률·오류율 통계" },
+        ],
+        compare: [
+          { item: "처리 방식", before: "파일을 나누어 반복 작업", after: "수십만 페이지를 한 번에 일괄 처리" },
+          { item: "산출물", before: "형식별로 각각 변환 작업을 진행", after: "XML·JSON·TXT, 이미지 추출, Hidden Text PDF 등을 원스톱 생성" },
+          { item: "현황 파악", before: "처리 통계를 따로 집계", after: "처리 건수·인식률·오류율을 자동 리포트로 생성" },
+        ],
+      },
+      "tango-pdf": {
+        headline: ["목차가 살아있는", "검색 가능한 PDF를 자동으로"],
+        metrics: [
+          { value: "4가지", label: "목차 구축·검수 핵심 기능" },
+          { value: "북마크 PDF", label: "검색 가능한 구조화 PDF 자동 생성" },
+          { value: "공식 인증", label: "국회도서관 원문DB 주관기관 인증 SW" },
+        ],
+        compare: [
+          { item: "목차 연결", before: "페이지마다 목차를 직접 대조", after: "OCR 후 목차 항목과 해당 페이지 이미지를 자동 연결" },
+          { item: "검수", before: "목차 오류를 별도 파일로 점검", after: "입력·검수·수정을 하나의 인터페이스에서 처리" },
+          { item: "결과 PDF", before: "목차 없는 평면 PDF", after: "다단계 목차 구조가 반영된 북마크 PDF" },
+        ],
+      },
+      "moon-ai-explorer": {
+        headline: ["쌓아둔 아카이브를", "질문하듯 찾고 활용합니다"],
+        metrics: [
+          { value: "VLM", label: "텍스트·이미지·영상을 함께 이해" },
+          { value: "5가지", label: "AI 핵심 역량" },
+          { value: "질의·번역", label: "대화하듯 정보를 찾고 번역" },
+        ],
+        compare: [
+          { item: "대상 자료", before: "텍스트와 이미지를 따로 다룸", after: "텍스트·이미지·동영상을 동시에 이해하는 VLM" },
+          { item: "활용", before: "구축한 아카이브를 보관하는 데 그침", after: "질의·번역·요약으로 아카이브의 가치를 극대화" },
+          { item: "정보 탐색", before: "필요한 문서를 직접 찾아 읽어야 함", after: "대화하듯 필요한 정보를 찾아냄" },
+        ],
+      },
+    } as Record<string, { headline: string[]; metrics: { value: string; label: string }[]; compare: { item: string; before: string; after: string }[] }>,
+  },
+
   workflowPage: {
     headline: ["수십만 면 구축,", "일정과 품질을 한 화면에서"],
     metrics: [
@@ -1433,6 +1522,95 @@ const en: typeof ko = {
   },
 
   // ── SOLUTIONS PAGE (/solutions) ──────────────
+  solutionShowcase: {
+    common: {
+      compareTitle: "Conventional vs {name}",
+      beforeLabel: "Conventional",
+      demoCta: "Request a demo of this solution",
+      mockCaption: "Illustrative screen",
+    },
+    items: {
+      "moon-editor": {
+        headline: ["Fix errors in one pass,", "edit heritage text accurately"],
+        metrics: [
+          { value: "Cluster Review", label: "Fix same-shaped characters at once" },
+          { value: "1-4 columns", label: "Paragraph refinement for classical layouts" },
+          { value: "H & V text", label: "Mixed writing directions supported" },
+        ],
+        compare: [
+          { item: "Correction", before: "Fix the same error one character at a time", after: "Group characters recognized alike and fix them at once" },
+          { item: "Heritage text", before: "Paragraphs hard to build with mixed columns and directions", after: "Paragraph refinement for mixed-direction, 1-4 column documents" },
+          { item: "Tables & figures", before: "Tables and figures organized by hand", after: "Auto-detected and structured with metadata" },
+        ],
+      },
+      "moon-ai-ocr": {
+        headline: ["Learns from your heritage documents", "and reads them more accurately"],
+        metrics: [
+          { value: "90%+", label: "Recognition on classical, typed, and handwritten text" },
+          { value: "F1 0.964", label: "Average accuracy on heritage documents" },
+          { value: "Self-learning", label: "Engine updates itself as data accumulates" },
+        ],
+        compare: [
+          { item: "Targets", before: "Accuracy drops on Chinese characters, archaic script, handwriting", after: "90%+ on classical, mixed-script, typed, and handwritten documents" },
+          { item: "Improvement", before: "Engine stays the same; the same errors repeat", after: "Engine updates itself as training data accumulates" },
+          { item: "Output", before: "Text only; post-processing done separately", after: "Datasets (image, JSON, XML) and OCR PDF generated automatically" },
+        ],
+      },
+      "tango-xml": {
+        headline: ["Less manual tagging,", "data you can use right away"],
+        metrics: [
+          { value: "90%", label: "Less manual tagging time" },
+          { value: "XML·JSON", label: "Standard structured formats" },
+          { value: "Auto", label: "Element classification and XML tagging" },
+        ],
+        compare: [
+          { item: "Tagging", before: "People tag each element by hand", after: "AI classifies elements and assigns XML tags (90% less manual time)" },
+          { item: "Data format", before: "Formats differ per institution; rework needed", after: "Automatic conversion to standard DTD/XSD-based XML" },
+          { item: "Reuse", before: "Extra processing needed before loading into a DB", after: "Semantic JSON ready for API integration and DB loading" },
+        ],
+      },
+      "tango-batch": {
+        headline: ["Hundreds of thousands of pages,", "in one go"],
+        metrics: [
+          { value: "100Ks of pages", label: "Processed in a single batch" },
+          { value: "6 types", label: "Output formats in one stop" },
+          { value: "Auto report", label: "Counts, accuracy, and error-rate statistics" },
+        ],
+        compare: [
+          { item: "Processing", before: "Split files and repeat the work", after: "Process hundreds of thousands of pages at once" },
+          { item: "Output", before: "Convert to each format separately", after: "XML/JSON/TXT, image extraction, Hidden Text PDF in one stop" },
+          { item: "Reporting", before: "Compile statistics separately", after: "Counts, accuracy, and error rates reported automatically" },
+        ],
+      },
+      "tango-pdf": {
+        headline: ["Searchable PDFs", "with a living table of contents"],
+        metrics: [
+          { value: "4 tools", label: "Core TOC production and review functions" },
+          { value: "Bookmark PDF", label: "Searchable structured PDF generated automatically" },
+          { value: "Certified", label: "Official software of the National Assembly Library DB project" },
+        ],
+        compare: [
+          { item: "TOC linking", before: "Match the table of contents to pages by hand", after: "TOC entries auto-linked to page images after OCR" },
+          { item: "Review", before: "TOC errors checked in separate files", after: "Input, review, and correction in a single interface" },
+          { item: "Output PDF", before: "Flat PDF without a table of contents", after: "Bookmarked PDF reflecting a multi-level TOC" },
+        ],
+      },
+      "moon-ai-explorer": {
+        headline: ["Ask your archive questions", "and put it to work"],
+        metrics: [
+          { value: "VLM", label: "Understands text, images, and video together" },
+          { value: "5", label: "Core AI capabilities" },
+          { value: "Q&A, Translate", label: "Find and translate through conversation" },
+        ],
+        compare: [
+          { item: "Materials", before: "Text and images handled separately", after: "Vision-Language Model understanding text, images, and video" },
+          { item: "Use", before: "Digital archives are built, then just stored", after: "Maximize archive value with Q&A, translation, and summaries" },
+          { item: "Discovery", before: "Find and read documents yourself", after: "Find what you need through conversation" },
+        ],
+      },
+    } as Record<string, { headline: string[]; metrics: { value: string; label: string }[]; compare: { item: string; before: string; after: string }[] }>,
+  },
+
   workflowPage: {
     headline: ["Hundreds of thousands of pages,", "schedule and quality on one screen"],
     metrics: [
