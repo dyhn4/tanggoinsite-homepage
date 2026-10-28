@@ -158,6 +158,21 @@ function MockBody({ id, accent }: { id: string; accent: string }) {
           </div>
         </div>
       );
+    case "tango-image":
+      return (
+        <div className="grid grid-cols-2 gap-3 p-4">
+          <div className="rounded-lg bg-white/[0.04] border border-white/8 p-3 flex items-center justify-center overflow-hidden h-36">
+            <div className="w-24 rounded-sm bg-white/10 border border-white/10 p-2.5 flex flex-col gap-1.5" style={{ transform: "rotate(-7deg) translateX(-4px)", boxShadow: "inset -10px 0 14px rgba(0,0,0,0.35)" }}>
+              {[90, 70, 82, 60, 78, 66].map((w, i) => <Line key={i} w={`${w}%`} c="bg-white/25" />)}
+            </div>
+          </div>
+          <div className="rounded-lg border p-3 flex items-center justify-center overflow-hidden h-36" style={{ background: `${accent}12`, borderColor: `${accent}40` }}>
+            <div className="w-24 rounded-sm bg-white/15 border border-white/15 p-2.5 flex flex-col gap-1.5">
+              {[90, 70, 82, 60, 78, 66].map((w, i) => <Line key={i} w={`${w}%`} c="bg-white/45" />)}
+            </div>
+          </div>
+        </div>
+      );
     case "moon-translator":
       return <Image src="/solutions/translator/translate.webp" alt="MooN Translator" width={1430} height={742} className="w-full h-auto" unoptimized />;
     default:

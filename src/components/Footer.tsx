@@ -7,12 +7,14 @@ import { translations } from "@/lib/translations";
 
 const solutions = [
   { label: "Tango Workflow",  href: "/solutions#tango-workflow" },
-  { label: "MooN Editor",     href: "/solutions#moon-editor"   },
+  { label: "Tango Image",     href: "/solutions#tango-image"   },
   { label: "MooN AI OCR",     href: "/solutions#moon-ai-ocr"   },
+  { label: "MooN Editor",     href: "/solutions#moon-editor"   },
+  { label: "Tango PDF",       href: "/solutions#tango-pdf"     },
   { label: "Tango XML(JSON)", href: "/solutions#tango-xml"     },
   { label: "Tango Batch",     href: "/solutions#tango-batch"   },
-  { label: "Tango PDF",        href: "/solutions#tango-pdf" },
   { label: "MooN AI Explorer",href: "/solutions#moon-ai-explorer" },
+  { label: "MooN Translator", href: "/solutions#moon-translator" },
 ];
 
 export default function Footer() {

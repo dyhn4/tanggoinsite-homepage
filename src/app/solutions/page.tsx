@@ -6,7 +6,7 @@ import {
   ArrowLeft, GitBranch, PenLine, ScanSearch, Braces,
   Layers, FileText, BrainCircuit, ChevronRight, Check,
   Briefcase, ShieldCheck, BookOpen, ClipboardCheck, Package, Settings,
-  ExternalLink, Gift, MessageCircle, Languages,
+  ExternalLink, Gift, MessageCircle, Languages, Wand2,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
@@ -46,10 +46,18 @@ type BatchSol     = SolBase & { kind: "batch";     outputIcons: string[] };
 type PdfSol       = SolBase & { kind: "pdf";       featureIcons: string[] };
 type ExplorerSol  = SolBase & { kind: "explorer";  capabilityIcons: string[] };
 type TranslatorSol = SolBase & { kind: "translator" };
+type ImageSol     = SolBase & { kind: "image";     featureIcons: string[] };
 
 type AnySolution =
-  | WorkflowSol | EditorSol | OcrSol | XmlSol
+  | WorkflowSol | ImageSol | EditorSol | OcrSol | XmlSol
   | BatchSol | PdfSol | ExplorerSol | TranslatorSol;
+
+/* 화면 순서 = 메인 솔루션 섹션의 공정 순서. 번역 데이터는 id로 찾는다. */
+const TR_INDEX: Record<string, number> = {
+  "tango-workflow": 0, "moon-editor": 1, "moon-ai-ocr": 2, "tango-xml": 3,
+  "tango-batch": 4, "tango-pdf": 5, "moon-ai-explorer": 6, "moon-translator": 7,
+  "tango-image": 8,
+};
 
 /* ─────────────────────────────────────────────
    정적 메타 (아이콘·색상·시각 데이터만)
@@ -68,14 +76,14 @@ const solutions: AnySolution[] = [
     processIcons: PROCESS_ICONS,
   },
   {
-    kind: "editor",
-    id: "moon-editor", icon: PenLine,
-    title: "MooN Editor",
+    kind: "image",
+    id: "tango-image", icon: Wand2,
+    title: "Tango Image",
     badge: "Plug in Program",
-    bg: "linear-gradient(135deg, #1a0533 0%, #4c1d95 35%, #7c3aed 65%, #a855f7 100%)",
-    orbs: ["rgba(124,58,237,0.55)", "rgba(168,85,247,0.40)", "rgba(196,181,253,0.20)"],
-    accent: "#c084fc", tag: "violet",
-    featureIcons: ["🔍", "🎯", "✏️", "📝", "🗂️"],
+    bg: "linear-gradient(135deg, #1f1a00 0%, #5c3a0a 35%, #b7791f 65%, #f4c542 100%)",
+    orbs: ["rgba(202,138,4,0.50)", "rgba(250,204,21,0.36)", "rgba(120,53,15,0.45)"],
+    accent: "#facc15", tag: "gold",
+    featureIcons: ["📐", "🧹", "🎯", "🌓"],
   },
   {
     kind: "ocr",
@@ -91,6 +99,26 @@ const solutions: AnySolution[] = [
       { value: "95.7%", width: "95" },
       { value: "92.6%", width: "92" },
     ],
+  },
+  {
+    kind: "editor",
+    id: "moon-editor", icon: PenLine,
+    title: "MooN Editor",
+    badge: "Plug in Program",
+    bg: "linear-gradient(135deg, #1a0533 0%, #4c1d95 35%, #7c3aed 65%, #a855f7 100%)",
+    orbs: ["rgba(124,58,237,0.55)", "rgba(168,85,247,0.40)", "rgba(196,181,253,0.20)"],
+    accent: "#c084fc", tag: "violet",
+    featureIcons: ["🔍", "🎯", "✏️", "📝", "🗂️"],
+  },
+  {
+    kind: "pdf",
+    id: "tango-pdf", icon: FileText,
+    title: "Tango PDF",
+    badge: "Plug in Program",
+    bg: "linear-gradient(135deg, #1c0008 0%, #881337 35%, #e11d48 65%, #fb7185 100%)",
+    orbs: ["rgba(225,29,72,0.55)", "rgba(251,113,133,0.40)", "rgba(253,164,175,0.25)"],
+    accent: "#fb7185", tag: "rose",
+    featureIcons: ["🔗", "📑", "📖", "🗂️"],
   },
   {
     kind: "xml",
@@ -111,16 +139,6 @@ const solutions: AnySolution[] = [
     orbs: ["rgba(194,65,12,0.55)", "rgba(251,146,60,0.40)", "rgba(253,186,116,0.25)"],
     accent: "#fb923c", tag: "orange",
     outputIcons: ["📊", "🖼️", "📑", "📚", "📈", "📰"],
-  },
-  {
-    kind: "pdf",
-    id: "tango-pdf", icon: FileText,
-    title: "Tango PDF",
-    badge: "Plug in Program",
-    bg: "linear-gradient(135deg, #1c0008 0%, #881337 35%, #e11d48 65%, #fb7185 100%)",
-    orbs: ["rgba(225,29,72,0.55)", "rgba(251,113,133,0.40)", "rgba(253,164,175,0.25)"],
-    accent: "#fb7185", tag: "rose",
-    featureIcons: ["🔗", "📑", "📖", "🗂️"],
   },
   {
     kind: "explorer",
@@ -174,6 +192,24 @@ function SectionContent({ sol, tSol, labels }: { sol: AnySolution; tSol: TSol; l
 
   if (sol.kind === "translator") {
     return <TranslatorShowcase accent={accent} />;
+  }
+
+  if (sol.kind === "image") {
+    return (
+      <div>
+        <SectionLabel accent={accent}>{labels.coreFeaturesLabel}</SectionLabel>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
+          {tSol.namedFeatures.map((f, fi) => (
+            <div key={f.name} className="rounded-xl p-5 border border-white/6 hover:border-white/15 hover:-translate-y-0.5 transition-all"
+              style={{ background: "rgba(255,255,255,0.03)" }}>
+              <span className="text-3xl block mb-3">{sol.featureIcons[fi] ?? "✨"}</span>
+              <h3 className="font-bold text-white mb-1.5 text-sm">{f.name}</h3>
+              <p className="text-xs text-white/50 leading-relaxed">{f.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
   }
 
   if (sol.kind === "editor") {
@@ -454,7 +490,7 @@ export default function SolutionsPage() {
       {/* 솔루션 섹션 */}
       {solutions.map((sol, idx) => {
         const Icon = sol.icon;
-        const tSol = tSolutions[idx];
+        const tSol = tSolutions[TR_INDEX[sol.id]];
         return (
           <section key={sol.id} id={sol.id} className="relative overflow-hidden">
 

@@ -723,6 +723,19 @@ const ko = {
           { item: "결과 PDF", before: "목차 없는 평면 PDF", after: "다단계 목차 구조가 반영된 북마크 PDF" },
         ],
       },
+      "tango-image": {
+        headline: ["스캔 이미지부터 바로잡아", "OCR 인식률을 끌어올립니다"],
+        metrics: [
+          { value: "자동 보정", label: "기울기·그림자·곡률 교정" },
+          { value: "3종",       label: "기울기·배경/잡티·중앙정렬 자동 처리" },
+          { value: "OCR 전처리", label: "인식률 극대화를 위한 첫 단계" },
+        ],
+        compare: [
+          { item: "기울기·정렬", before: "삐뚤게 스캔된 페이지를 하나씩 수작업으로 바로잡음", after: "기울기와 중앙정렬을 자동으로 보정" },
+          { item: "배경·잡티",   before: "얼룩과 잡티가 남은 채 OCR에 입력되어 오인식이 늘어남", after: "배경과 잡티를 제거해 문자가 선명한 이미지로 전달" },
+          { item: "곡률·그림자", before: "제본 부분의 휘어짐과 그림자 때문에 인식률이 떨어짐", after: "곡률과 그림자까지 교정해 OCR 인식률을 극대화" },
+        ],
+      },
       "moon-translator": {
         headline: ["번역가가 기준을 세우고,", "AI는 그 기준에 맞춰 돕습니다"],
         metrics: [
@@ -928,6 +941,23 @@ const ko = {
         ocrFeatures: [] as string[],
         accuracyLabels: [] as string[],
         namedFeatures: [] as { name: string; desc: string }[],
+        outputs: [] as { name: string; desc: string }[],
+        capabilities: [] as { name: string; desc: string }[],
+      },
+      {
+        subtitle: "스캔 이미지 자동 보정 프로그램",
+        description: "스캔·촬영 이미지의 기울기, 그림자, 곡률을 자동으로 교정해 OCR 인식률을 높이는 전처리 프로그램.\n문자 인식에 들어가기 전, 이미지 품질부터 먼저 맞춥니다.",
+        processes: [] as { label: string; items: string[] }[],
+        automation: [] as string[],
+        editorFeatures: [] as { name: string; stage: string; desc: string }[],
+        ocrFeatures: [] as string[],
+        accuracyLabels: [] as string[],
+        namedFeatures: [
+          { name: "자동 기울기 보정",  desc: "비스듬히 스캔된 페이지를 자동으로 바로잡아 문자 인식 오류를 줄입니다" },
+          { name: "배경/잡티 제거",    desc: "배경 얼룩과 잡티를 제거해 문자가 선명하게 드러나도록 정리합니다" },
+          { name: "자동 중앙정렬",     desc: "페이지 내용을 자동으로 중앙에 맞춰 일관된 이미지로 정리합니다" },
+          { name: "곡률·그림자 교정",  desc: "제본 부분의 휘어짐과 그림자를 교정해 OCR 인식률을 극대화합니다" },
+        ],
         outputs: [] as { name: string; desc: string }[],
         capabilities: [] as { name: string; desc: string }[],
       },
@@ -1748,6 +1778,19 @@ const en: typeof ko = {
           { item: "Output PDF", before: "Flat PDF without a table of contents", after: "Bookmarked PDF reflecting a multi-level TOC" },
         ],
       },
+      "tango-image": {
+        headline: ["Fix the scan first,", "and lift OCR recognition rates"],
+        metrics: [
+          { value: "Auto-correct", label: "Tilt, shadow, and curvature fixes" },
+          { value: "3 types", label: "Tilt, background/noise, centering handled automatically" },
+          { value: "OCR pre-processing", label: "The first step to maximize recognition" },
+        ],
+        compare: [
+          { item: "Tilt & alignment", before: "Skewed pages straightened by hand, one by one", after: "Tilt and centering corrected automatically" },
+          { item: "Background & noise", before: "Stains and specks go into OCR and raise misreads", after: "Background and noise removed so characters are clear" },
+          { item: "Curvature & shadow", before: "Bending and shadows near the binding lower recognition", after: "Curvature and shadows corrected to maximize OCR recognition" },
+        ],
+      },
       "moon-translator": {
         headline: ["Translators set the standard,", "AI helps meet it"],
         metrics: [
@@ -1953,6 +1996,23 @@ const en: typeof ko = {
         ocrFeatures: [] as string[],
         accuracyLabels: [] as string[],
         namedFeatures: [] as { name: string; desc: string }[],
+        outputs: [] as { name: string; desc: string }[],
+        capabilities: [] as { name: string; desc: string }[],
+      },
+      {
+        subtitle: "Automatic Scan Image Correction",
+        description: "A pre-processing program that automatically corrects tilt, shadows, and curvature in scanned or photographed images to raise OCR recognition rates.\nIt gets image quality right before text recognition begins.",
+        processes: [] as { label: string; items: string[] }[],
+        automation: [] as string[],
+        editorFeatures: [] as { name: string; stage: string; desc: string }[],
+        ocrFeatures: [] as string[],
+        accuracyLabels: [] as string[],
+        namedFeatures: [
+          { name: "Auto Tilt Correction",     desc: "Straightens skewed pages automatically to reduce recognition errors" },
+          { name: "Background/Noise Removal", desc: "Removes stains and specks so characters stand out clearly" },
+          { name: "Auto Centering",           desc: "Centers page content automatically for consistent images" },
+          { name: "Curvature & Shadow Fix",   desc: "Corrects bending and shadows near the binding to maximize OCR recognition" },
+        ],
         outputs: [] as { name: string; desc: string }[],
         capabilities: [] as { name: string; desc: string }[],
       },
