@@ -441,6 +441,63 @@ export default function SolutionsPage() {
 
   const [activeId, setActiveId] = useState("tango-workflow");
   const observerRef = useRef<IntersectionObserver | null>(null);
+  const tabsRef = useRef<HTMLDivElement>(null);
+  const dragMoved = useRef(false);
+
+  // 상단 탭: 마우스 휠·드래그로 좌우 이동
+  useEffect(() => {
+    const el = tabsRef.current;
+    if (!el) return;
+
+    const onWheel = (e: WheelEvent) => {
+      if (el.scrollWidth <= el.clientWidth) return;
+      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+        e.preventDefault();
+        el.scrollLeft += e.deltaY;
+      }
+    };
+
+    let startX = 0;
+    let startLeft = 0;
+    let down = false;
+    const onDown = (e: PointerEvent) => {
+      if (e.pointerType !== "mouse") return;
+      down = true;
+      dragMoved.current = false;
+      startX = e.clientX;
+      startLeft = el.scrollLeft;
+    };
+    const onMove = (e: PointerEvent) => {
+      if (!down) return;
+      const dx = e.clientX - startX;
+      if (Math.abs(dx) > 4) dragMoved.current = true;
+      if (dragMoved.current) el.scrollLeft = startLeft - dx;
+    };
+    const onUp = () => {
+      down = false;
+      setTimeout(() => { dragMoved.current = false; }, 0);
+    };
+
+    el.addEventListener("wheel", onWheel, { passive: false });
+    el.addEventListener("pointerdown", onDown);
+    window.addEventListener("pointermove", onMove);
+    window.addEventListener("pointerup", onUp);
+    return () => {
+      el.removeEventListener("wheel", onWheel);
+      el.removeEventListener("pointerdown", onDown);
+      window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("pointerup", onUp);
+    };
+  }, []);
+
+  // 현재 섹션 탭이 보이도록 자동 이동
+  useEffect(() => {
+    const el = tabsRef.current;
+    const btn = el?.querySelector<HTMLElement>(`[data-tab="${activeId}"]`);
+    if (!el || !btn) return;
+    const target = btn.offsetLeft - (el.clientWidth - btn.offsetWidth) / 2;
+    el.scrollTo({ left: Math.max(0, target), behavior: "smooth" });
+  }, [activeId]);
 
   useEffect(() => {
     observerRef.current = new IntersectionObserver(
@@ -472,13 +529,15 @@ export default function SolutionsPage() {
             {labels.backHome}
           </Link>
 
-          <div className="flex items-center gap-1 overflow-x-auto scrollbar-hide flex-1 justify-center">
+          <div ref={tabsRef} className="relative overflow-x-auto scrollbar-hide flex-1 min-w-0 cursor-grab active:cursor-grabbing select-none">
+            <div className="flex items-center gap-1 w-max mx-auto">
             {solutions.map((s) => {
               const Icon = s.icon;
               return (
                 <button
                   key={s.id}
-                  onClick={() => document.getElementById(s.id)?.scrollIntoView({ behavior: "smooth" })}
+                  data-tab={s.id}
+                  onClick={() => { if (dragMoved.current) return; document.getElementById(s.id)?.scrollIntoView({ behavior: "smooth" }); }}
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all duration-200 ${
                     activeId === s.id ? "text-white" : "text-white/40 hover:text-white/70"
                   }`}
@@ -489,6 +548,7 @@ export default function SolutionsPage() {
                 </button>
               );
             })}
+            </div>
           </div>
 
           <span className="text-sm font-black tracking-tight whitespace-nowrap" style={{ fontFamily: "'Sora', sans-serif" }}>
