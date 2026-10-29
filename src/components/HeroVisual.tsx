@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { translations } from "@/lib/translations";
 
@@ -108,23 +108,35 @@ export default function HeroVisual() {
         {/* 1) AI OCR */}
         <SlideShell active={idx === 0} href={HREFS[0]} cta={hs.ocrCta}>
           <WindowBar path="heritage-ai.scan / live" />
-          <Skeleton rows={4} />
-          <div className="relative flex-1 min-h-[14rem] rounded-2xl overflow-hidden border border-white/10 bg-slate-950/45">
-            <div className="absolute inset-0 p-5 text-slate-300/80 leading-8 text-lg">
-              訓民正音 國之語音 異乎中國
-              <br />
-              與文字不相流通 故愚民有所欲言
-              <br />
-              而終不得伸其情者多矣
-              <br />
-              予爲此憫然 新制二十八字
+          <div className="text-white font-bold text-base mb-3">{hs.ocr.title}</div>
+          <div className="relative flex-1 min-h-[19rem] rounded-2xl overflow-hidden border border-white/10 bg-slate-950/45 flex flex-col">
+            <div className="relative flex-1 p-3">
+              <div className="grid grid-cols-2 gap-2.5 h-full">
+                {hs.ocr.types.map((label, i) => (
+                  <div key={label} className="relative rounded-lg overflow-hidden border border-white/15 shadow-lg shadow-black/30 min-h-[6.5rem]">
+                    <Image src={`/hero/ocr-type-${i + 1}.webp`} alt={label} fill sizes="240px" className="object-cover" unoptimized />
+                    <div className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-2 px-2 py-1 bg-gradient-to-t from-black/80 to-transparent">
+                      <span className="text-[11px] font-bold text-white">{label}</span>
+                      <span
+                        className={`inline-flex items-center gap-0.5 rounded-full bg-emerald-400/90 text-slate-900 text-[9px] font-black px-1.5 py-0.5 transition-all duration-500 ${idx === 0 ? "opacity-100 scale-100" : "opacity-0 scale-75"}`}
+                        style={{ transitionDelay: `${700 + i * 450}ms` }}
+                      >
+                        <Check size={9} strokeWidth={3} />
+                        {hs.ocr.done}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="absolute inset-x-3 top-3 h-14 rounded bg-gradient-to-b from-sky-400/30 to-transparent animate-[scan_2.6s_ease-in-out_infinite] pointer-events-none" />
             </div>
-            <div className="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-sky-400/25 to-transparent animate-[scan_2.4s_ease-in-out_infinite]" />
-            <div className="absolute bottom-4 left-4 right-4 bg-white/90 border border-white rounded-2xl p-4 shadow-lg backdrop-blur-md">
-              <div className="text-blue-700 text-xs font-bold mb-1">{hero.ocrLabel}</div>
+
+            <div className="relative m-3 mt-0 bg-white/90 border border-white rounded-2xl px-4 py-3 shadow-lg backdrop-blur-md">
+              <div className="text-blue-700 text-xs font-bold mb-0.5">{hero.ocrLabel}</div>
               <div className="text-slate-900 text-sm font-semibold">{hero.ocrResult}</div>
             </div>
           </div>
+          <p className="mt-2 text-[10px] text-slate-400/80 leading-snug">{hs.ocr.note}</p>
         </SlideShell>
 
         {/* 2) 현대어 번역 */}

@@ -781,6 +781,12 @@ const ko = {
   heroSlides: {
     dots: ["AI OCR", "현대어 번역", "번역 성능"],
     ocrCta: "MooN AI OCR 자세히 보기",
+    ocr: {
+      title: "딱지본 본문 유형별 인식",
+      types: ["옛한글", "한자괄호병기", "한자병기", "한글·한자 혼용"],
+      done: "인식 완료",
+      note: "※ 2026 국립중앙도서관 사업 대상 자료 예시 · 붉은 상자는 유형별 특징 표기",
+    },
     translate: {
       path: "heritage-ai.translate / live",
       liveTag: "전문가 협업",
@@ -2055,6 +2061,12 @@ const en: typeof ko = {
   heroSlides: {
     dots: ["AI OCR", "Modern Translation", "Translation Quality"],
     ocrCta: "Learn more about MooN AI OCR",
+    ocr: {
+      title: "Recognition by Ttakji-bon Text Type",
+      types: ["Old Hangul", "Hanja in parentheses", "Hanja alongside", "Hangul-Hanja mixed"],
+      done: "Recognized",
+      note: "* Sample materials from the 2026 National Library of Korea project · red boxes mark each type's characteristic notation",
+    },
     translate: {
       path: "heritage-ai.translate / live",
       liveTag: "Expert collaboration",
