@@ -30,7 +30,7 @@ export default function AdminPage() {
   const fetchContacts = useCallback(async (pw: string) => {
     setContactsError("");
     try {
-      const res = await fetch("/api/contact", { headers: { "x-admin-password": pw } });
+      const res = await fetch("/api/contact", { headers: { "x-admin-password": encodeURIComponent(pw) } });
       if (!res.ok) {
         setContactsError("문의 목록을 불러올 수 없습니다. 문의는 접수 이메일로 확인해 주세요.");
         return;
@@ -46,7 +46,7 @@ export default function AdminPage() {
       setLoading(true);
       setError("");
       try {
-        const res = await fetch("/api/admin/verify", { headers: { "x-admin-password": pw } });
+        const res = await fetch("/api/admin/verify", { headers: { "x-admin-password": encodeURIComponent(pw) } });
         if (res.status === 401) {
           setError("비밀번호가 올바르지 않습니다.");
           return;

@@ -86,7 +86,7 @@ export default function AdminAnalytics({ password }: { password: string }) {
     setLoading(true);
     setError("");
     try {
-      const res = await fetch(`/api/admin/analytics?range=${range}`, { headers: { "x-admin-password": password }, cache: "no-store" });
+      const res = await fetch(`/api/admin/analytics?range=${range}`, { headers: { "x-admin-password": encodeURIComponent(password) }, cache: "no-store" });
       const json = (await res.json()) as Data;
       if (!res.ok) {
         setError(json.error ?? "방문자 통계를 불러오지 못했습니다.");
