@@ -777,6 +777,46 @@ const ko = {
     } as Record<string, { headline: string[]; metrics: { value: string; label: string }[]; compare: { item: string; before: string; after: string }[] }>,
   },
 
+  // ── HERO SLIDES (메인 오른쪽 비주얼 반복 카드) ──
+  heroSlides: {
+    dots: ["AI OCR", "현대어 번역", "번역 성능"],
+    ocrCta: "MooN AI OCR 자세히 보기",
+    translate: {
+      path: "heritage-ai.translate / live",
+      liveTag: "전문가 협업",
+      tag: "현대어 번역",
+      lines: [
+        { from: "자행처치",     to: "알아서 처리하소서" },
+        { from: "불승대경",     to: "몹시 놀라" },
+        { from: "수원수우리요", to: "누구를 원망하고 누구를 탓하리오" },
+      ],
+      resultLabel: "현대어 번역 결과",
+      result: "원문 보존 · 자연스러운 직역 · 전문가 검수",
+      cta: "MooN Translator 자세히 보기",
+    },
+    chart: {
+      path: "heritage-ai.translate / benchmark",
+      liveTag: "내부 벤치마크",
+      tag: "TVI v4",
+      title: "100어절당 주요 차이",
+      hint: "낮을수록 좋음",
+      bars: [
+        { label: "초기",           value: 15.09 },
+        { label: "TVI v3",         value: 8.91 },
+        { label: "TVI v4",         value: 6.71, hl: true },
+        { label: "Gemini 3.1 Pro", value: 9.79 },
+      ],
+      drop: "−56%",
+      metricsHead: ["평가 지표", "TVI v4", "Gemini"],
+      metrics: [
+        { label: "문자 일치도 (0–100)", a: "91.6",  b: "87.7" },
+        { label: "문장 유사도 (0–1)",   a: "0.940", b: "0.894" },
+      ],
+      note: "20세기 초 소설 80쪽 기준 TVI 내부 벤치마크입니다. 전체 지표와 한계는 상세 페이지에서 확인하세요.",
+      cta: "번역 성능 자세히 보기",
+    },
+  },
+
   // ── 2026 국립중앙도서관 완료보고 기반 근거 자료 ──
   report2026: {
     ocr: {
@@ -2006,6 +2046,46 @@ const en: typeof ko = {
         ],
       },
     } as Record<string, { headline: string[]; metrics: { value: string; label: string }[]; compare: { item: string; before: string; after: string }[] }>,
+  },
+
+  // ── HERO SLIDES (rotating visual card on the home hero) ──
+  heroSlides: {
+    dots: ["AI OCR", "Modern Translation", "Translation Quality"],
+    ocrCta: "Learn more about MooN AI OCR",
+    translate: {
+      path: "heritage-ai.translate / live",
+      liveTag: "Expert collaboration",
+      tag: "Modern Korean Translation",
+      lines: [
+        { from: "자행처치",     to: "알아서 처리하소서" },
+        { from: "불승대경",     to: "몹시 놀라" },
+        { from: "수원수우리요", to: "누구를 원망하고 누구를 탓하리오" },
+      ],
+      resultLabel: "Modern Korean translation",
+      result: "Source preserved · Natural literal translation · Expert review",
+      cta: "Learn more about MooN Translator",
+    },
+    chart: {
+      path: "heritage-ai.translate / benchmark",
+      liveTag: "Internal benchmark",
+      tag: "TVI v4",
+      title: "Major differences per 100 words",
+      hint: "Lower is better",
+      bars: [
+        { label: "Initial",        value: 15.09 },
+        { label: "TVI v3",         value: 8.91 },
+        { label: "TVI v4",         value: 6.71, hl: true },
+        { label: "Gemini 3.1 Pro", value: 9.79 },
+      ],
+      drop: "−56%",
+      metricsHead: ["Metric", "TVI v4", "Gemini"],
+      metrics: [
+        { label: "Character match (0–100)", a: "91.6",  b: "87.7" },
+        { label: "Sentence similarity (0–1)", a: "0.940", b: "0.894" },
+      ],
+      note: "TVI's internal benchmark on 80 pages of early-20th-century novels. See the detail page for all metrics and limitations.",
+      cta: "See translation quality details",
+    },
   },
 
   // ── Evidence from the 2026 National Library of Korea completion report ──

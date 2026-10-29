@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowRight, BookOpen, Cpu, Gift, Sparkles } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { translations } from "@/lib/translations";
+import HeroVisual from "@/components/HeroVisual";
 
 const featureIcons = [Sparkles, BookOpen, Cpu];
 
@@ -157,71 +158,8 @@ export default function Hero() {
             </Link>
           </div>
 
-          <div className="hidden lg:block">
-            <div className="relative animate-[float_4s_ease-in-out_infinite]">
-              <div className="absolute -inset-6 rounded-[2rem] bg-gradient-to-r from-blue-500/25 via-sky-400/20 to-cyan-400/20 blur-2xl animate-pulse" />
-
-              <div className="relative bg-white/10 backdrop-blur-xl border border-white/15 rounded-3xl p-6 shadow-2xl shadow-blue-950/40">
-                <div className="flex items-center gap-3 mb-5">
-                  <div className="w-3 h-3 rounded-full bg-blue-400" />
-                  <div className="w-3 h-3 rounded-full bg-sky-400" />
-                  <div className="w-3 h-3 rounded-full bg-cyan-400" />
-                  <span className="text-slate-400 text-xs ml-2 font-mono">
-                    heritage-ai.scan / live
-                  </span>
-                </div>
-
-                <div className="space-y-3 mb-5">
-                  {[
-                    ["w-16", "w-32", "w-20"],
-                    ["w-24", "w-28", "w-16"],
-                    ["w-20", "w-36", "w-12"],
-                    ["w-28", "w-20", "w-24"],
-                  ].map((row, index) => (
-                    <div key={index} className="flex gap-2 items-center">
-                      {row.map((width, i) => (
-                        <div
-                          key={i}
-                          className={`${width} h-3 rounded-full bg-blue-300/25 animate-pulse`}
-                          style={{ animationDelay: `${index * 0.25 + i * 0.15}s` }}
-                        />
-                      ))}
-                    </div>
-                  ))}
-                </div>
-
-                <div className="relative h-56 rounded-2xl overflow-hidden border border-white/10 bg-slate-950/45">
-                  <div className="absolute inset-0 p-5 text-slate-300/80 leading-8 text-lg">
-                    訓民正音 國之語音 異乎中國
-                    <br />
-                    與文字不相流通 故愚民有所欲言
-                    <br />
-                    而終不得伸其情者多矣
-                    <br />
-                    予爲此憫然 新制二十八字
-                  </div>
-
-                  <div className="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-sky-400/25 to-transparent animate-[scan_2.4s_ease-in-out_infinite]" />
-
-                  <div className="absolute bottom-4 left-4 right-4 bg-white/90 border border-white rounded-2xl p-4 shadow-lg backdrop-blur-md">
-                    <div className="text-blue-700 text-xs font-bold mb-1">
-                      {t.ocrLabel}
-                    </div>
-                    <div className="text-slate-900 text-sm font-semibold">
-                      {t.ocrResult}
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="absolute -top-4 -right-4 bg-blue-600 text-white text-xs font-bold px-4 py-2 rounded-full shadow-lg shadow-blue-900/40">
-                {t.liveTag}
-              </div>
-
-              <div className="absolute -bottom-4 -left-4 bg-white/95 text-slate-800 text-xs font-bold px-4 py-2 rounded-full shadow-lg">
-                {t.heritageTag}
-              </div>
-            </div>
+          <div className="hidden lg:block pb-10">
+            <HeroVisual />
           </div>
         </div>
 
