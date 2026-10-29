@@ -109,6 +109,7 @@ const majorProjectsStatic = [
     client: "국립중앙도서관",
     badgeColor: "#ef4444",
     rows: [
+      { year: "2026", books: "306책",   pages: "30,854면",  chars: "16,442,242자",  f1: "0.967" },
       { year: "2025", books: "65책",    pages: "15,404면",  chars: "14,467,147자",  f1: "0.958" },
       { year: "2024", books: "55책",    pages: "11,799면",  chars: "11,682,856자",  f1: "0.951" },
       { year: "2023", books: "217책",   pages: "13,898면",  chars: "10,080,144자",  f1: "0.930" },

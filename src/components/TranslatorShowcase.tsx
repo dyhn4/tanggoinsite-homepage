@@ -10,6 +10,7 @@ import {
 import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
 import { translations } from "@/lib/translations";
+import { TranslatorCase } from "@/components/ReportProof";
 
 const flowIcons = [ListChecks, Sparkles, PenLine, SearchCheck, Database];
 const featureIcons = [FileInput, Layers, Plug, UserCheck, BarChart3, Save];
@@ -156,6 +157,9 @@ export default function TranslatorShowcase({ accent }: { accent: string }) {
           ))}
         </ul>
       </div>
+
+      {/* 국가기관 수행 사례 */}
+      <TranslatorCase accent={accent} />
 
       {/* 번역 기준 */}
       <div>

@@ -14,6 +14,7 @@ import { translations } from "@/lib/translations";
 import type { Translations } from "@/lib/translations";
 import WorkflowShowcase, { WorkflowMock, WorkflowMetrics } from "@/components/WorkflowShowcase";
 import TranslatorShowcase from "@/components/TranslatorShowcase";
+import { OcrRetrain, DeliverablesBlock, JsonStructureBlock, WorkflowDesignBlock } from "@/components/ReportProof";
 import SolutionCompare, { SolutionHeadline, SolutionMetrics, SolutionMock, hasShowcase } from "@/components/SolutionShowcase";
 
 /* ─────────────────────────────────────────────
@@ -186,6 +187,7 @@ function SectionContent({ sol, tSol, labels }: { sol: AnySolution; tSol: TSol; l
             ))}
           </div>
         </div>
+        <WorkflowDesignBlock accent={accent} />
       </div>
     );
   }
@@ -328,12 +330,15 @@ function SectionContent({ sol, tSol, labels }: { sol: AnySolution; tSol: TSol; l
           </div>
           <p className="mt-3 text-xs text-white/30">{labels.comparisonNote}</p>
         </div>
+
+        <OcrRetrain accent={accent} />
       </div>
     );
   }
 
   if (sol.kind === "xml") {
     return (
+      <div className="flex flex-col gap-10">
       <div>
         <SectionLabel accent={accent}>{labels.coreFeaturesLabel}</SectionLabel>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4">
@@ -347,11 +352,14 @@ function SectionContent({ sol, tSol, labels }: { sol: AnySolution; tSol: TSol; l
           ))}
         </div>
       </div>
+      <JsonStructureBlock accent={accent} />
+      </div>
     );
   }
 
   if (sol.kind === "batch") {
     return (
+      <div className="flex flex-col gap-10">
       <div>
         <SectionLabel accent={accent}>{labels.outputsLabel}</SectionLabel>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
@@ -367,6 +375,8 @@ function SectionContent({ sol, tSol, labels }: { sol: AnySolution; tSol: TSol; l
             </div>
           ))}
         </div>
+      </div>
+      <DeliverablesBlock accent={accent} />
       </div>
     );
   }

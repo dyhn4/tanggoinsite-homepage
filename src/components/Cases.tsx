@@ -30,10 +30,10 @@ export default function Cases() {
   return (
     <section
       id="cases"
-      className="min-h-screen flex flex-col justify-center px-4 sm:px-6 bg-white py-12"
+      className="min-h-screen flex flex-col justify-center px-4 sm:px-6 bg-white py-10"
     >
       <div className="max-w-6xl mx-auto w-full">
-        <div className="text-center mb-10">
+        <div className="text-center mb-8">
           <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-blue-100 text-blue-700 border border-blue-200 font-semibold text-sm mb-3">
             {t.badge}
           </span>
@@ -71,6 +71,20 @@ export default function Cases() {
                   </li>
                 ))}
               </ul>
+
+              {item.metrics.length > 0 && (
+                <div className="mb-3 rounded-xl bg-gradient-to-br from-blue-700 to-sky-600 px-4 py-2.5 text-white">
+                  <div className="grid grid-cols-3 gap-3">
+                    {item.metrics.map((m) => (
+                      <div key={m.label}>
+                        <div className="text-sm sm:text-base font-black leading-tight tabular-nums">{m.value}</div>
+                        <div className="text-[10px] text-blue-100 leading-snug mt-0.5">{m.label}</div>
+                      </div>
+                    ))}
+                  </div>
+                  {item.metricsNote && <p className="mt-2 text-[10px] text-blue-200/80">{item.metricsNote}</p>}
+                </div>
+              )}
 
               <div className="flex flex-wrap gap-1.5">
                 {item.tags.map((tag) => (
