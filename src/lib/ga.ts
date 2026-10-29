@@ -15,7 +15,9 @@ export function gaConfig() {
 
 // 붙여넣은 방식(실제 줄바꿈, \n 글자, 줄바꿈이 공백으로 바뀐 경우, 따옴표 포함)과 상관없이 올바른 PEM 으로 복원
 function normalizePrivateKey(raw: string) {
-  const body = raw
+  // JSON 파일의 "private_key": "...", 줄을 통째로 붙여넣어도 BEGIN~END 사이만 사용
+  const m = raw.match(/-----BEGIN [A-Z ]*PRIVATE KEY-----([\s\S]*?)-----END [A-Z ]*PRIVATE KEY-----/);
+  const body = (m ? m[1] : raw)
     .replace(/-----BEGIN [A-Z ]*PRIVATE KEY-----/, "")
     .replace(/-----END [A-Z ]*PRIVATE KEY-----/, "")
     .replace(/\\n/g, "")
