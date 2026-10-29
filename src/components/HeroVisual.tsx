@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { translations } from "@/lib/translations";
@@ -9,6 +10,12 @@ import { translations } from "@/lib/translations";
 const INTERVAL = 5500;
 const HREFS = ["/solutions#moon-ai-ocr", "/solutions#moon-translator", "/solutions#moon-translator"];
 const COPPER = "#e0a06b";
+// 원문 스캔의 표시 상자 색과 같은 색으로 의미를 구분
+const TONES = {
+  amber:  { line: "#d9972b", text: "#fbbf5a" },
+  violet: { line: "#8b6cf0", text: "#c4b5fd" },
+  teal:   { line: "#1fa79a", text: "#5eead4" },
+} as const;
 
 function WindowBar({ path }: { path: string }) {
   return (
@@ -123,22 +130,41 @@ export default function HeroVisual() {
         {/* 2) 현대어 번역 */}
         <SlideShell active={idx === 1} href={HREFS[1]} cta={hs.translate.cta}>
           <WindowBar path={hs.translate.path} />
-          <Skeleton rows={2} />
-          <div className="relative flex-1 min-h-[17.5rem] rounded-2xl overflow-hidden border border-white/10 bg-slate-950/45">
-            <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-amber-300/15 to-transparent animate-[scan_2.8s_ease-in-out_infinite]" />
-            <div className="relative p-5 flex flex-col gap-3">
-              {hs.translate.lines.map((l, i) => (
-                <div key={l.from} className={`transition-all duration-700 ${idx === 1 ? "opacity-100 translate-x-0" : "opacity-0 translate-x-3"}`} style={{ transitionDelay: `${i * 160}ms` }}>
-                  <div className="text-xs text-slate-400 leading-tight">{l.from}</div>
-                  <div className="text-base text-slate-100 font-semibold leading-snug flex items-start gap-1.5">
-                    <ArrowRight size={14} className="mt-1.5 flex-shrink-0" style={{ color: COPPER }} />
-                    {l.to}
-                  </div>
+          <div className="relative flex-1 min-h-[19rem] rounded-2xl overflow-hidden border border-white/10 bg-slate-950/45 flex flex-col">
+            <div className="relative flex-1">
+              {/* 원문 스캔 — 뒤쪽 배경 */}
+              <div
+                className={`absolute right-3 top-3 bottom-3 aspect-[695/1074] rounded-lg overflow-hidden shadow-2xl shadow-black/50 border border-white/20 transition-all duration-1000 ${idx === 1 ? "opacity-100 rotate-0" : "opacity-0 rotate-3"}`}
+                style={{ transformOrigin: "bottom right" }}
+              >
+                <Image src="/hero/translate-sample.webp" alt="" fill sizes="240px" className="object-cover" unoptimized />
+                <div className="absolute inset-x-0 bottom-0 px-2 py-1 text-[10px] font-semibold text-white/90 bg-gradient-to-t from-black/70 to-transparent">
+                  {hs.translate.imageCaption}
                 </div>
-              ))}
+              </div>
+              <div className="absolute inset-y-0 left-0 w-[70%] bg-gradient-to-r from-slate-950/85 via-slate-950/60 to-transparent pointer-events-none" />
+
+              {/* 바뀐 글자 목록 */}
+              <div className="relative p-4 pr-[44%] flex flex-col gap-2.5">
+                {hs.translate.lines.map((l, i) => {
+                  const tone = TONES[l.tone as keyof typeof TONES];
+                  return (
+                    <div
+                      key={l.from}
+                      className={`pl-2.5 border-l-2 transition-all duration-700 ${idx === 1 ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-3"}`}
+                      style={{ borderColor: tone.line, transitionDelay: `${i * 140}ms` }}
+                    >
+                      <div className="text-[11px] text-slate-400 leading-tight">{l.from}</div>
+                      <div className="text-[15px] text-slate-50 font-bold leading-snug">{l.to}</div>
+                      <div className="text-[10px] font-semibold leading-tight mt-0.5" style={{ color: tone.text }}>{l.kind}</div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-            <div className="absolute bottom-4 left-4 right-4 bg-white/90 border border-white rounded-2xl p-4 shadow-lg backdrop-blur-md">
-              <div className="text-xs font-bold mb-1" style={{ color: "#b45309" }}>{hs.translate.resultLabel}</div>
+
+            <div className="relative m-3 mt-0 bg-white/90 border border-white rounded-2xl px-4 py-3 shadow-lg backdrop-blur-md">
+              <div className="text-xs font-bold mb-0.5" style={{ color: "#b45309" }}>{hs.translate.resultLabel}</div>
               <div className="text-slate-900 text-sm font-semibold">{hs.translate.result}</div>
             </div>
           </div>
