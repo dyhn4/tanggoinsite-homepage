@@ -77,6 +77,10 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ configured: true, error: e.message, kind: e.kind }, { status: 502 });
     }
     console.error("Analytics API error:", e);
-    return NextResponse.json({ configured: true, error: "방문자 통계를 불러오는 중 오류가 발생했습니다." }, { status: 500 });
+    const detail = e instanceof Error ? `${e.name}: ${e.message}`.slice(0, 160) : "";
+    return NextResponse.json(
+      { configured: true, error: `방문자 통계를 불러오는 중 오류가 발생했습니다.${detail ? ` (${detail})` : ""}` },
+      { status: 500 }
+    );
   }
 }

@@ -10,9 +10,18 @@ export function gaConfig() {
   const email = process.env.GA_CLIENT_EMAIL?.trim();
   const rawKey = process.env.GA_PRIVATE_KEY;
   if (!propertyId || !email || !rawKey) return null;
-  // Vercel 에 붙여넣은 키의 \n 글자와 앞뒤 따옴표를 정리
-  const privateKey = rawKey.trim().replace(/^"|"$/g, "").replace(/\\n/g, "\n");
-  return { propertyId, email, privateKey };
+  return { propertyId, email, privateKey: normalizePrivateKey(rawKey) };
+}
+
+// 붙여넣은 방식(실제 줄바꿈, \n 글자, 줄바꿈이 공백으로 바뀐 경우, 따옴표 포함)과 상관없이 올바른 PEM 으로 복원
+function normalizePrivateKey(raw: string) {
+  const body = raw
+    .replace(/-----BEGIN [A-Z ]*PRIVATE KEY-----/, "")
+    .replace(/-----END [A-Z ]*PRIVATE KEY-----/, "")
+    .replace(/\\n/g, "")
+    .replace(/["'\s]/g, "");
+  const lines = body.match(/.{1,64}/g) ?? [];
+  return `-----BEGIN PRIVATE KEY-----\n${lines.join("\n")}\n-----END PRIVATE KEY-----\n`;
 }
 
 const b64u = (v: string | Buffer) => Buffer.from(v).toString("base64url");
@@ -27,10 +36,12 @@ async function getAccessToken(cfg: NonNullable<ReturnType<typeof gaConfig>>) {
   const claim = b64u(
     JSON.stringify({ iss: cfg.email, scope: SCOPE, aud: TOKEN_URL, iat: now, exp: now + 3600 })
   );
-  const signature = createSign("RSA-SHA256")
-    .update(`${header}.${claim}`)
-    .sign(cfg.privateKey)
-    .toString("base64url");
+  let signature: string;
+  try {
+    signature = createSign("RSA-SHA256").update(`${header}.${claim}`).sign(cfg.privateKey).toString("base64url");
+  } catch {
+    throw new GaError("auth", "GA_PRIVATE_KEY 형식이 올바르지 않습니다. JSON 파일의 private_key 값 전체를 다시 붙여넣어 주세요.");
+  }
 
   const res = await fetch(TOKEN_URL, {
     method: "POST",
