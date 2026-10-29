@@ -11,8 +11,10 @@ import { ocrSample } from "@/lib/ocrSample";
 const INTERVAL = 5500;
 const HREFS = ["/solutions#moon-ai-ocr", "/solutions#moon-translator", "/solutions#moon-translator"];
 const COPPER = "#e0a06b";
-// 옛한글(ㆍ) 글자를 표시할 수 있는 글꼴을 우선 지정
-const OLD_HANGUL_FONT = { fontFamily: '"Malgun Gothic", "Apple SD Gothic Neo", "Noto Sans CJK KR", "Noto Serif CJK KR", "Batang", "AppleMyungjo", sans-serif' } as const;
+// 한자·한글 혼용 글자를 고문헌 느낌의 명조 계열로 표시
+const DOC_FONT = { fontFamily: '"Noto Serif KR", "Noto Serif CJK KR", "Batang", "AppleMyungjo", "Malgun Gothic", serif' } as const;
+// 읽어낸 줄과 스캔 속 열 표시를 이어주는 색
+const LINE_COLORS = ["#38bdf8", "#34d399", "#fbbf24", "#c4b5fd"];
 // 원문 스캔의 표시 상자 색과 같은 색으로 의미를 구분
 const TONES = {
   amber:  { line: "#d9972b", text: "#fbbf5a" },
@@ -139,17 +141,17 @@ export default function HeroVisual() {
               <div className="absolute inset-y-0 left-0 w-[70%] bg-gradient-to-r from-slate-950/85 via-slate-950/60 to-transparent pointer-events-none" />
 
               {/* 읽어낸 글자 */}
-              <div className="relative p-4 pr-[46%] flex flex-col gap-4">
+              <div className="relative p-4 pr-[44%] flex flex-col gap-3">
                 {ocrSample.lines.map((l, i) => (
                   <div
                     key={l.text}
                     className={`pl-2.5 border-l-2 transition-all duration-700 ${idx === 0 ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-3"}`}
-                    style={{ borderColor: i === 0 ? "#38bdf8" : "#34d399", transitionDelay: `${900 + i * 500}ms` }}
+                    style={{ borderColor: LINE_COLORS[i], transitionDelay: `${900 + i * 450}ms` }}
                   >
                     <div className="text-[10px] font-semibold text-slate-400 leading-tight mb-1">
-                      {hs.ocr.confLabel} <span style={{ color: i === 0 ? "#7dd3fc" : "#6ee7b7" }}>{l.conf}%</span>
+                      {hs.ocr.confLabel} <span style={{ color: LINE_COLORS[i] }}>{l.conf}%</span>
                     </div>
-                    <div className="text-[17px] text-slate-50 font-bold leading-snug break-keep" style={OLD_HANGUL_FONT}>{l.text}</div>
+                    <div className="text-[15px] text-slate-50 font-bold leading-snug break-keep" style={DOC_FONT}>{l.text}</div>
                   </div>
                 ))}
               </div>
@@ -165,9 +167,9 @@ export default function HeroVisual() {
                     className="absolute rounded-md border-2 transition-opacity duration-700"
                     style={{
                       left: `${l.rect[0] - 1}%`, top: `${l.rect[1] - 0.6}%`, width: `${l.rect[2] + 2}%`, height: `${l.rect[3] + 1.2}%`,
-                      borderColor: i === 0 ? "#38bdf8" : "#34d399",
+                      borderColor: LINE_COLORS[i],
                       opacity: idx === 0 ? 1 : 0,
-                      transitionDelay: idx === 0 ? `${900 + i * 500}ms` : "0ms",
+                      transitionDelay: idx === 0 ? `${900 + i * 450}ms` : "0ms",
                     }}
                   />
                 ))}

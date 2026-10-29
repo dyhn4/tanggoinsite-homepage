@@ -784,8 +784,8 @@ const ko = {
     ocr: {
       title: "고문헌 AI OCR 인식",
       confLabel: "글자 신뢰도",
-      caption: "실제 인식 결과 · 『금상쳠화』 7면",
-      note: "※ 2026 국립중앙도서관 사업 자료의 실제 인식 데이터입니다. 초록 상자는 AI가 찾아낸 글자 영역입니다.",
+      caption: "실제 인식 결과 · 국한문 혼용 자료",
+      note: "※ 2026 국립중앙도서관 사업 자료(한자·한글 혼용)의 실제 인식 데이터입니다. 초록 상자는 AI가 찾아낸 글자 영역입니다.",
     },
     translate: {
       path: "heritage-ai.translate / live",
@@ -2064,8 +2064,8 @@ const en: typeof ko = {
     ocr: {
       title: "Heritage Document AI OCR",
       confLabel: "Character confidence",
-      caption: "Actual result · Geumsangcheomhwa, p.7",
-      note: "* Actual recognition data from a 2026 National Library of Korea project. Green boxes mark the character areas found by the AI.",
+      caption: "Actual result · Mixed Hanja-Hangul text",
+      note: "* Actual recognition data from a 2026 National Library of Korea project (mixed Hanja-Hangul). Green boxes mark the character areas found by the AI.",
     },
     translate: {
       path: "heritage-ai.translate / live",
