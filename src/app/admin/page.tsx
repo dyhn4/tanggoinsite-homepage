@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import { Mail, Building2, Phone, Calendar, Tag, Eye, EyeOff } from "lucide-react";
+import AdminAnalytics from "@/components/AdminAnalytics";
+import { Mail, Building2, Phone, Tag } from "lucide-react";
 
 interface Contact {
   id: string;
@@ -23,26 +24,48 @@ export default function AdminPage() {
   const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState<Contact | null>(null);
 
+  const [tab, setTab] = useState<"visitors" | "contacts">("visitors");
+  const [contactsError, setContactsError] = useState("");
+
   const fetchContacts = useCallback(async (pw: string) => {
-    setLoading(true);
-    setError("");
+    setContactsError("");
     try {
-      const res = await fetch("/api/contact", {
-        headers: { "x-admin-password": pw },
-      });
-      if (res.status === 401) {
-        setError("비밀번호가 올바르지 않습니다.");
+      const res = await fetch("/api/contact", { headers: { "x-admin-password": pw } });
+      if (!res.ok) {
+        setContactsError("문의 목록을 불러올 수 없습니다. 문의는 접수 이메일로 확인해 주세요.");
         return;
       }
-      const data = await res.json();
-      setContacts(data);
-      setAuthed(true);
+      setContacts(await res.json());
     } catch {
-      setError("데이터를 불러오는 데 실패했습니다.");
-    } finally {
-      setLoading(false);
+      setContactsError("문의 목록을 불러올 수 없습니다. 문의는 접수 이메일로 확인해 주세요.");
     }
   }, []);
+
+  const login = useCallback(
+    async (pw: string) => {
+      setLoading(true);
+      setError("");
+      try {
+        const res = await fetch("/api/admin/verify", { headers: { "x-admin-password": pw } });
+        if (res.status === 401) {
+          setError("비밀번호가 올바르지 않습니다.");
+          return;
+        }
+        if (!res.ok) {
+          const j = await res.json().catch(() => ({}));
+          setError(j.error ?? "로그인에 실패했습니다.");
+          return;
+        }
+        setAuthed(true);
+        fetchContacts(pw);
+      } catch {
+        setError("서버에 연결하지 못했습니다.");
+      } finally {
+        setLoading(false);
+      }
+    },
+    [fetchContacts]
+  );
 
   if (!authed) {
     return (
@@ -63,14 +86,14 @@ export default function AdminPage() {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && fetchContacts(password)}
+                onKeyDown={(e) => e.key === "Enter" && login(password)}
                 placeholder="비밀번호를 입력하세요"
                 className="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 outline-none transition text-sm"
               />
             </div>
             {error && <p className="text-red-500 text-sm">{error}</p>}
             <button
-              onClick={() => fetchContacts(password)}
+              onClick={() => login(password)}
               disabled={loading || !password}
               className="w-full py-2.5 rounded-lg bg-blue-700 hover:bg-blue-800 text-white font-medium transition-colors disabled:opacity-60"
             >
@@ -91,16 +114,36 @@ export default function AdminPage() {
               <span className="text-white font-bold text-xs">T</span>
             </div>
             <span className="font-bold text-slate-900 text-sm">
-              탱고인사이트 — 문의 관리
+              탱고인사이트 — 관리자
             </span>
           </div>
-          <span className="text-slate-500 text-sm">
-            총 {contacts.length}건
-          </span>
+          <div className="flex gap-1">
+            {([
+              ["visitors", "방문자"],
+              ["contacts", `문의 (${contacts.length})`],
+            ] as const).map(([k, label]) => (
+              <button
+                key={k}
+                onClick={() => setTab(k)}
+                className={`px-3.5 py-1.5 rounded-lg text-sm font-semibold transition-colors ${
+                  tab === k ? "bg-blue-50 text-blue-700" : "text-slate-500 hover:text-slate-800"
+                }`}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
         </div>
       </header>
 
       <div className="max-w-6xl mx-auto px-4 py-8">
+        {tab === "visitors" && <AdminAnalytics password={password} />}
+
+        {tab === "contacts" && contactsError && (
+          <div className="bg-amber-50 border border-amber-100 text-amber-800 text-sm rounded-xl p-4 mb-5">{contactsError}</div>
+        )}
+
+        {tab === "contacts" && (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* 목록 */}
           <div className="lg:col-span-1 space-y-3">
@@ -178,6 +221,7 @@ export default function AdminPage() {
             )}
           </div>
         </div>
+        )}
       </div>
     </div>
   );
