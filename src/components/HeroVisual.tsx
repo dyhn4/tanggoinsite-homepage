@@ -3,13 +3,16 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { translations } from "@/lib/translations";
+import { ocrSample } from "@/lib/ocrSample";
 
 const INTERVAL = 5500;
 const HREFS = ["/solutions#moon-ai-ocr", "/solutions#moon-translator", "/solutions#moon-translator"];
 const COPPER = "#e0a06b";
+// 옛한글(ㆍ) 글자를 표시할 수 있는 글꼴을 우선 지정
+const OLD_HANGUL_FONT = { fontFamily: '"Malgun Gothic", "Apple SD Gothic Neo", "Noto Sans CJK KR", "Noto Serif CJK KR", "Batang", "AppleMyungjo", sans-serif' } as const;
 // 원문 스캔의 표시 상자 색과 같은 색으로 의미를 구분
 const TONES = {
   amber:  { line: "#d9972b", text: "#fbbf5a" },
@@ -110,25 +113,65 @@ export default function HeroVisual() {
           <WindowBar path="heritage-ai.scan / live" />
           <div className="text-white font-bold text-base mb-3">{hs.ocr.title}</div>
           <div className="relative flex-1 min-h-[19rem] rounded-2xl overflow-hidden border border-white/10 bg-slate-950/45 flex flex-col">
-            <div className="relative flex-1 p-3">
-              <div className="grid grid-cols-2 gap-2.5 h-full">
-                {hs.ocr.types.map((label, i) => (
-                  <div key={label} className="relative rounded-lg overflow-hidden border border-white/15 shadow-lg shadow-black/30 min-h-[6.5rem]">
-                    <Image src={`/hero/ocr-type-${i + 1}.webp`} alt={label} fill sizes="240px" className="object-cover" unoptimized />
-                    <div className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-2 px-2 py-1 bg-gradient-to-t from-black/80 to-transparent">
-                      <span className="text-[11px] font-bold text-white">{label}</span>
-                      <span
-                        className={`inline-flex items-center gap-0.5 rounded-full bg-emerald-400/90 text-slate-900 text-[9px] font-black px-1.5 py-0.5 transition-all duration-500 ${idx === 0 ? "opacity-100 scale-100" : "opacity-0 scale-75"}`}
-                        style={{ transitionDelay: `${700 + i * 450}ms` }}
-                      >
-                        <Check size={9} strokeWidth={3} />
-                        {hs.ocr.done}
-                      </span>
+            <div className="relative flex-1">
+              {/* 실제 스캔 + AI가 찾은 글자 영역 */}
+              <div
+                className={`absolute right-3 top-3 bottom-3 rounded-lg overflow-hidden shadow-2xl shadow-black/50 border border-white/20 transition-all duration-1000 ${idx === 0 ? "opacity-100" : "opacity-0"}`}
+                style={{ aspectRatio: `${ocrSample.width} / ${ocrSample.height}` }}
+              >
+                <Image src="/hero/ocr-sample.webp" alt="" fill sizes="240px" className="object-cover" unoptimized />
+                {ocrSample.boxes.map((b, i) => (
+                  <span
+                    key={i}
+                    className="absolute rounded-[2px] border border-emerald-300/90 bg-emerald-300/15 transition-opacity duration-500"
+                    style={{
+                      left: `${b[0]}%`, top: `${b[1]}%`, width: `${b[2]}%`, height: `${b[3]}%`,
+                      opacity: idx === 0 ? 1 : 0,
+                      transitionDelay: idx === 0 ? `${400 + b[1] * 22}ms` : "0ms",
+                    }}
+                  />
+                ))}
+                <div className="absolute inset-x-0 top-0 h-10 bg-gradient-to-b from-sky-400/35 to-transparent animate-[scan_2.6s_ease-in-out_infinite] pointer-events-none" />
+                <div className="absolute inset-x-0 bottom-0 px-2 py-1 text-[10px] font-semibold text-white/90 bg-gradient-to-t from-black/75 to-transparent">
+                  {hs.ocr.caption}
+                </div>
+              </div>
+              <div className="absolute inset-y-0 left-0 w-[70%] bg-gradient-to-r from-slate-950/85 via-slate-950/60 to-transparent pointer-events-none" />
+
+              {/* 읽어낸 글자 */}
+              <div className="relative p-4 pr-[46%] flex flex-col gap-4">
+                {ocrSample.lines.map((l, i) => (
+                  <div
+                    key={l.text}
+                    className={`pl-2.5 border-l-2 transition-all duration-700 ${idx === 0 ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-3"}`}
+                    style={{ borderColor: i === 0 ? "#38bdf8" : "#34d399", transitionDelay: `${900 + i * 500}ms` }}
+                  >
+                    <div className="text-[10px] font-semibold text-slate-400 leading-tight mb-1">
+                      {hs.ocr.confLabel} <span style={{ color: i === 0 ? "#7dd3fc" : "#6ee7b7" }}>{l.conf}%</span>
                     </div>
+                    <div className="text-[17px] text-slate-50 font-bold leading-snug break-keep" style={OLD_HANGUL_FONT}>{l.text}</div>
                   </div>
                 ))}
               </div>
-              <div className="absolute inset-x-3 top-3 h-14 rounded bg-gradient-to-b from-sky-400/30 to-transparent animate-[scan_2.6s_ease-in-out_infinite] pointer-events-none" />
+
+              {/* 읽어낸 줄이 스캔의 어느 열인지 표시 */}
+              <div
+                className="absolute right-3 top-3 bottom-3 pointer-events-none"
+                style={{ aspectRatio: `${ocrSample.width} / ${ocrSample.height}` }}
+              >
+                {ocrSample.lines.map((l, i) => (
+                  <span
+                    key={l.text}
+                    className="absolute rounded-md border-2 transition-opacity duration-700"
+                    style={{
+                      left: `${l.rect[0] - 1}%`, top: `${l.rect[1] - 0.6}%`, width: `${l.rect[2] + 2}%`, height: `${l.rect[3] + 1.2}%`,
+                      borderColor: i === 0 ? "#38bdf8" : "#34d399",
+                      opacity: idx === 0 ? 1 : 0,
+                      transitionDelay: idx === 0 ? `${900 + i * 500}ms` : "0ms",
+                    }}
+                  />
+                ))}
+              </div>
             </div>
 
             <div className="relative m-3 mt-0 bg-white/90 border border-white rounded-2xl px-4 py-3 shadow-lg backdrop-blur-md">

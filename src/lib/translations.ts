@@ -782,10 +782,10 @@ const ko = {
     dots: ["AI OCR", "현대어 번역", "번역 성능"],
     ocrCta: "MooN AI OCR 자세히 보기",
     ocr: {
-      title: "딱지본 본문 유형별 인식",
-      types: ["옛한글", "한자괄호병기", "한자병기", "한글·한자 혼용"],
-      done: "인식 완료",
-      note: "※ 2026 국립중앙도서관 사업 대상 자료 예시 · 붉은 상자는 유형별 특징 표기",
+      title: "고문헌 AI OCR 인식",
+      confLabel: "글자 신뢰도",
+      caption: "실제 인식 결과 · 『금상쳠화』 7면",
+      note: "※ 2026 국립중앙도서관 사업 자료의 실제 인식 데이터입니다. 초록 상자는 AI가 찾아낸 글자 영역입니다.",
     },
     translate: {
       path: "heritage-ai.translate / live",
@@ -2062,10 +2062,10 @@ const en: typeof ko = {
     dots: ["AI OCR", "Modern Translation", "Translation Quality"],
     ocrCta: "Learn more about MooN AI OCR",
     ocr: {
-      title: "Recognition by Ttakji-bon Text Type",
-      types: ["Old Hangul", "Hanja in parentheses", "Hanja alongside", "Hangul-Hanja mixed"],
-      done: "Recognized",
-      note: "* Sample materials from the 2026 National Library of Korea project · red boxes mark each type's characteristic notation",
+      title: "Heritage Document AI OCR",
+      confLabel: "Character confidence",
+      caption: "Actual result · Geumsangcheomhwa, p.7",
+      note: "* Actual recognition data from a 2026 National Library of Korea project. Green boxes mark the character areas found by the AI.",
     },
     translate: {
       path: "heritage-ai.translate / live",
