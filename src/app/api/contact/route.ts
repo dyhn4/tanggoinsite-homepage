@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
+import { checkAdmin } from "@/lib/adminAuth";
+import { dbConfigured, listInquiries, markRead, saveInquiry } from "@/lib/inquiries";
 
 const TO_EMAIL = "dyhn4@naver.com, juni0815@daum.net, qqh9514@naver.com";
 
@@ -53,23 +55,46 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const transporter = nodemailer.createTransport({
-      host: "smtp.naver.com",
-      port: 465,
-      secure: true,
-      auth: {
-        user: process.env.NAVER_USER,
-        pass: process.env.NAVER_PASS,
-      },
-    });
+    // 1) 관리자 화면용으로 DB에 저장 (실패해도 이메일 발송은 계속 진행)
+    let saved = false;
+    if (dbConfigured()) {
+      try {
+        await saveInquiry({ name, email, phone, company, service, assignee, message });
+        saved = true;
+      } catch (e) {
+        console.error("Inquiry save error:", e);
+      }
+    }
 
-    await transporter.sendMail({
-      from: `"탱고인사이트 문의" <${process.env.NAVER_USER}>`,
-      to: TO_EMAIL,
-      subject: `[문의] ${name} / ${company || email}`,
-      html: buildHtml({ name, email, phone, company, service, assignee, message }),
-      replyTo: email,
-    });
+    // 2) 이메일 발송
+    let mailed = false;
+    try {
+      const transporter = nodemailer.createTransport({
+        host: "smtp.naver.com",
+        port: 465,
+        secure: true,
+        auth: {
+          user: process.env.NAVER_USER,
+          pass: process.env.NAVER_PASS,
+        },
+      });
+
+      await transporter.sendMail({
+        from: `"탱고인사이트 문의" <${process.env.NAVER_USER}>`,
+        to: TO_EMAIL,
+        subject: `[문의] ${name} / ${company || email}`,
+        html: buildHtml({ name, email, phone, company, service, assignee, message }),
+        replyTo: email,
+      });
+      mailed = true;
+    } catch (e) {
+      console.error("Inquiry mail error:", e);
+    }
+
+    // 저장과 발송 중 하나라도 성공하면 접수된 것으로 처리
+    if (!saved && !mailed) {
+      return NextResponse.json({ error: "서버 오류가 발생했습니다." }, { status: 500 });
+    }
 
     return NextResponse.json({ success: true }, { status: 201 });
   } catch (error) {
@@ -78,5 +103,40 @@ export async function POST(req: NextRequest) {
       { error: "서버 오류가 발생했습니다." },
       { status: 500 }
     );
+  }
+}
+
+// 관리자: 문의 목록 조회
+export async function GET(req: NextRequest) {
+  const denied = checkAdmin(req);
+  if (denied) return denied;
+  if (!dbConfigured()) {
+    return NextResponse.json({ error: "데이터베이스(DATABASE_URL)가 연결되어 있지 않습니다." }, { status: 503 });
+  }
+  try {
+    return NextResponse.json(await listInquiries(), { headers: { "Cache-Control": "no-store" } });
+  } catch (e) {
+    console.error("Inquiry list error:", e);
+    return NextResponse.json({ error: "문의 목록을 불러오지 못했습니다." }, { status: 500 });
+  }
+}
+
+// 관리자: 읽음 표시
+export async function PATCH(req: NextRequest) {
+  const denied = checkAdmin(req);
+  if (denied) return denied;
+  if (!dbConfigured()) {
+    return NextResponse.json({ error: "데이터베이스가 연결되어 있지 않습니다." }, { status: 503 });
+  }
+  try {
+    const { id } = (await req.json()) as { id?: string };
+    if (!id || !/^\d+$/.test(id)) {
+      return NextResponse.json({ error: "잘못된 요청입니다." }, { status: 400 });
+    }
+    await markRead(id);
+    return NextResponse.json({ ok: true });
+  } catch (e) {
+    console.error("Inquiry read error:", e);
+    return NextResponse.json({ error: "처리하지 못했습니다." }, { status: 500 });
   }
 }

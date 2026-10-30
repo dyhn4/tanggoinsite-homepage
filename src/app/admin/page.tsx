@@ -11,6 +11,7 @@ interface Contact {
   phone?: string;
   company?: string;
   service?: string;
+  assignee?: string;
   message: string;
   createdAt: string;
   isRead: boolean;
@@ -32,7 +33,8 @@ export default function AdminPage() {
     try {
       const res = await fetch("/api/contact", { headers: { "x-admin-password": encodeURIComponent(pw) } });
       if (!res.ok) {
-        setContactsError("문의 목록을 불러올 수 없습니다. 문의는 접수 이메일로 확인해 주세요.");
+        const j = await res.json().catch(() => ({}));
+        setContactsError(`${j.error ?? "문의 목록을 불러올 수 없습니다."} 문의는 접수 이메일로도 확인할 수 있습니다.`);
         return;
       }
       setContacts(await res.json());
@@ -40,6 +42,18 @@ export default function AdminPage() {
       setContactsError("문의 목록을 불러올 수 없습니다. 문의는 접수 이메일로 확인해 주세요.");
     }
   }, []);
+
+  const selectContact = (c: Contact) => {
+    setSelected(c);
+    if (!c.isRead) {
+      setContacts((prev) => prev.map((x) => (x.id === c.id ? { ...x, isRead: true } : x)));
+      fetch("/api/contact", {
+        method: "PATCH",
+        headers: { "x-admin-password": encodeURIComponent(password), "Content-Type": "application/json" },
+        body: JSON.stringify({ id: c.id }),
+      }).catch(() => {});
+    }
+  };
 
   const login = useCallback(
     async (pw: string) => {
@@ -120,7 +134,7 @@ export default function AdminPage() {
           <div className="flex gap-1">
             {([
               ["visitors", "방문자"],
-              ["contacts", `문의 (${contacts.length})`],
+              ["contacts", `문의 (${contacts.length}${contacts.some((c) => !c.isRead) ? ` · 새 글 ${contacts.filter((c) => !c.isRead).length}` : ""})`],
             ] as const).map(([k, label]) => (
               <button
                 key={k}
@@ -155,7 +169,7 @@ export default function AdminPage() {
               contacts.map((c) => (
                 <button
                   key={c.id}
-                  onClick={() => setSelected(c)}
+                  onClick={() => selectContact(c)}
                   className={`w-full text-left p-4 rounded-xl border transition-all ${
                     selected?.id === c.id
                       ? "bg-blue-50 border-blue-200"
@@ -196,6 +210,7 @@ export default function AdminPage() {
                     { icon: Phone, label: "연락처", value: selected.phone || "—" },
                     { icon: Building2, label: "회사명", value: selected.company || "—" },
                     { icon: Tag, label: "관심 서비스", value: selected.service || "—" },
+                    { icon: Mail, label: "담당자 요청", value: selected.assignee || "—" },
                   ].map((item) => (
                     <div key={item.label} className="flex items-start gap-3">
                       <item.icon size={16} className="text-slate-400 mt-0.5 flex-shrink-0" />
