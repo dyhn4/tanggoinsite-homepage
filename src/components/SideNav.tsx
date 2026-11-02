@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { homeSections } from "@/lib/sections";
+import { activeIndex, scrollToSection } from "@/lib/snapScroll";
 
 export default function SideNav() {
   const { lang } = useLanguage();
@@ -11,7 +12,7 @@ export default function SideNav() {
   useEffect(() => {
     const main = document.querySelector("main");
     if (!main) return;
-    const onScroll = () => setActive(Math.round(main.scrollTop / main.clientHeight));
+    const onScroll = () => setActive(activeIndex(main));
     onScroll();
     main.addEventListener("scroll", onScroll);
     return () => main.removeEventListener("scroll", onScroll);
@@ -19,7 +20,7 @@ export default function SideNav() {
 
   const goTo = (idx: number) => {
     const main = document.querySelector("main");
-    main?.scrollTo({ top: idx * main.clientHeight, behavior: "smooth" });
+    if (main) scrollToSection(main, idx);
   };
 
   const dark = homeSections[active]?.dark ?? false;

@@ -6,6 +6,7 @@ import { ArrowRight, BookOpen, Cpu, Gift, Sparkles } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { translations } from "@/lib/translations";
 import HeroVisual from "@/components/HeroVisual";
+import { getSections, scrollToSection } from "@/lib/snapScroll";
 
 const featureIcons = [Sparkles, BookOpen, Cpu];
 
@@ -17,11 +18,8 @@ export default function Hero() {
     const mainEl = document.querySelector("main");
     const target = document.querySelector("#services");
     if (!mainEl || !target) return;
-    const sections = Array.from(mainEl.querySelectorAll(":scope > section"));
-    const idx = sections.findIndex((s) => s.contains(target));
-    if (idx !== -1) {
-      mainEl.scrollTo({ top: idx * mainEl.clientHeight, behavior: "smooth" });
-    }
+    const idx = getSections(mainEl as HTMLElement).findIndex((s) => s.contains(target));
+    if (idx !== -1) scrollToSection(mainEl as HTMLElement, idx);
   };
 
   const canvasRef = useRef<HTMLCanvasElement>(null);

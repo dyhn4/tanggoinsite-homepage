@@ -12,6 +12,7 @@ import {
 import { useLanguage } from "@/context/LanguageContext";
 import { translations } from "@/lib/translations";
 import { homeSections } from "@/lib/sections";
+import { getSections, scrollToSection, sectionAt } from "@/lib/snapScroll";
 
 type NavSubItem = {
   label: string;
@@ -89,8 +90,7 @@ export default function Header() {
     const main = document.querySelector("main");
     if (!main) return;
     const handleScroll = () => {
-      const idx = Math.round(main.scrollTop / main.clientHeight);
-      setIsDark(darkIndexes.includes(idx));
+      setIsDark(darkIndexes.includes(sectionAt(main)));
     };
     main.addEventListener("scroll", handleScroll);
     return () => main.removeEventListener("scroll", handleScroll);
@@ -120,10 +120,8 @@ export default function Header() {
     const main = document.querySelector("main");
     const target = document.querySelector(href);
     if (main && target) {
-      const windowH = main.clientHeight;
-      const sections = Array.from(main.querySelectorAll("section"));
-      const idx = sections.indexOf(target.closest("section") as HTMLElement);
-      if (idx !== -1) main.scrollTo({ top: idx * windowH, behavior: "smooth" });
+      const idx = getSections(main).indexOf(target.closest("section") as HTMLElement);
+      if (idx !== -1) scrollToSection(main, idx);
     }
   };
 

@@ -16,6 +16,7 @@ import CaseStudy from "@/components/CaseStudy";
 import Cases from "@/components/Cases";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
+import { stepScroll } from "@/lib/snapScroll";
 
 export default function Home() {
   const mainRef = useRef<HTMLDivElement>(null);
@@ -32,21 +33,7 @@ export default function Home() {
 
       isScrolling = true;
 
-      const sections = Array.from(el.querySelectorAll("section"));
-      const currentScroll = el.scrollTop;
-      const windowH = el.clientHeight;
-
-      // 현재 보이는 섹션 인덱스 계산
-      const currentIndex = Math.round(currentScroll / windowH);
-      const nextIndex =
-        e.deltaY > 0
-          ? Math.min(currentIndex + 1, sections.length - 1)
-          : Math.max(currentIndex - 1, 0);
-
-      el.scrollTo({
-        top: nextIndex * windowH,
-        behavior: "smooth",
-      });
+      stepScroll(el, e.deltaY > 0 ? 1 : -1);
 
       // 스크롤 쿨다운 (애니메이션 완료 후 해제)
       setTimeout(() => {
@@ -65,14 +52,7 @@ export default function Home() {
       if (Math.abs(dy) < 50) return; // 50px 미만 스와이프는 무시
 
       isScrolling = true;
-      const sections = Array.from(el.querySelectorAll("section"));
-      const currentIndex = Math.round(el.scrollTop / el.clientHeight);
-      const nextIndex =
-        dy > 0
-          ? Math.min(currentIndex + 1, sections.length - 1)
-          : Math.max(currentIndex - 1, 0);
-
-      el.scrollTo({ top: nextIndex * el.clientHeight, behavior: "smooth" });
+      stepScroll(el, dy > 0 ? 1 : -1);
       setTimeout(() => { isScrolling = false; }, 800);
     };
 
