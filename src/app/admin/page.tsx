@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from "react";
 import AdminAnalytics from "@/components/AdminAnalytics";
+import AdminKakao from "@/components/AdminKakao";
 import { Mail, Building2, Phone, Tag } from "lucide-react";
 
 interface Contact {
@@ -25,8 +26,9 @@ export default function AdminPage() {
   const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState<Contact | null>(null);
 
-  const [tab, setTab] = useState<"visitors" | "contacts">("visitors");
+  const [tab, setTab] = useState<"visitors" | "contacts" | "alerts">("visitors");
   const [contactsError, setContactsError] = useState("");
+  const kakaoReturn = typeof window !== "undefined" && new URLSearchParams(window.location.search).has("kakao");
 
   const fetchContacts = useCallback(async (pw: string) => {
     setContactsError("");
@@ -71,6 +73,7 @@ export default function AdminPage() {
           return;
         }
         setAuthed(true);
+        if (kakaoReturn) setTab("alerts");
         fetchContacts(pw);
       } catch {
         setError("서버에 연결하지 못했습니다.");
@@ -78,7 +81,7 @@ export default function AdminPage() {
         setLoading(false);
       }
     },
-    [fetchContacts]
+    [fetchContacts, kakaoReturn]
   );
 
   if (!authed) {
@@ -134,6 +137,7 @@ export default function AdminPage() {
           <div className="flex gap-1">
             {([
               ["visitors", "방문자"],
+              ["alerts", "알림"],
               ["contacts", `문의 (${contacts.length}${contacts.some((c) => !c.isRead) ? ` · 새 글 ${contacts.filter((c) => !c.isRead).length}` : ""})`],
             ] as const).map(([k, label]) => (
               <button
@@ -152,6 +156,7 @@ export default function AdminPage() {
 
       <div className="max-w-6xl mx-auto px-4 py-8">
         {tab === "visitors" && <AdminAnalytics password={password} />}
+        {tab === "alerts" && <AdminKakao password={password} />}
 
         {tab === "contacts" && contactsError && (
           <div className="bg-amber-50 border border-amber-100 text-amber-800 text-sm rounded-xl p-4 mb-5">{contactsError}</div>

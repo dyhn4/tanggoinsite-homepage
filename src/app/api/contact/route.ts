@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 import { checkAdmin } from "@/lib/adminAuth";
 import { dbConfigured, listInquiries, markRead, saveInquiry } from "@/lib/inquiries";
+import { inquiryText, kakaoConfigured, notifyAll } from "@/lib/kakao";
 
 const TO_EMAIL = "dyhn4@naver.com, juni0815@daum.net, qqh9514@naver.com";
 
@@ -94,6 +95,18 @@ export async function POST(req: NextRequest) {
     // 저장과 발송 중 하나라도 성공하면 접수된 것으로 처리
     if (!saved && !mailed) {
       return NextResponse.json({ error: "서버 오류가 발생했습니다." }, { status: 500 });
+    }
+
+    // 3) 카카오톡 알림 (실패하거나 느려도 접수에는 영향 없음)
+    if (kakaoConfigured()) {
+      try {
+        await Promise.race([
+          notifyAll(inquiryText({ name, company, service, message })),
+          new Promise((resolve) => setTimeout(resolve, 5000)),
+        ]);
+      } catch (e) {
+        console.error("Inquiry kakao error:", e);
+      }
     }
 
     return NextResponse.json({ success: true }, { status: 201 });
