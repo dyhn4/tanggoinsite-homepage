@@ -193,7 +193,6 @@ function SectionContent({ sol, tSol, labels }: { sol: AnySolution; tSol: TSol; l
           </div>
         </div>
         <WorkflowDesignBlock accent={accent} />
-        <SolutionFigures id={sol.id} accent={accent} />
       </div>
     );
   }

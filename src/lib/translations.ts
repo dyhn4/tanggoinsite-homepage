@@ -781,14 +781,6 @@ const ko = {
   solutionFigures: {
     label: "실제 화면과 산출물",
     items: {
-      "tango-workflow": [
-        {
-          src: "/solutions/figures/workflow-process.webp", w: 1004, h: 778,
-          title: "공정 흐름도",
-          caption: "납품 파일이 검수와 업로드를 거쳐 전자도서관 시스템에 반영되고, OCR 처리와 재OCR이 같은 흐름 안에서 이어집니다. 이미지-PDF 프로세스(파랑)와 OCR-PDF 프로세스(주황)를 나누어 관리합니다.",
-          note: "※ 도서관 원문 구축 사업의 공정 흐름도입니다.",
-        },
-      ],
       "moon-ai-ocr": [
         {
           src: "/solutions/figures/ocr-segmentation.webp", w: 380, h: 376,
@@ -2103,14 +2095,6 @@ const en: typeof ko = {
   solutionFigures: {
     label: "Real Screens and Deliverables",
     items: {
-      "tango-workflow": [
-        {
-          src: "/solutions/figures/workflow-process.webp", w: 1004, h: 778,
-          title: "Process Flow",
-          caption: "Delivered files pass inspection and upload into the digital library system, while OCR processing and re-OCR run in the same flow. The image-PDF process (blue) and OCR-PDF process (orange) are managed separately.",
-          note: "* Process flow from a library full-text build project.",
-        },
-      ],
       "moon-ai-ocr": [
         {
           src: "/solutions/figures/ocr-segmentation.webp", w: 380, h: 376,
