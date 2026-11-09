@@ -7,6 +7,10 @@ import {
   Layers, FileText, BrainCircuit, ChevronRight, Check,
   Briefcase, ShieldCheck, BookOpen, ClipboardCheck, Package, Settings,
   ExternalLink, Gift, MessageCircle, Languages, Wand2,
+  Ruler, Eraser, Focus, SunMoon, ScanText, Group, Type, Pilcrow, Table2,
+  Link2, ListChecks, Bookmark, ListTree, FileCode, Tags, FileOutput, Images,
+  FileSearch, Library, BarChart3, Newspaper, Eye, Image as ImageIcon,
+  MessageCircleQuestion, Trophy,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
@@ -40,14 +44,14 @@ type OcrStep = {
 };
 
 type WorkflowSol  = SolBase & { kind: "workflow";  processIcons: ProcessIcon[]; ocrSteps?: never };
-type EditorSol    = SolBase & { kind: "editor";    featureIcons: string[]; ocrSteps?: never };
+type EditorSol    = SolBase & { kind: "editor";    featureIcons: LucideIcon[]; ocrSteps?: never };
 type OcrSol       = SolBase & { kind: "ocr";       f1Score: string; ocrSteps: OcrStep[] };
-type XmlSol       = SolBase & { kind: "xml";       featureIcons: string[] };
-type BatchSol     = SolBase & { kind: "batch";     outputIcons: string[] };
-type PdfSol       = SolBase & { kind: "pdf";       featureIcons: string[] };
-type ExplorerSol  = SolBase & { kind: "explorer";  capabilityIcons: string[] };
+type XmlSol       = SolBase & { kind: "xml";       featureIcons: LucideIcon[] };
+type BatchSol     = SolBase & { kind: "batch";     outputIcons: LucideIcon[] };
+type PdfSol       = SolBase & { kind: "pdf";       featureIcons: LucideIcon[] };
+type ExplorerSol  = SolBase & { kind: "explorer";  capabilityIcons: LucideIcon[] };
 type TranslatorSol = SolBase & { kind: "translator" };
-type ImageSol     = SolBase & { kind: "image";     featureIcons: string[] };
+type ImageSol     = SolBase & { kind: "image";     featureIcons: LucideIcon[] };
 
 type AnySolution =
   | WorkflowSol | ImageSol | EditorSol | OcrSol | XmlSol
@@ -84,7 +88,7 @@ const solutions: AnySolution[] = [
     bg: "linear-gradient(135deg, #1f1a00 0%, #5c3a0a 35%, #b7791f 65%, #f4c542 100%)",
     orbs: ["rgba(202,138,4,0.50)", "rgba(250,204,21,0.36)", "rgba(120,53,15,0.45)"],
     accent: "#facc15", tag: "gold",
-    featureIcons: ["📐", "🧹", "🎯", "🌓"],
+    featureIcons: [Ruler, Eraser, Focus, SunMoon],
   },
   {
     kind: "ocr",
@@ -109,7 +113,7 @@ const solutions: AnySolution[] = [
     bg: "linear-gradient(135deg, #1a0533 0%, #4c1d95 35%, #7c3aed 65%, #a855f7 100%)",
     orbs: ["rgba(124,58,237,0.55)", "rgba(168,85,247,0.40)", "rgba(196,181,253,0.20)"],
     accent: "#c084fc", tag: "violet",
-    featureIcons: ["🔍", "🎯", "✏️", "📝", "🗂️"],
+    featureIcons: [ScanText, Group, Type, Pilcrow, Table2],
   },
   {
     kind: "pdf",
@@ -119,7 +123,7 @@ const solutions: AnySolution[] = [
     bg: "linear-gradient(135deg, #1c0008 0%, #881337 35%, #e11d48 65%, #fb7185 100%)",
     orbs: ["rgba(225,29,72,0.55)", "rgba(251,113,133,0.40)", "rgba(253,164,175,0.25)"],
     accent: "#fb7185", tag: "rose",
-    featureIcons: ["🔗", "📑", "📖", "🗂️"],
+    featureIcons: [Link2, ListChecks, Bookmark, ListTree],
   },
   {
     kind: "xml",
@@ -129,7 +133,7 @@ const solutions: AnySolution[] = [
     bg: "linear-gradient(135deg, #022c22 0%, #065f46 35%, #059669 65%, #34d399 100%)",
     orbs: ["rgba(5,150,105,0.55)", "rgba(52,211,153,0.40)", "rgba(110,231,183,0.25)"],
     accent: "#34d399", tag: "emerald",
-    featureIcons: ["📄", "🏷️", "⚡"],
+    featureIcons: [FileCode, Tags, Braces],
   },
   {
     kind: "batch",
@@ -139,7 +143,7 @@ const solutions: AnySolution[] = [
     bg: "linear-gradient(135deg, #2d0f00 0%, #7c2d12 35%, #c2410c 65%, #fb923c 100%)",
     orbs: ["rgba(194,65,12,0.55)", "rgba(251,146,60,0.40)", "rgba(253,186,116,0.25)"],
     accent: "#fb923c", tag: "orange",
-    outputIcons: ["📊", "🖼️", "📑", "📚", "📈", "📰"],
+    outputIcons: [FileOutput, Images, FileSearch, Library, BarChart3, Newspaper],
   },
   {
     kind: "explorer",
@@ -149,7 +153,7 @@ const solutions: AnySolution[] = [
     bg: "linear-gradient(135deg, #0f0a2e 0%, #312e81 35%, #4338ca 65%, #818cf8 100%)",
     orbs: ["rgba(67,56,202,0.55)", "rgba(129,140,248,0.40)", "rgba(196,181,253,0.25)"],
     accent: "#818cf8", tag: "indigo",
-    capabilityIcons: ["🧠", "🖼️", "📖", "🌐", "🤖"],
+    capabilityIcons: [Eye, ImageIcon, BookOpen, Languages, MessageCircleQuestion],
   },
   {
     kind: "translator",
@@ -204,7 +208,7 @@ function SectionContent({ sol, tSol, labels }: { sol: AnySolution; tSol: TSol; l
           {tSol.namedFeatures.map((f, fi) => (
             <div key={f.name} className="rounded-xl p-5 border border-white/6 hover:border-white/15 hover:-translate-y-0.5 transition-all"
               style={{ background: "rgba(255,255,255,0.03)" }}>
-              <span className="text-3xl block mb-3">{sol.featureIcons[fi] ?? "✨"}</span>
+              <FeatureIcon icon={sol.featureIcons[fi]} accent={accent} className="mb-3" />
               <h3 className="font-bold text-white mb-1.5 text-sm">{f.name}</h3>
               <p className="text-xs text-white/50 leading-relaxed">{f.desc}</p>
             </div>
@@ -223,7 +227,7 @@ function SectionContent({ sol, tSol, labels }: { sol: AnySolution; tSol: TSol; l
             <div key={f.name} className="rounded-xl p-4 border border-white/6 hover:border-white/12 hover:-translate-y-0.5 transition-all group"
               style={{ background: "rgba(255,255,255,0.03)" }}>
               <div className="flex items-start gap-3">
-                <span className="text-2xl flex-shrink-0">{sol.featureIcons[fi] ?? "✨"}</span>
+                <FeatureIcon icon={sol.featureIcons[fi]} accent={accent} className="flex-shrink-0" />
                 <div>
                   <div className="flex items-center gap-2 mb-1.5">
                     <h3 className="font-bold text-white text-sm">{f.name}</h3>
@@ -281,7 +285,7 @@ function SectionContent({ sol, tSol, labels }: { sol: AnySolution; tSol: TSol; l
                   style={{ background: `${accent}18` }} />
 
                 <div className="flex-shrink-0 flex flex-col items-center gap-1.5 z-10">
-                  <span className="text-4xl drop-shadow-lg">🏆</span>
+                  <Trophy size={36} strokeWidth={1.5} style={{ color: accent }} />
                   <span className="text-[10px] font-black uppercase tracking-widest px-2.5 py-0.5 rounded-full"
                     style={{ background: `${accent}30`, color: accent, border: `1px solid ${accent}50` }}>
                     {labels.rankBadge}
@@ -345,7 +349,7 @@ function SectionContent({ sol, tSol, labels }: { sol: AnySolution; tSol: TSol; l
           {tSol.namedFeatures.map((f, fi) => (
             <div key={f.name} className="rounded-xl p-5 border border-white/6 hover:border-white/15 hover:-translate-y-0.5 transition-all group"
               style={{ background: "rgba(255,255,255,0.03)" }}>
-              <span className="text-3xl block mb-3">{sol.featureIcons[fi] ?? "⚡"}</span>
+              <FeatureIcon icon={sol.featureIcons[fi]} accent={accent} className="mb-3" />
               <h3 className="font-bold text-white mb-1.5 text-sm">{f.name}</h3>
               <p className="text-xs text-white/50 leading-relaxed whitespace-pre-line">{f.desc}</p>
             </div>
@@ -369,7 +373,7 @@ function SectionContent({ sol, tSol, labels }: { sol: AnySolution; tSol: TSol; l
               <div className="absolute top-3 right-4 text-4xl opacity-10 group-hover:opacity-20 transition-opacity font-black text-white">
                 {String(i + 1).padStart(2, "0")}
               </div>
-              <span className="text-2xl block mb-2.5">{sol.outputIcons[i] ?? "📄"}</span>
+              <FeatureIcon icon={sol.outputIcons[i]} accent={accent} className="mb-3" />
               <h3 className="font-bold text-white text-sm mb-1.5">{o.name}</h3>
               <p className="text-xs text-white/50 leading-relaxed whitespace-pre-line">{o.desc}</p>
             </div>
@@ -389,7 +393,7 @@ function SectionContent({ sol, tSol, labels }: { sol: AnySolution; tSol: TSol; l
           {tSol.namedFeatures.map((f, fi) => (
             <div key={f.name} className="flex gap-3 rounded-xl p-4 border border-white/6 hover:border-white/12 hover:-translate-y-0.5 transition-all"
               style={{ background: "rgba(255,255,255,0.03)" }}>
-              <span className="text-2xl flex-shrink-0">{sol.featureIcons[fi] ?? "📄"}</span>
+              <FeatureIcon icon={sol.featureIcons[fi]} accent={accent} className="flex-shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1 text-sm">{f.name}</h3>
                 <p className="text-xs text-white/50 leading-relaxed whitespace-pre-line">{f.desc}</p>
@@ -409,7 +413,7 @@ function SectionContent({ sol, tSol, labels }: { sol: AnySolution; tSol: TSol; l
           {tSol.capabilities.map((c, ci) => (
             <div key={c.name} className="rounded-xl p-5 border border-white/6 hover:border-white/15 hover:-translate-y-0.5 transition-all group"
               style={{ background: "rgba(255,255,255,0.03)" }}>
-              <span className="text-3xl block mb-3">{sol.capabilityIcons[ci] ?? "🤖"}</span>
+              <FeatureIcon icon={sol.capabilityIcons[ci]} accent={accent} className="mb-3" />
               <h3 className="font-bold text-white mb-1.5 text-sm">{c.name}</h3>
               <p className="text-xs text-white/50 leading-relaxed whitespace-pre-line">{c.desc}</p>
             </div>
@@ -420,6 +424,15 @@ function SectionContent({ sol, tSol, labels }: { sol: AnySolution; tSol: TSol; l
   }
 
   return null;
+}
+
+function FeatureIcon({ icon: Icon, accent, className = "" }: { icon?: LucideIcon; accent: string; className?: string }) {
+  if (!Icon) return null;
+  return (
+    <span className={`w-10 h-10 rounded-lg border border-white/10 flex items-center justify-center ${className}`}>
+      <Icon size={20} strokeWidth={1.5} style={{ color: accent }} />
+    </span>
+  );
 }
 
 function SectionLabel({ accent, children }: { accent: string; children: React.ReactNode }) {
