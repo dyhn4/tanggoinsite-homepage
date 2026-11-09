@@ -778,6 +778,48 @@ const ko = {
   },
 
   // ── HERO SLIDES (메인 오른쪽 비주얼 반복 카드) ──
+  solutionFigures: {
+    label: "실제 화면과 산출물",
+    items: {
+      "tango-workflow": [
+        {
+          src: "/solutions/figures/workflow-process.webp", w: 1004, h: 778,
+          title: "공정 흐름도",
+          caption: "납품 파일이 검수와 업로드를 거쳐 전자도서관 시스템에 반영되고, OCR 처리와 재OCR이 같은 흐름 안에서 이어집니다. 이미지-PDF 프로세스(파랑)와 OCR-PDF 프로세스(주황)를 나누어 관리합니다.",
+          note: "※ 도서관 원문 구축 사업의 공정 흐름도입니다.",
+        },
+      ],
+      "moon-ai-ocr": [
+        {
+          src: "/solutions/figures/ocr-segmentation.webp", w: 380, h: 376,
+          title: "글자 분할 — 붙은 글자를 한 글자씩",
+          caption: "딥러닝 기반 글자 분할 모델을 적용하면 서로 이어진 글자도 한 글자씩 나뉩니다. 왼쪽은 적용 전, 오른쪽은 적용 후입니다.",
+          note: "※ 불교경전 디지털화 프로젝트 적용 사례",
+        },
+        {
+          src: "/solutions/figures/ocr-dataset.webp", w: 1225, h: 600,
+          title: "학습 글자 샘플 생성",
+          caption: "수작업으로 모은 약 20,000개 샘플을 Data Augmentation으로 325,576개의 학습 데이터로 늘렸습니다. 같은 글자를 굵기와 번짐이 다른 여러 모양으로 학습합니다.",
+          note: "※ 불교경전 디지털화 프로젝트(한자 인식) 적용 사례의 수치입니다.",
+        },
+      ],
+      "tango-pdf": [
+        {
+          src: "/solutions/figures/pdf-text-layer.webp", w: 566, h: 860,
+          title: "검색 가능한 OCR PDF",
+          caption: "원본 이미지 위에 인식한 글자가 보이지 않는 텍스트 층으로 얹혀 있어, 원본 모습 그대로 보면서 글자를 선택하고 복사하고 검색할 수 있습니다. 파란색은 선택된 텍스트 영역입니다.",
+          note: "※ 도서관 소장 자료의 OCR PDF를 PDF 뷰어에서 연 화면입니다.",
+        },
+      ],
+    },
+  },
+  outputSamples: {
+    label: "실제 산출물 예시",
+    note: "※ 실제 산출물 형식의 예시이며 일부만 발췌했습니다.",
+    json: { title: "JSON", desc: "페이지마다 본문이 담기고, 줄바꿈은 \\r\\n으로 보존됩니다." },
+    xml:  { title: "XML",  desc: "글자마다 좌표(l·t·r·b)와 신뢰도(cc)가 함께 기록됩니다." },
+    txt:  { title: "TXT (면 단위)", desc: "면 번호와 함께 인식한 본문이 텍스트 파일로 저장됩니다." },
+  },
   heroSlides: {
     dots: ["AI OCR", "현대어 번역", "번역 성능"],
     ocrCta: "MooN AI OCR 자세히 보기",
@@ -2058,6 +2100,48 @@ const en: typeof ko = {
   },
 
   // ── HERO SLIDES (rotating visual card on the home hero) ──
+  solutionFigures: {
+    label: "Real Screens and Deliverables",
+    items: {
+      "tango-workflow": [
+        {
+          src: "/solutions/figures/workflow-process.webp", w: 1004, h: 778,
+          title: "Process Flow",
+          caption: "Delivered files pass inspection and upload into the digital library system, while OCR processing and re-OCR run in the same flow. The image-PDF process (blue) and OCR-PDF process (orange) are managed separately.",
+          note: "* Process flow from a library full-text build project.",
+        },
+      ],
+      "moon-ai-ocr": [
+        {
+          src: "/solutions/figures/ocr-segmentation.webp", w: 380, h: 376,
+          title: "Character Segmentation — Joined Characters, Split One by One",
+          caption: "A deep-learning segmentation model splits characters that touch each other into individual characters. Left: before; right: after.",
+          note: "* Case from a Buddhist scripture digitization project",
+        },
+        {
+          src: "/solutions/figures/ocr-dataset.webp", w: 1225, h: 600,
+          title: "Training Sample Generation",
+          caption: "About 20,000 hand-collected samples were expanded to 325,576 training samples through data augmentation. The same character is learned in many shapes of different thickness and blur.",
+          note: "* Figures from a Buddhist scripture digitization project (Hanja recognition)",
+        },
+      ],
+      "tango-pdf": [
+        {
+          src: "/solutions/figures/pdf-text-layer.webp", w: 566, h: 860,
+          title: "Searchable OCR PDF",
+          caption: "Recognized text sits on the original image as an invisible text layer, so you can view the original page while selecting, copying and searching text. Blue marks the selected text area.",
+          note: "* An OCR PDF of a library holding opened in a PDF viewer.",
+        },
+      ],
+    },
+  },
+  outputSamples: {
+    label: "Sample Deliverables",
+    note: "* Examples in the actual deliverable formats; shown in part.",
+    json: { title: "JSON", desc: "Each page holds its body text, and line breaks are preserved as \\r\\n." },
+    xml:  { title: "XML",  desc: "Each character is recorded with its coordinates (l·t·r·b) and confidence (cc)." },
+    txt:  { title: "TXT (per page)", desc: "Recognized text is saved as a text file together with the page number." },
+  },
   heroSlides: {
     dots: ["AI OCR", "Modern Translation", "Translation Quality"],
     ocrCta: "Learn more about MooN AI OCR",

@@ -20,6 +20,7 @@ import WorkflowShowcase, { WorkflowMock, WorkflowMetrics } from "@/components/Wo
 import TranslatorShowcase from "@/components/TranslatorShowcase";
 import { OcrRetrain, DeliverablesBlock, JsonStructureBlock, WorkflowDesignBlock } from "@/components/ReportProof";
 import SolutionCompare, { SolutionHeadline, SolutionMetrics, SolutionMock, hasShowcase } from "@/components/SolutionShowcase";
+import SolutionFigures, { OutputSamples } from "@/components/SolutionFigures";
 
 /* ─────────────────────────────────────────────
    타입 정의
@@ -192,6 +193,7 @@ function SectionContent({ sol, tSol, labels }: { sol: AnySolution; tSol: TSol; l
           </div>
         </div>
         <WorkflowDesignBlock accent={accent} />
+        <SolutionFigures id={sol.id} accent={accent} />
       </div>
     );
   }
@@ -335,6 +337,8 @@ function SectionContent({ sol, tSol, labels }: { sol: AnySolution; tSol: TSol; l
           <p className="mt-3 text-xs text-white/30">{labels.comparisonNote}</p>
         </div>
 
+        <SolutionFigures id={sol.id} accent={accent} />
+
         <OcrRetrain accent={accent} />
       </div>
     );
@@ -356,6 +360,7 @@ function SectionContent({ sol, tSol, labels }: { sol: AnySolution; tSol: TSol; l
           ))}
         </div>
       </div>
+      <OutputSamples variant="xml" accent={accent} />
       <JsonStructureBlock accent={accent} />
       </div>
     );
@@ -380,6 +385,7 @@ function SectionContent({ sol, tSol, labels }: { sol: AnySolution; tSol: TSol; l
           ))}
         </div>
       </div>
+      <OutputSamples variant="batch" accent={accent} />
       <DeliverablesBlock accent={accent} />
       </div>
     );
@@ -387,20 +393,23 @@ function SectionContent({ sol, tSol, labels }: { sol: AnySolution; tSol: TSol; l
 
   if (sol.kind === "pdf") {
     return (
-      <div>
-        <SectionLabel accent={accent}>{labels.featuresLabel}</SectionLabel>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
-          {tSol.namedFeatures.map((f, fi) => (
-            <div key={f.name} className="flex gap-3 rounded-xl p-4 border border-white/6 hover:border-white/12 hover:-translate-y-0.5 transition-all"
-              style={{ background: "rgba(255,255,255,0.03)" }}>
-              <FeatureIcon icon={sol.featureIcons[fi]} accent={accent} className="flex-shrink-0" />
-              <div>
-                <h3 className="font-bold text-white mb-1 text-sm">{f.name}</h3>
-                <p className="text-xs text-white/50 leading-relaxed whitespace-pre-line">{f.desc}</p>
+      <div className="flex flex-col gap-10">
+        <div>
+          <SectionLabel accent={accent}>{labels.featuresLabel}</SectionLabel>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+            {tSol.namedFeatures.map((f, fi) => (
+              <div key={f.name} className="flex gap-3 rounded-xl p-4 border border-white/6 hover:border-white/12 hover:-translate-y-0.5 transition-all"
+                style={{ background: "rgba(255,255,255,0.03)" }}>
+                <FeatureIcon icon={sol.featureIcons[fi]} accent={accent} className="flex-shrink-0" />
+                <div>
+                  <h3 className="font-bold text-white mb-1 text-sm">{f.name}</h3>
+                  <p className="text-xs text-white/50 leading-relaxed whitespace-pre-line">{f.desc}</p>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
+        <SolutionFigures id={sol.id} accent={accent} />
       </div>
     );
   }
