@@ -205,8 +205,8 @@ export default function WorkflowShowcase({
 
         <Link
           href="/contact"
-          className="mt-5 inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold border transition-colors hover:bg-white/10"
-          style={{ borderColor: `${accent}77`, color: accent }}
+          className="mt-5 inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold text-slate-900 transition-transform hover:-translate-y-0.5"
+          style={{ background: accent }}
         >
           <MessageCircle size={14} />
           {w.demoCta}
