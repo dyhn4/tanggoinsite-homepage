@@ -20,7 +20,7 @@ function Label({ accent, children }: { accent: string; children: React.ReactNode
   return (
     <div className="flex items-center gap-3">
       <div className="h-px w-6 rounded-full" style={{ background: accent }} />
-      <h2 className="text-sm font-bold uppercase tracking-widest" style={{ color: accent }}>{children}</h2>
+      <h2 className="text-sm font-bold tracking-widest" style={{ color: accent }}>{children}</h2>
     </div>
   );
 }

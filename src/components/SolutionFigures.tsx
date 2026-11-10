@@ -8,7 +8,7 @@ function Label({ accent, children }: { accent: string; children: React.ReactNode
   return (
     <div className="flex items-center gap-3">
       <div className="h-px w-6 rounded-full" style={{ background: accent }} />
-      <h2 className="text-sm font-bold uppercase tracking-widest" style={{ color: accent }}>{children}</h2>
+      <h2 className="text-sm font-bold tracking-widest" style={{ color: accent }}>{children}</h2>
     </div>
   );
 }
@@ -18,7 +18,7 @@ type Figure = { src: string; w: number; h: number; title: string; caption: strin
 function Frame({ f }: { f: Figure }) {
   return (
     // 원본보다 크게 늘리면 흐려지므로 원본 폭을 넘지 않게 제한
-    <div className="rounded-2xl overflow-hidden bg-white border border-white/10" style={{ maxWidth: f.w }}>
+    <div className="rounded-2xl overflow-hidden bg-white border border-white/10" style={{ maxWidth: Math.min(f.w, f.h > f.w ? 380 : f.w) }}>
       <Image src={f.src} alt={f.title} width={f.w} height={f.h} className="w-full h-auto" />
     </div>
   );
@@ -124,7 +124,7 @@ export function OutputSamples({ variant, accent }: { variant: "xml" | "batch"; a
           <Code title={t.xml.title} desc={t.xml.desc} code={XML_SAMPLE} accent={accent} />
         </div>
       ) : (
-        <div className="mt-5 max-w-2xl">
+        <div className="mt-5">
           <Code title={t.txt.title} desc={t.txt.desc} code={TXT_SAMPLE} accent={accent} />
         </div>
       )}

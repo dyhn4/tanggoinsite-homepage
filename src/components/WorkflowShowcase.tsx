@@ -108,7 +108,7 @@ export default function WorkflowShowcase({
       <div>
         <div className="flex items-center gap-3">
           <div className="h-px w-6 rounded-full" style={{ background: accent }} />
-          <h2 className="text-sm font-bold uppercase tracking-widest" style={{ color: accent }}>{w.tabsLabel}</h2>
+          <h2 className="text-sm font-bold tracking-widest" style={{ color: accent }}>{w.tabsLabel}</h2>
         </div>
 
         <div className="mt-5 grid grid-cols-1 lg:grid-cols-5 gap-5">
@@ -179,7 +179,7 @@ export default function WorkflowShowcase({
       <div>
         <div className="flex items-center gap-3">
           <div className="h-px w-6 rounded-full" style={{ background: accent }} />
-          <h2 className="text-sm font-bold uppercase tracking-widest" style={{ color: accent }}>{w.compareTitle}</h2>
+          <h2 className="text-sm font-bold tracking-widest" style={{ color: accent }}>{w.compareTitle}</h2>
         </div>
 
         <div className="mt-5 rounded-2xl border border-white/10 overflow-hidden" style={{ background: "rgba(255,255,255,0.03)" }}>

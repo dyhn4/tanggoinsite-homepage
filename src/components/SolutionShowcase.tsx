@@ -206,7 +206,7 @@ export default function SolutionCompare({ id, name, accent }: { id: string; name
     <div className="mt-12">
       <div className="flex items-center gap-3">
         <div className="h-px w-6 rounded-full" style={{ background: accent }} />
-        <h2 className="text-sm font-bold uppercase tracking-widest" style={{ color: accent }}>
+        <h2 className="text-sm font-bold tracking-widest" style={{ color: accent }}>
           {common.compareTitle.replace("{name}", name)}
         </h2>
       </div>

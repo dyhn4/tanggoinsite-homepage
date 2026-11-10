@@ -739,7 +739,7 @@ const ko = {
         headline: ["스캔 이미지부터 바로잡아", "OCR 인식률을 끌어올립니다"],
         metrics: [
           { value: "자동 보정", label: "기울기·그림자·곡률 교정" },
-          { value: "3종",       label: "기울기·배경/잡티·중앙정렬 자동 처리" },
+          { value: "4가지",     label: "기울기·잡티·중앙정렬·곡률 자동 보정" },
           { value: "OCR 전처리", label: "인식률 극대화를 위한 첫 단계" },
         ],
         compare: [
@@ -2053,7 +2053,7 @@ const en: typeof ko = {
         headline: ["Fix the scan first,", "and lift OCR recognition rates"],
         metrics: [
           { value: "Auto-correct", label: "Tilt, shadow, and curvature fixes" },
-          { value: "3 types", label: "Tilt, background/noise, centering handled automatically" },
+          { value: "4 types", label: "Tilt, noise, centering and curvature corrected automatically" },
           { value: "OCR pre-processing", label: "The first step to maximize recognition" },
         ],
         compare: [

@@ -195,7 +195,9 @@ function SectionContent({ sol, tSol, labels }: { sol: AnySolution; tSol: TSol; l
         <SectionLabel accent={accent}>{labels.featuresLabel}</SectionLabel>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
           {tSol.editorFeatures.map((f, fi) => (
-            <div key={f.name} className="rounded-xl p-4 border border-white/6 hover:border-white/12 hover:-translate-y-0.5 transition-all group"
+            <div key={f.name} className={`rounded-xl p-4 border border-white/6 hover:border-white/12 hover:-translate-y-0.5 transition-all group ${
+                fi === tSol.editorFeatures.length - 1 && tSol.editorFeatures.length % 2 === 1 ? "sm:col-span-2" : ""
+              }`}
               style={{ background: "rgba(255,255,255,0.03)" }}>
               <div className="flex items-start gap-3">
                 <FeatureIcon icon={sol.featureIcons[fi]} accent={accent} className="flex-shrink-0" />
@@ -387,9 +389,12 @@ function SectionContent({ sol, tSol, labels }: { sol: AnySolution; tSol: TSol; l
     return (
       <div>
         <SectionLabel accent={accent}>{labels.aiCapabilitiesLabel}</SectionLabel>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+        {/* 5개: 윗줄 3개 + 아랫줄 2개를 폭에 맞춰 늘려 빈칸이 생기지 않게 한다 */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4 mt-4">
           {tSol.capabilities.map((c, ci) => (
-            <div key={c.name} className="rounded-xl p-5 border border-white/6 hover:border-white/15 hover:-translate-y-0.5 transition-all group"
+            <div key={c.name} className={`rounded-xl p-5 border border-white/6 hover:border-white/15 hover:-translate-y-0.5 transition-all group ${
+                ci < 3 ? "lg:col-span-2" : "lg:col-span-3"
+              } ${ci === tSol.capabilities.length - 1 && tSol.capabilities.length % 2 === 1 ? "sm:col-span-2" : ""}`}
               style={{ background: "rgba(255,255,255,0.03)" }}>
               <FeatureIcon icon={sol.capabilityIcons[ci]} accent={accent} className="mb-3" />
               <h3 className="font-bold text-white mb-1.5 text-sm">{c.name}</h3>
@@ -417,7 +422,7 @@ function SectionLabel({ accent, children }: { accent: string; children: React.Re
   return (
     <div className="flex items-center gap-3">
       <div className="h-px w-6 rounded-full" style={{ background: accent }} />
-      <h2 className="text-sm font-bold uppercase tracking-widest" style={{ color: accent }}>{children}</h2>
+      <h2 className="text-sm font-bold tracking-widest" style={{ color: accent }}>{children}</h2>
     </div>
   );
 }
@@ -618,7 +623,7 @@ export default function SolutionsPage() {
           <section key={sol.id} id={sol.id} className="relative overflow-hidden scroll-mt-14">
 
             {/* 히어로 */}
-            <div className="relative min-h-[300px] flex items-center bg-[#0b1a33]">
+            <div className="relative min-h-[300px] md:min-h-[450px] flex items-center bg-[#0b1a33]">
               <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 py-10 w-full">
                 <div className="flex flex-col md:flex-row md:items-center gap-8">
                   <div className="flex-1">
