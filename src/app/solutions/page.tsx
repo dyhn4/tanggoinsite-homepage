@@ -610,15 +610,13 @@ export default function SolutionsPage() {
                 {sol.kind !== "workflow" && <SolutionCompare id={sol.id} name={sol.title} accent={sol.accent} />}
 
                 {/* CTA */}
-                <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 rounded-2xl px-6 py-5 border border-white/8"
-                  style={{ background: `linear-gradient(135deg,${sol.accent}10 0%,transparent 60%)` }}>
+                <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 rounded-2xl px-6 py-5 border border-white/8">
                   <div>
                     <p className="font-bold text-white text-base">{sol.title} {labels.ctaQuestion}</p>
                     <p className="text-sm text-white/40 mt-0.5">{labels.ctaDesc}</p>
                   </div>
                   <Link href="/contact"
-                    className="flex-shrink-0 inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-bold text-white transition-all hover:scale-105"
-                    style={{ background: `linear-gradient(135deg,${sol.accent}60,${sol.accent})` }}>
+                    className="flex-shrink-0 inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-bold text-white bg-blue-600 hover:bg-blue-500 transition-colors">
                     {labels.ctaBtn} <ArrowLeft size={14} className="rotate-180" />
                   </Link>
                 </div>
