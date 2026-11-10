@@ -126,7 +126,7 @@ const majorProjectsStatic = [
 
 const heroStatsStatic = [
   { icon: Calendar,  value: "2022"  },
-  { icon: Award,     value: "0.964" },
+  { icon: Award,     value: "0.967" },
   { icon: Clock,     value: "6"     },
   { icon: FileCheck, value: "6"     },
 ];
