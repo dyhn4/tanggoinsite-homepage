@@ -29,9 +29,6 @@ type SolBase = {
   id: string;
   icon: LucideIcon;
   title: string;
-  badge: string;
-  bg: string;
-  orbs: [string, string, string];
   accent: string;
   tag: string;
 };
@@ -75,9 +72,6 @@ const solutions: AnySolution[] = [
     kind: "workflow",
     id: "tango-workflow", icon: GitBranch,
     title: "Tango Workflow",
-    badge: "Plug in Program",
-    bg: "linear-gradient(135deg, #0a1628 0%, #0f2d6b 35%, #1a56c4 65%, #0ea5e9 100%)",
-    orbs: ["rgba(29,78,216,0.55)", "rgba(14,165,233,0.40)", "rgba(99,102,241,0.30)"],
     accent: "#38bdf8", tag: "blue",
     processIcons: PROCESS_ICONS,
   },
@@ -85,9 +79,6 @@ const solutions: AnySolution[] = [
     kind: "image",
     id: "tango-image", icon: Wand2,
     title: "Tango Image",
-    badge: "Plug in Program",
-    bg: "linear-gradient(135deg, #1f1a00 0%, #5c3a0a 35%, #b7791f 65%, #f4c542 100%)",
-    orbs: ["rgba(202,138,4,0.50)", "rgba(250,204,21,0.36)", "rgba(120,53,15,0.45)"],
     accent: "#facc15", tag: "gold",
     featureIcons: [Ruler, Eraser, Focus, SunMoon],
   },
@@ -95,9 +86,6 @@ const solutions: AnySolution[] = [
     kind: "ocr",
     id: "moon-ai-ocr", icon: ScanSearch,
     title: "MooN AI OCR",
-    badge: "Plug in Program",
-    bg: "linear-gradient(135deg, #061b2e 0%, #0c4a6e 35%, #0284c7 65%, #06b6d4 100%)",
-    orbs: ["rgba(3,105,161,0.55)", "rgba(6,182,212,0.40)", "rgba(56,189,248,0.30)"],
     accent: "#38bdf8", tag: "sky",
     f1Score: "99.8%",
     ocrSteps: [
@@ -110,9 +98,6 @@ const solutions: AnySolution[] = [
     kind: "editor",
     id: "moon-editor", icon: PenLine,
     title: "MooN Editor",
-    badge: "Plug in Program",
-    bg: "linear-gradient(135deg, #1a0533 0%, #4c1d95 35%, #7c3aed 65%, #a855f7 100%)",
-    orbs: ["rgba(124,58,237,0.55)", "rgba(168,85,247,0.40)", "rgba(196,181,253,0.20)"],
     accent: "#c084fc", tag: "violet",
     featureIcons: [ScanText, Group, Type, Pilcrow, Table2],
   },
@@ -120,9 +105,6 @@ const solutions: AnySolution[] = [
     kind: "pdf",
     id: "tango-pdf", icon: FileText,
     title: "Tango PDF",
-    badge: "Plug in Program",
-    bg: "linear-gradient(135deg, #1c0008 0%, #881337 35%, #e11d48 65%, #fb7185 100%)",
-    orbs: ["rgba(225,29,72,0.55)", "rgba(251,113,133,0.40)", "rgba(253,164,175,0.25)"],
     accent: "#fb7185", tag: "rose",
     featureIcons: [Link2, ListChecks, Bookmark, ListTree],
   },
@@ -130,9 +112,6 @@ const solutions: AnySolution[] = [
     kind: "xml",
     id: "tango-xml", icon: Braces,
     title: "Tango XML(JSON)",
-    badge: "Plug in Program",
-    bg: "linear-gradient(135deg, #022c22 0%, #065f46 35%, #059669 65%, #34d399 100%)",
-    orbs: ["rgba(5,150,105,0.55)", "rgba(52,211,153,0.40)", "rgba(110,231,183,0.25)"],
     accent: "#34d399", tag: "emerald",
     featureIcons: [FileCode, Tags, Braces],
   },
@@ -140,9 +119,6 @@ const solutions: AnySolution[] = [
     kind: "batch",
     id: "tango-batch", icon: Layers,
     title: "Tango Batch",
-    badge: "Plug in Program",
-    bg: "linear-gradient(135deg, #2d0f00 0%, #7c2d12 35%, #c2410c 65%, #fb923c 100%)",
-    orbs: ["rgba(194,65,12,0.55)", "rgba(251,146,60,0.40)", "rgba(253,186,116,0.25)"],
     accent: "#fb923c", tag: "orange",
     outputIcons: [FileOutput, Images, FileSearch, Library, BarChart3, Newspaper],
   },
@@ -150,9 +126,6 @@ const solutions: AnySolution[] = [
     kind: "explorer",
     id: "moon-ai-explorer", icon: BrainCircuit,
     title: "MooN AI Explorer",
-    badge: "Plug in Program",
-    bg: "linear-gradient(135deg, #0f0a2e 0%, #312e81 35%, #4338ca 65%, #818cf8 100%)",
-    orbs: ["rgba(67,56,202,0.55)", "rgba(129,140,248,0.40)", "rgba(196,181,253,0.25)"],
     accent: "#818cf8", tag: "indigo",
     capabilityIcons: [Eye, ImageIcon, BookOpen, Languages, MessageCircleQuestion],
   },
@@ -160,9 +133,6 @@ const solutions: AnySolution[] = [
     kind: "translator",
     id: "moon-translator", icon: Languages,
     title: "MooN Translator",
-    badge: "Plug in Program",
-    bg: "linear-gradient(135deg, #0f1f2b 0%, #1f3a4a 35%, #8a5230 68%, #d99a63 100%)",
-    orbs: ["rgba(201,125,74,0.50)", "rgba(224,160,107,0.38)", "rgba(31,58,74,0.45)"],
     accent: "#e0a06b", tag: "copper",
   },
 ];
@@ -586,28 +556,10 @@ export default function SolutionsPage() {
           <section key={sol.id} id={sol.id} className="relative overflow-hidden">
 
             {/* 히어로 */}
-            <div className="relative min-h-[300px] flex items-center" style={{ background: sol.bg }}>
-              <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <div className="animate-orb-1 absolute w-[400px] h-[400px] rounded-full blur-[100px] -top-24 -left-24"
-                  style={{ background: sol.orbs[0] }} />
-                <div className="animate-orb-2 absolute w-[320px] h-[320px] rounded-full blur-[80px] -bottom-16 -right-16"
-                  style={{ background: sol.orbs[1] }} />
-                <div className="animate-orb-3 absolute w-[240px] h-[240px] rounded-full blur-[60px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-                  style={{ background: sol.orbs[2] }} />
-                <div className="absolute inset-0 opacity-[0.04]"
-                  style={{ backgroundImage: "radial-gradient(circle, #fff 1px, transparent 1px)", backgroundSize: "32px 32px" }} />
-              </div>
-
+            <div className="relative min-h-[300px] flex items-center bg-[#0b1a33]">
               <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 py-10 w-full">
                 <div className="flex flex-col md:flex-row md:items-center gap-8">
-                  <div className="flex-1 animate-fade-up">
-                    <div className="flex items-center gap-3 mb-3">
-                      <span className="text-[10px] font-bold tracking-[0.25em] uppercase px-3 py-1 rounded-full border"
-                        style={{ borderColor: `${sol.accent}40`, color: sol.accent, background: `${sol.accent}15` }}>
-                        {sol.badge}
-                      </span>
-                      <span className="text-white/30 text-xs">#{String(idx + 1).padStart(2, "0")}</span>
-                    </div>
+                  <div className="flex-1">
                     <h1 className="text-3xl sm:text-4xl font-black text-white mb-2 leading-tight">{sol.title}</h1>
                     {sol.kind === "workflow" ? (
                       <p className="text-xl sm:text-2xl font-extrabold mb-3 leading-snug" style={{ color: sol.accent }}>
@@ -642,15 +594,8 @@ export default function SolutionsPage() {
                     </div>
                   ) : (
                   <div className="flex-shrink-0 flex items-center justify-center">
-                    <div className="relative">
-                      <div className="w-28 h-28 rounded-2xl flex items-center justify-center animate-glow"
-                        style={{ background: `linear-gradient(135deg,${sol.accent}30 0%,${sol.accent}15 100%)`, border: `1px solid ${sol.accent}30`, boxShadow: `0 0 40px ${sol.accent}30` }}>
-                        <Icon size={52} style={{ color: sol.accent }} strokeWidth={1.2} />
-                      </div>
-                      <div className="absolute inset-0 -m-3 rounded-[1.75rem] border opacity-20 animate-pulse"
-                        style={{ borderColor: sol.accent }} />
-                      <div className="absolute inset-0 -m-6 rounded-[2.25rem] border opacity-10"
-                        style={{ borderColor: sol.accent }} />
+                    <div className="w-28 h-28 rounded-2xl flex items-center justify-center border border-white/10 bg-white/[0.03]">
+                      <Icon size={48} style={{ color: sol.accent }} strokeWidth={1.2} />
                     </div>
                   </div>
                   )}
