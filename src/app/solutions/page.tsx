@@ -508,6 +508,23 @@ export default function SolutionsPage() {
   const wf = translations[lang].workflowPage;
   const activeTitle = solutions.find((s) => s.id === activeId)?.title ?? "";
 
+  // 왼쪽 목록 묶음 (순서는 solutions 배열과 같다)
+  const groups: { label: string; ids: string[] }[] = lang === "ko"
+    ? [
+        { label: "공정 관리",   ids: ["tango-workflow"] },
+        { label: "전처리·인식", ids: ["tango-image", "moon-ai-ocr"] },
+        { label: "교정·편집",   ids: ["moon-editor"] },
+        { label: "산출물",      ids: ["tango-pdf", "tango-xml", "tango-batch"] },
+        { label: "AI 서비스",   ids: ["moon-ai-explorer", "moon-translator"] },
+      ]
+    : [
+        { label: "Workflow",         ids: ["tango-workflow"] },
+        { label: "Preprocess · OCR", ids: ["tango-image", "moon-ai-ocr"] },
+        { label: "Proofreading",     ids: ["moon-editor"] },
+        { label: "Deliverables",     ids: ["tango-pdf", "tango-xml", "tango-batch"] },
+        { label: "AI Services",      ids: ["moon-ai-explorer", "moon-translator"] },
+      ];
+
   return (
     <div className="bg-slate-950 min-h-screen pb-20">
 
@@ -520,7 +537,7 @@ export default function SolutionsPage() {
             {labels.backHome}
           </Link>
 
-          <div ref={tabsRef} className="relative overflow-x-auto scrollbar-hide flex-1 min-w-0 cursor-grab active:cursor-grabbing select-none">
+          <div ref={tabsRef} className="relative overflow-x-auto scrollbar-hide flex-1 min-w-0 cursor-grab active:cursor-grabbing select-none xl:hidden">
             <div className="flex items-center gap-1 w-max mx-auto">
             {solutions.map((s) => {
               const Icon = s.icon;
@@ -548,12 +565,45 @@ export default function SolutionsPage() {
         </div>
       </div>
 
+      <div className="xl:grid xl:grid-cols-[240px_minmax(0,1fr)]">
+
+      {/* 왼쪽 솔루션 목록 (넓은 화면) */}
+      <aside className="hidden xl:block sticky top-14 self-start h-[calc(100vh-3.5rem-4.5rem)] overflow-y-auto border-r border-white/8 px-5 py-7">
+        <nav aria-label="solutions">
+          {groups.map((g) => (
+            <div key={g.label} className="mb-5">
+              <p className="px-3 mb-1.5 text-[11px] font-bold text-white/35 tracking-wide">{g.label}</p>
+              {g.ids.map((id) => {
+                const s = solutions.find((x) => x.id === id);
+                if (!s) return null;
+                const no = String(solutions.indexOf(s) + 1).padStart(2, "0");
+                const active = activeId === id;
+                return (
+                  <button
+                    key={id}
+                    onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })}
+                    aria-current={active ? "true" : undefined}
+                    className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left text-[13px] transition-colors ${
+                      active ? "bg-white/10 text-white font-bold" : "text-white/50 hover:text-white/80 hover:bg-white/5"
+                    }`}
+                  >
+                    <span className="w-5 text-[11px] tabular-nums" style={{ color: active ? s.accent : "rgba(255,255,255,0.3)" }}>{no}</span>
+                    {s.title}
+                  </button>
+                );
+              })}
+            </div>
+          ))}
+        </nav>
+      </aside>
+
+      <div className="min-w-0">
       {/* 솔루션 섹션 */}
       {solutions.map((sol, idx) => {
         const Icon = sol.icon;
         const tSol = tSolutions[TR_INDEX[sol.id]];
         return (
-          <section key={sol.id} id={sol.id} className="relative overflow-hidden">
+          <section key={sol.id} id={sol.id} className="relative overflow-hidden scroll-mt-14">
 
             {/* 히어로 */}
             <div className="relative min-h-[300px] flex items-center bg-[#0b1a33]">
@@ -629,6 +679,8 @@ export default function SolutionsPage() {
           </section>
         );
       })}
+      </div>
+      </div>
 
       {/* 하단 고정 문의 바 */}
       <div className="fixed bottom-0 inset-x-0 z-50 border-t border-white/10"
