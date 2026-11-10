@@ -431,7 +431,6 @@ export default function SolutionsPage() {
   const { solutions: tSolutions, ...labels } = tp;
 
   const [activeId, setActiveId] = useState("tango-workflow");
-  const observerRef = useRef<IntersectionObserver | null>(null);
   const tabsRef = useRef<HTMLDivElement>(null);
   const dragMoved = useRef(false);
 
@@ -490,18 +489,31 @@ export default function SolutionsPage() {
     el.scrollTo({ left: Math.max(0, target), behavior: "smooth" });
   }, [activeId]);
 
+  // 현재 위치: 상단 헤더 아래 기준선(120px)을 지난 마지막 섹션.
+  // 섹션이 화면보다 훨씬 길어서 '화면에 보이는 비율'로는 판별할 수 없다.
   useEffect(() => {
-    observerRef.current = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => { if (e.isIntersecting) setActiveId(e.target.id); });
-      },
-      { threshold: 0.4 }
-    );
-    solutions.forEach((s) => {
-      const el = document.getElementById(s.id);
-      if (el) observerRef.current?.observe(el);
-    });
-    return () => observerRef.current?.disconnect();
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      let current = solutions[0].id;
+      for (const s of solutions) {
+        const el = document.getElementById(s.id);
+        if (el && el.getBoundingClientRect().top <= 120) current = s.id;
+      }
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) {
+        current = solutions[solutions.length - 1].id;
+      }
+      setActiveId(current);
+    };
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
   }, []);
 
   const cta = translations[lang].solutionHome;
