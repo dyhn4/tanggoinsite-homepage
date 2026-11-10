@@ -36,8 +36,8 @@ export function SolutionMetrics({ id, accent }: { id: string; accent: string }) 
   return (
     <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-2xl">
       {item.metrics.map((x) => (
-        <div key={x.label} className="rounded-xl border border-white/12 bg-white/[0.06] px-4 py-3 backdrop-blur-sm">
-          <div className="text-xl sm:text-2xl font-black tracking-tight text-white leading-tight">{x.value}</div>
+        <div key={x.label} className="rounded-xl border border-white/12 bg-white/[0.06] px-4 py-3 sm:min-h-[88px]">
+          <div className="text-2xl font-black tracking-tight text-white leading-tight">{x.value}</div>
           <div className="text-[11px] leading-snug mt-1" style={{ color: accent }}>{x.label}</div>
         </div>
       ))}
