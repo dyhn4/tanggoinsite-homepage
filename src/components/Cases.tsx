@@ -30,7 +30,7 @@ export default function Cases() {
   return (
     <section
       id="cases"
-      className="min-h-screen flex flex-col justify-center px-4 sm:px-6 bg-white py-10"
+      className="min-h-screen flex flex-col justify-center px-4 sm:px-6 bg-white pt-24 pb-8"
     >
       <div className="max-w-6xl mx-auto w-full">
         <div className="text-center mb-8">
